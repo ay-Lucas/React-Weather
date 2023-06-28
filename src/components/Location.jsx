@@ -23,18 +23,15 @@ export default function Location() {
 			});
 	}, []);
 	return (
-		<div className="Location">
+		// <div className="Location text-lg">
+		<>
 			{data && (
-				<div className="ml-auto mr-auto text-center">
-					{"city: " +
-						data.city +
-						" lat: " +
-						data.latitude +
-						" lon: " +
-						data.longitude}
-				</div>
+				<h1 className="text-2xl font-bold my-2">
+					{data.city + ", " + data.state_prov}
+				</h1>
 			)}
-		</div>
+		</>
+		// </div>
 	);
 }
 
