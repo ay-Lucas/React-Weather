@@ -3,7 +3,9 @@ const ipGeolocationKey = "d771d4b53a23484bb0ff58d97321c33a";
 const url = "https://api.ipgeolocation.io/ipgeo?apiKey=" + ipGeolocationKey;
 export default function Location() {
 	const [data, setData] = useState(null);
+	// eslint-disable-next-line no-unused-vars
 	const [loading, setLoading] = useState(true);
+	// eslint-disable-next-line no-unused-vars
 	const [error, setError] = useState(null);
 
 	useEffect(() => {
