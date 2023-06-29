@@ -28,7 +28,7 @@ export default function Location() {
 		// <div className="Location text-lg">
 		<>
 			{data && (
-				<h1 className="text-2xl font-bold my-2">
+				<h1 className="text-xl font-semibold my-2">
 					{data.city + ", " + data.state_prov}
 				</h1>
 			)}

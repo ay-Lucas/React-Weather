@@ -8,8 +8,8 @@ export default function WeatherCard() {
 				<h2 className="text-xl">Thurs, 27 Jun 2023</h2>
 			</div>
 			<div className="flex flex-row justify-between py-2 border-gray-800 border-b-[1px]">
-				<h1 className="text-lg">High/Low</h1>
-				<h2 className="text-md">90°F / 80°F</h2>
+				<h1 className="lg:text-lg sm:text-md">High/Low</h1>
+				<h2 className="text-md text-right">90°F / 80°F</h2>
 			</div>
 			<div className="flex flex-row justify-between py-2 border-gray-800 border-b-[1px]">
 				<h1 className="text-md">Wind</h1>
