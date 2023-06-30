@@ -2,7 +2,7 @@ import Button from "@mui/material/Button";
 import Search from "./Search.jsx";
 export default function Header() {
 	return (
-		<div className="py-1 items-center text-center lg:flex justify-center sm:flex-auto m-auto w-3/4">
+		<div className="py-1 items-center text-center lg:flex justify-center sm:flex-auto m-auto w-3/4 ">
 			<h1 className="text-xl text-white xl:visible justify-center lg:w-1/3 sm:1/2">
 				WeatherPal
 			</h1>
