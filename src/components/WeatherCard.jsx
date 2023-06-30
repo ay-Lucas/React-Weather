@@ -9,7 +9,7 @@ export default function WeatherCard() {
 			</div>
 			<div className="flex flex-row justify-between py-2 border-gray-800 border-b-[1px]">
 				<h1 className="lg:text-lg sm:text-md">High/Low</h1>
-				<h2 className="text-md text-right">90°F / 80°F</h2>
+				<h2 className="text-md text-right whitespace-nowrap">90°F / 80°F</h2>
 			</div>
 			<div className="flex flex-row justify-between py-2 border-gray-800 border-b-[1px]">
 				<h1 className="text-md">Wind</h1>

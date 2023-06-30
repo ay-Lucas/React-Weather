@@ -26,35 +26,32 @@ TODO Thursday 6/29
 function App() {
 	return (
 		<div className="text-white">
-			<div className="bg-black drop-shadow-2xl ">
+			<div className="bg-black drop-shadow-2xl">
 				<Header />
 			</div>
-			<div className="flex bg-gradient-to-r from-[#2193b0] to-[#6dd5ed]">
-				<div className="flex h-screen mx-auto">
-					<div className="text-center items-center  rounded-2xl">
-						<div className="mx-2 mt-3 bg-[#0a1929]/60 rounded-2xl">
+			<div className="flex">
+				<div className="flex mx-auto w-fit">
+					<div className="box-content flex-wrap">
+						<div className=" flex flex-auto m-1 mt-2 p-2 bg-[#0a1929]/60 rounded-xl ">
 							<LocationCard />
 						</div>
-						<div className="inline-flex w-full">
-							<div className="mx-2 my-2 bg-[#0a1929]/60 rounded-2xl m-auto p-5 w-1/2">
+						<div className="lg:flex sm:inline-flex w-full">
+							<div className="mx-1 my-1 bg-[#0a1929]/60 rounded-2xl p-5 lg:w-1/2 sm:w-full">
 								<CurrentWeather />
 							</div>
-							<div className="mx-2 my-2 bg-[#0a1929]/60 rounded-2xl m-auto p-5 w-1/2">
+							<div className="mx-1 my-1 bg-[#0a1929]/60 rounded-2xl p-5 lg:w-1/2 sm:w-full">
 								<WeatherCard />
 							</div>
 						</div>
-						<div className="inline-flex w-full">
-							<div className="mx-2 my-2 bg-[#0a1929]/60 rounded-2xl m-auto p-5 w-1/2">
+						<div className="lg:flex sm:inline-flex w-full">
+							<div className="mx-1 my-1 bg-[#0a1929]/60 rounded-2xl p-5 lg:w-1/2 sm:w-full">
 								<HourlyForecastOutlook />
 							</div>
-							<div className="mx-2 my-2 bg-[#0a1929]/60 rounded-2xl m-auto p-5 w-1/2">
+							<div className="mx-1 my-1 bg-[#0a1929]/60 rounded-2xl p-5 lg:w-1/2 sm:w-full">
 								<DailyForecastOutlook />
 							</div>
 						</div>
-						<div className="mx-2 my-2 bg-[#0a1929]/60 rounded-2xl m-auto">
-							<SimpleAccordion />
-							<SimpleAccordion />
-							<SimpleAccordion />
+						<div className="mx-1 my-1 bg-[#0a1929]/60 rounded-2xl m-auto">
 							<SimpleAccordion />
 						</div>
 						{/* <SimpleAccordion /> */}
@@ -64,6 +61,7 @@ function App() {
 		</div>
 	);
 	//rgb(23 23 23 / var(--tw-bg-opacity))
+	//lg:flex sm:block  sm:w-full lg:w-1/2
 }
 
 export default App;

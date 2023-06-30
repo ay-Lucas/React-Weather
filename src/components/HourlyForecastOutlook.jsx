@@ -27,17 +27,23 @@ export default function HourlyForecastOutlook() {
 	}, []);
 	//border-gray-800 border-b-[1px]
 	return (
-		<div className="mx-2">
-			<div className="w-full text-left mb-4">
-				<h1 className="text-2xl">Hourly Forecast</h1>
+		<div className="mx-2 w-full">
+			<div className=" text-left mb-4 ">
+				<h1 className="text-2xl">Hourly</h1>
 			</div>
 			{times.map((time, index) => (
-				<div key={index} className="flex  justify-between py-2 ">
-					<h1 key={index} className="lg:text-lg sm:text-md text-left">
+				<div key={index} className="flex flex-row justify-between py-2 ">
+					<h1
+						key={index}
+						className="lg:text-lg sm:text-md text-left flex flex-row"
+					>
 						{time}
 					</h1>
-					<IoPartlySunnyOutline size={20} className="justify-center" />
-					<h2 className="text-md text-right">90°F / 80°F</h2>
+					<IoPartlySunnyOutline
+						size={20}
+						className="justify-center flex flex-row"
+					/>
+					<h2 className="text-md text-right flex-row flex">90°F</h2>
 				</div>
 			))}
 		</div>
