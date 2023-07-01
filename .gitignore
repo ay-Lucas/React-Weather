@@ -12,7 +12,9 @@ dist
 dist-ssr
 *.local
 /public
+src/assets/icons/Weather Icons 1.1 Dark Mode/
 src/assets/icons/Weather Icons 1.1 Light Mode Sexy/
+src/assets/icons/Weather Icons 1.1 Light Mode/
 src/assets/icons/Colored/
 # Editor directories and files
 .vscode/*
