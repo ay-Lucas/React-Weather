@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 const ipGeolocationKey = "d771d4b53a23484bb0ff58d97321c33a";
 const url = "https://api.ipgeolocation.io/ipgeo?apiKey=" + ipGeolocationKey;
+
+//no longer using
+
 export default function Location() {
 	const [data, setData] = useState(null);
 	// eslint-disable-next-line no-unused-vars

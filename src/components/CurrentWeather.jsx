@@ -1,15 +1,54 @@
+/* eslint-disable react/prop-types */
 // eslint-disable-next-line no-unused-vars
-import { Circle, CircleRounded } from "@mui/icons-material";
-import React, { useEffect, useState } from "react";
+import { Circle, CircleRounded, Description } from "@mui/icons-material";
+import React, { useEffect, useMemo, useState } from "react";
 
 import { BsCloudLightningRain } from "react-icons/bs";
 
-export default function Weather() {
+// eslint-disable-next-line react/prop-types
+const CurrentWeather = ({ data, aqi }) => {
 	const [time, setTime] = useState(new Date());
 
 	useEffect(() => {
-		setInterval(() => setTime(new Date()), 1000);
+		setTime(new Date());
 	}, []);
+	console.log("current weather render");
+	let description = `${data.weather[0].description}`;
+	let color;
+	if (aqi !== undefined) {
+		console.log(aqi[1].Category.Name);
+		if (aqi[1].Category.Name === "Good") {
+			color = "mr-1 h-3 w-3 inline-flex items-center rounded-full bg-green-500";
+		} else if (aqi[1].Category.Name === "Moderate") {
+			color =
+				"mr-1 h-3 w-3 inline-flex items-center rounded-full bg-yellow-500";
+			console.log(color);
+		} else if (aqi[1].Category.Name === "Unhealthy for Sensitive Groups") {
+			color =
+				"mr-1 h-3 w-3 inline-flex items-center rounded-full bg-yellow-600";
+		} else if (aqi[1].Category.Name === "Unhealthy") {
+			color = "mr-1 h-3 w-3 inline-flex items-center rounded-full bg-red-500";
+		} else if (aqi[1].Category.Name === "Very Unhealthy") {
+			color = "mr-1 h-3 w-3 inline-flex items-center rounded-full bg-red-600";
+		} else if (aqi[1].Category.Name === "Hazardous") {
+			color =
+				"mr-1 h-3 w-3 inline-flex items-center rounded-full bg-purple-500";
+		} else {
+			color = "mr-1 h-3 w-3 inline-flex items-center rounded-full bg-gray-500";
+		}
+	}
+
+	// console.log(description);
+	// if (description.includes(" ")) {
+	// 	description.split(" ").map((word) => {
+	// 		console.log(description);
+	// 		description = word[0].toUpperCase() + word.slice(1);
+	// 		if (word.length > 1) {
+	// 			description = description + " " + word[1].toUpperCase + word.slice(1);
+	// 			console.log(description);
+	// 		}
+	// 	});
+	// }
 	return (
 		<div className="flex flex-col text-center items-center justify-between">
 			<div className="text-2xl flex mb-4">Current Weather</div>
@@ -24,7 +63,7 @@ export default function Weather() {
 								minute: "2-digit",
 							})}
 						</div>
-						<div className="mt-1">Thunderstorms</div>
+						<div className="mt-1">{description}</div>
 					</div>
 					<div className="ml-3">
 						<BsCloudLightningRain size={50} />
@@ -33,36 +72,46 @@ export default function Weather() {
 				{/* <div className="mt-3">
 				Expect thunderstorms to continue for the next hour.
 			</div> */}
-				<div className="text-6xl font-light my-4">80°F</div>
+				{/* <>
+					{data && (
+						<div className="text-6xl font-light my-4">{data.temperature}°F</div>
+					)}
+				</> */}
+				<div className="text-6xl font-light my-4">{`${Math.round(
+					data.main.temp
+				)}`}</div>
 			</div>
-			<div className="flex justify-between text-base">
+
+			<div className="flex justify-between text-base items-center">
 				<div className="inline-flex flex-col px-2">
 					<div className="flex">Feels like</div>
-					<div>80°F</div>
+					<div>{data.main.feels_like}</div>
 				</div>
 				<div className="inline-flex flex-col items-center px-2">
 					<div>Air Quality</div>
 					<div className="inline-flex  flex-row items-center justify-center ">
-						<div
-							className=" mr-1 h-3 w-3 inline-flex items-center rounded-full
-						bg-yellow-600"
-						></div>
-						<div>78</div>
+						<div className={color}></div>
+						<div>{aqi[1].AQI}</div>
 					</div>
 				</div>
 				<div className="inline-flex flex-col px-2">
 					<div>Humidity</div>
-					<div>60%</div>
+					<div>{data.main.humidity}%</div>
 				</div>
 				<div className="inline-flex flex-col px-2">
 					<div>Wind</div>
-					<div>5mph NE</div>
+					<div>{data.wind.speed}</div>
 				</div>
 				<div className="inline-flex flex-col px-2">
-					<div>Wind</div>
-					<div>5mph NE</div>
+					<div>Pressure</div>
+					<div>{data.main.pressure}</div>
+				</div>
+				<div className="inline-flex flex-col px-2">
+					<div>Visibility</div>
+					<div>{data.visibility}</div>
 				</div>
 			</div>
 		</div>
 	);
-}
+};
+export default CurrentWeather;
