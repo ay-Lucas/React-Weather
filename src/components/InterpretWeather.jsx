@@ -22,188 +22,192 @@ import {
 	BsMoonStars,
 	BsSun,
 } from "react-icons/bs";
-const WeatherCode = (code, isNight) => {
+const WeatherCode = ({ code, isDay, size }) => {
+	console.log("interpret rendered");
 	if (typeof code !== "number") {
 		console.log("code is not a number");
 		return null;
 	}
-	if (isNight === 1) {
-		isNight = false;
-	} else if (isNight === 0) {
-		isNight = true;
+	if (isDay === 1) {
+		isDay = true;
+	} else if (isDay === 0) {
+		isDay = false;
 	}
 	let description, icon;
-	if (code == 0 && !isNight) {
+	if (code == 0 && !isDay) {
 		description = "Clear Sky";
-		icon = BsSun;
-	} else if (code == 0 && isNight) {
+		icon = <BsSun size={size} />;
+	} else if (code == 0 && isDay) {
 		description = "Clear Sky";
-		icon = BsMoonStars;
-	} else if (code == 1 && !isNight) {
+		icon = <BsMoonStars size={size} />;
+	} else if (code == 1 && !isDay) {
 		description = "Mainly Clear";
-		icon = BsSun;
-	} else if (code == 1 && isNight) {
+		icon = <BsSun size={size} />;
+	} else if (code == 1 && isDay) {
 		description = "Mainly Clear";
-		icon = BsMoonStars;
-	} else if (code == 2 && !isNight) {
+		icon = <BsMoonStars size={size} />;
+	} else if (code == 2 && !isDay) {
 		description = "Partly Cloudy";
-		icon = BsCloudSun;
-	} else if (code == 2 && isNight) {
+		icon = <BsCloudSun size={size} />;
+	} else if (code == 2 && isDay) {
 		description = "Partly Cloudy";
-		icon = BsCloudMoonFill;
-	} else if (code == 3 && !isNight) {
+		icon = <BsCloudMoonFill size={size} />;
+	} else if (code == 3 && !isDay) {
 		description = "Overcast";
-		icon = BsClouds;
-	} else if (code == 3 && isNight) {
+		icon = <BsClouds size={size} />;
+	} else if (code == 3 && isDay) {
 		description = "Overcast";
-		icon = BsCloudsFill;
-	} else if (code == 45 && !isNight) {
+		icon = <BsCloudsFill size={size} />;
+	} else if (code == 45 && !isDay) {
 		description = "Fog";
-		icon = BsCloudFog2;
-	} else if (code == 45 && isNight) {
+		icon = <BsCloudFog2 size={size} />;
+	} else if (code == 45 && isDay) {
 		description = "Fog";
-		icon = BsCloudFog2Fill;
-	} else if (code == 48 && !isNight) {
+		icon = <BsCloudFog2Fill size={size} />;
+	} else if (code == 48 && !isDay) {
 		description = "Freezing Fog";
-		icon = BsCloudFog2;
-	} else if (code == 48 && isNight) {
+		icon = <BsCloudFog2 size={size} />;
+	} else if (code == 48 && isDay) {
 		description = "Freezing Fog";
-		icon = BsCloudFog2Fill;
-	} else if (code == 51 && !isNight) {
+		icon = <BsCloudFog2Fill size={size} />;
+	} else if (code == 51 && !isDay) {
+		icon = <BsCloudDrizzle size={size} />;
+	} else if (code == 51 && isDay) {
 		description = "Light Drizzle";
-		icon = BsCloudDrizzle;
-	} else if (code == 51 && isNight) {
-		description = "Light Drizzle";
-		icon = BsCloudDrizzleFill;
-	} else if (code == 53 && !isNight) {
+		icon = <BsCloudDrizzleFill size={size} />;
+	} else if (code == 53 && !isDay) {
 		description = "Moderate Drizzle";
-		icon = BsCloudDrizzle;
-	} else if (code == 53 && isNight) {
+		icon = <BsCloudDrizzle size={size} />;
+	} else if (code == 53 && isDay) {
 		description = "Moderate Drizzle";
-		icon = BsFillCloudDrizzleFill;
-	} else if (code == 55 && !isNight) {
+		icon = <BsFillCloudDrizzleFill size={size} />;
+	} else if (code == 55 && !isDay) {
 		description = "Heavy Drizzle";
-		icon = BsCloudDrizzle;
-	} else if (code == 55 && isNight) {
+		icon = <BsCloudDrizzle size={size} />;
+	} else if (code == 55 && isDay) {
 		description = "Heavy Drizzle";
-		icon = BsCloudDrizzleFill;
-	} else if (code == 56 && !isNight) {
+		icon = <BsCloudDrizzleFill size={size} />;
+	} else if (code == 56 && !isDay) {
 		description = "Light Freezing Drizzle";
-		icon = BsCloudDrizzle;
-	} else if (code == 56 && isNight) {
+		icon = <BsCloudDrizzle size={size} />;
+	} else if (code == 56 && isDay) {
 		description = "Light Freezing Drizzle";
-		icon = BsCloudDrizzleFill;
-	} else if (code == 57 && !isNight) {
+		icon = <BsCloudDrizzleFill size={size} />;
+	} else if (code == 57 && !isDay) {
 		description = "Freezing Drizzle";
-		icon = BsCloudDrizzle;
-	} else if (code == 57 && isNight) {
+		icon = <BsCloudDrizzle size={size} />;
+	} else if (code == 57 && isDay) {
 		description = "Freezing Drizzle";
-		icon = BsCloudDrizzleFill;
-	} else if (code == 61 && !isNight) {
+		icon = <BsCloudDrizzleFill size={size} />;
+	} else if (code == 61 && !isDay) {
 		description = "Light Rain";
-		icon = BsCloudRain;
-	} else if (code == 61 && isNight) {
+		icon = <BsCloudRain size={size} />;
+	} else if (code == 61 && isDay) {
 		description = "Light Rain";
-		icon = BsCloudRainFill;
-	} else if (code == 63 && !isNight) {
+		icon = <BsCloudRainFill size={size} />;
+	} else if (code == 63 && !isDay) {
 		description = "Rain";
-		icon = BsCloudRain;
-	} else if (code == 63 && isNight) {
+		icon = <BsCloudRain size={size} />;
+	} else if (code == 63 && isDay) {
 		description = "Rain";
-		icon = BsCloudRainFill;
-	} else if (code == 65 && !isNight) {
+		icon = <BsCloudRainFill size={size} />;
+	} else if (code == 65 && !isDay) {
 		description = "Heavy Rain";
-		icon = BsCloudRainHeavy;
-	} else if (code == 65 && isNight) {
+		icon = <BsCloudRainHeavy size={size} />;
+	} else if (code == 65 && isDay) {
 		description = "Heavy Rain";
-		icon = BsCloudRainHeavyFill;
-	} else if (code == 66 && !isNight) {
+		icon = <BsCloudRainHeavyFill size={size} />;
+	} else if (code == 66 && !isDay) {
 		description = "Light Freezing Rain";
-		icon = BsCloudSleet;
-	} else if (code == 66 && isNight) {
+		icon = <BsCloudSleet size={size} />;
+	} else if (code == 66 && isDay) {
 		description = "Light Freezing Rain";
-		icon = BsCloudSleetFill;
-	} else if (code == 67 && !isNight) {
+		icon = <BsCloudSleetFill size={size} />;
+	} else if (code == 67 && !isDay) {
 		description = "Freezing Rain";
-		icon = BsCloudSleet;
-	} else if (code == 67 && isNight) {
+		icon = <BsCloudSleet size={size} />;
+	} else if (code == 67 && isDay) {
 		description = "Freezing Rain";
-		icon = BsCloudSleetFill;
-	} else if (code == 71 && !isNight) {
+		icon = <BsCloudSleetFill size={size} />;
+	} else if (code == 71 && !isDay) {
 		description = "Light Snow";
-		icon = BsCloudSnow;
-	} else if (code == 71 && isNight) {
+		icon = <BsCloudSnow size={size} />;
+	} else if (code == 71 && isDay) {
 		description = "Light Snow";
-		icon = BsCloudSnowFill;
-	} else if (code == 73 && !isNight) {
+		icon = <BsCloudSnowFill size={size} />;
+	} else if (code == 73 && !isDay) {
 		description = "Snow";
-		icon = BsCloudSnow;
-	} else if (code == 73 && isNight) {
+		icon = <BsCloudSnow size={size} />;
+	} else if (code == 73 && isDay) {
 		description = "Snow";
-		icon = BsCloudSnowFill;
-	} else if (code == 75 && !isNight) {
+		icon = <BsCloudSnowFill size={size} />;
+	} else if (code == 75 && !isDay) {
 		description = "Heavy Snow";
-		icon = BsCloudSnow;
-	} else if (code == 75 && isNight) {
+		icon = <BsCloudSnow size={size} />;
+	} else if (code == 75 && isDay) {
 		description = "Heavy Snow";
-		icon = BsCloudSnowFill;
-	} else if (code == 77 && !isNight) {
+		icon = <BsCloudSnowFill size={size} />;
+	} else if (code == 77 && !isDay) {
 		description = "Snow Grains";
-		icon = BsCloudSnow;
-	} else if (code == 77 && isNight) {
+		icon = <BsCloudSnow size={size} />;
+	} else if (code == 77 && isDay) {
 		description = "Snow Grains";
-		icon = BsCloudSnowFill;
-	} else if (code == 80 && !isNight) {
+		icon = <BsCloudSnowFill size={size} />;
+	} else if (code == 80 && !isDay) {
 		description = "Light Rain Showers";
-		icon = BsCloudRain;
-	} else if (code == 80 && isNight) {
+		icon = <BsCloudRain size={size} />;
+	} else if (code == 80 && isDay) {
 		description = "Light Rain Showers";
-		icon = BsCloudRainFill;
-	} else if (code == 81 && !isNight) {
+		icon = <BsCloudRainFill size={size} />;
+	} else if (code == 81 && !isDay) {
 		description = "Rain Showers";
-		icon = BsCloudRain;
-	} else if (code == 81 && isNight) {
+		icon = <BsCloudRain size={size} />;
+	} else if (code == 81 && isDay) {
 		description = "Rain Showers";
-		icon = BsCloudRainFill;
-	} else if (code == 82 && !isNight) {
+		icon = <BsCloudRainFill size={size} />;
+	} else if (code == 82 && !isDay) {
 		description = "Heavy Rain Showers";
-		icon = BsCloudRainHeavy;
-	} else if (code == 82 && isNight) {
+		icon = <BsCloudRainHeavy size={size} />;
+	} else if (code == 82 && isDay) {
 		description = "Heavy Rain Showers";
-		icon = BsCloudRainHeavyFill;
-	} else if (code == 85 && !isNight) {
+		icon = <BsCloudRainHeavyFill size={size} />;
+	} else if (code == 85 && !isDay) {
 		description = "Light Snow Showers";
-		icon = BsCloudSnow;
-	} else if (code == 85 && isNight) {
+		icon = <BsCloudSnow size={size} />;
+	} else if (code == 85 && isDay) {
 		description = "Light Snow Showers";
-		icon = BsCloudSnowFill;
-	} else if (code == 86 && !isNight) {
+		icon = <BsCloudSnowFill size={size} />;
+	} else if (code == 86 && !isDay) {
 		description = "Heavy Snow Showers";
-		icon = BsCloudSnow;
-	} else if (code == 86 && isNight) {
+		icon = <BsCloudSnow size={size} />;
+	} else if (code == 86 && isDay) {
 		description = "Heavy Snow Showers";
-		icon = BsCloudSnowFill;
-	} else if (code == 95 && !isNight) {
+		icon = <BsCloudSnowFill size={size} />;
+	} else if (code == 95 && !isDay) {
 		description = "Thunderstorm";
-		icon = BsFillCloudLightningRainFill;
-	} else if (code == 95 && isNight) {
+		icon = <BsFillCloudLightningRainFill size={size} />;
+	} else if (code == 95 && isDay) {
 		description = "Thunderstorm";
-		icon = BsFillCloudLightningRainFill;
-	} else if (code == 96 && !isNight) {
+		icon = <BsFillCloudLightningRainFill size={size} />;
+	} else if (code == 96 && !isDay) {
 		description = "Thunderstorm";
-		icon = BsFillCloudLightningRainFill;
-	} else if (code == 96 && isNight) {
+		icon = <BsFillCloudLightningRainFill size={size} />;
+	} else if (code == 96 && isDay) {
 		description = "Thunderstorm";
-		icon = BsFillCloudLightningRainFill;
-	} else if (code == 99 && !isNight) {
+		icon = <BsFillCloudLightningRainFill size={size} />;
+	} else if (code == 99 && !isDay) {
 		description = "Thunderstorm";
-		icon = BsFillCloudLightningRainFill;
-	} else if (code == 99 && isNight) {
+		icon = <BsFillCloudLightningRainFill size={size} />;
+	} else if (code == 99 && isDay) {
 		description = "Thunderstorm";
-		icon = BsFillCloudLightningRainFill;
+		icon = <BsFillCloudLightningRainFill size={size} />;
+	} else {
+		return -1;
 	}
 	console.log(description, icon);
-	return [description, icon];
+	// return [description, icon];
+	return <>{icon}</>;
 };
 
+// return < size={size}>{description}</ size={size}div>;
 export default WeatherCode;

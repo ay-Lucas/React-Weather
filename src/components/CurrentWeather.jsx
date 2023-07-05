@@ -49,6 +49,7 @@ const CurrentWeather = ({ data, aqi }) => {
 	// 	});
 	// }
 	const weatherIcon = <BsCloudLightningRain size={50} />;
+
 	return (
 		<div className="flex flex-col text-center items-center justify-between">
 			<div className="text-2xl flex mb-4">Current Weather</div>

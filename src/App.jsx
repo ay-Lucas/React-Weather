@@ -38,6 +38,8 @@ TODO Thursday 6/29
 //Weather query params
 //apparent tem
 function App() {
+	console.log("app rendered");
+
 	const imperialUnits = {
 		temperature: "fahrenheit",
 		wind: "mph",
