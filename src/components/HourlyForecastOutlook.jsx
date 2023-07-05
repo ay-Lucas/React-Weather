@@ -1,6 +1,8 @@
+/* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
 import { IoPartlySunnyOutline } from "react-icons/io5";
-export default function HourlyForecastOutlook() {
+import InterpretWeather from "./InterpretWeather";
+export default function HourlyForecastOutlook({ data }) {
 	const [times, setTimes] = useState([]);
 
 	useEffect(() => {
@@ -25,6 +27,18 @@ export default function HourlyForecastOutlook() {
 
 		setTimes(getNextFiveRoundedHours());
 	}, []);
+	// const getIcon = () => {
+	// 		const [description, icon] = InterpretWeather(
+
+	// }
+	console.log(data.current_weather.weathercode);
+	const [description, icon] = InterpretWeather(
+		data.current_weather.weathercode,
+		data.current_weather.is_day
+	);
+	console.log(description);
+	console.log(icon);
+
 	//border-gray-800 border-b-[1px]
 	return (
 		<div className="mx-2 w-full">

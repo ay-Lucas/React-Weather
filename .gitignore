@@ -27,3 +27,7 @@ src/assets/icons/Colored/
 *.njsproj
 *.sln
 *.sw?
+Api.js
+.git.bgf-report
+.git.bgf-report/
+.git.bfg-report/

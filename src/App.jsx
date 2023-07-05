@@ -12,6 +12,7 @@ import {
 	AQI_URL,
 	CUREENT_WEATHER_URL,
 	CURRENT_WEATHER_KEY,
+	FIVE_DAY_FORECAST_URL,
 	FORECAST_API_URL,
 } from "./Api";
 import HourlyForecastOutlook from "./components/HourlyForecastOutlook";
@@ -47,6 +48,7 @@ function App() {
 	const [units, setUnits] = useState(imperialUnits);
 	const [currentWeather, setCurrentWeather] = useState(null);
 	const [forecast, setForecast] = useState(null);
+	const [fiveday, setFiveDay] = useState(null);
 	const [hourly, setHourly] = useState(null);
 	const [daily, setDaily] = useState(null);
 	const [currentAqi, setAqi] = useState(null);
@@ -79,6 +81,16 @@ function App() {
 			"longitude=" +
 			lon +
 			forecastParams;
+		const fiveDayForecaseUrl =
+			FIVE_DAY_FORECAST_URL +
+			"lat=" +
+			lat +
+			"&lon=" +
+			lon +
+			"&appid=" +
+			CURRENT_WEATHER_KEY;
+		+"&units=imperial";
+
 		const currentWeatherUrl =
 			CUREENT_WEATHER_URL +
 			"lat=" +
@@ -96,25 +108,35 @@ function App() {
 			lon +
 			"&distance=25&API_KEY=" +
 			AQI_KEY;
+		const fiveDayForecastFetch = fetch(fiveDayForecaseUrl);
 		const forecastFetch = fetch(forecastUrl);
 		const currentWeatherFetch = fetch(currentWeatherUrl);
 		const currentAQIFetch = fetch(currentAQI);
 		console.log(forecastUrl);
 		console.log(currentWeatherUrl);
 		console.log(currentAQIFetch);
-		Promise.all([forecastFetch, currentWeatherFetch, currentAQIFetch])
+		Promise.all([
+			forecastFetch,
+			currentWeatherFetch,
+			currentAQIFetch,
+			fiveDayForecastFetch,
+		])
 			.then(async (response) => {
 				const forecastResponse = await response[0].json();
 				const currentWeatherResponse = await response[1].json();
 				const currentAQIFetch = await response[2].json();
+				const fiveDayForecastResponse = await response[3].json();
 				setCurrentWeather(currentWeatherResponse);
 				setHourly(forecastResponse.hourly);
 				setDaily(forecastResponse.daily);
+				setFiveDay(fiveDayForecastResponse);
+				console.log(forecastResponse.daily);
 				setForecast(forecastResponse);
 				setAqi(currentAQIFetch);
 				console.log(currentWeatherResponse);
 				console.log(forecastResponse);
 				console.log(currentAQIFetch);
+				console.log(fiveDayForecastResponse);
 			})
 			.catch((error) => {
 				console.log(error);
@@ -154,15 +176,15 @@ function App() {
 								)}
 							</div>
 							<div className="mx-1 my-1 bg-[#0a1929]/60 rounded-2xl p-5 lg:w-1/2 sm:w-full">
-								<Today />
+								{daily && <Today data={daily} />}
 							</div>
 						</div>
 						<div className="lg:flex sm:inline-flex w-full">
 							<div className="mx-1 my-1 bg-[#0a1929]/60 rounded-2xl p-5 lg:w-1/2 sm:w-full">
-								<HourlyForecastOutlook />
+								{fiveday && <HourlyForecastOutlook data={forecast} />}
 							</div>
 							<div className="mx-1 my-1 bg-[#0a1929]/60 rounded-2xl p-5 lg:w-1/2 sm:w-full">
-								<DailyForecastOutlook />
+								<DailyForecastOutlook data={daily} />
 							</div>
 						</div>
 						<div className="mx-1 my-1 bg-[#0a1929]/60 rounded-2xl m-auto">

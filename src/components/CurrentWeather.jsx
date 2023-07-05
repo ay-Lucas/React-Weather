@@ -1,9 +1,8 @@
 /* eslint-disable react/prop-types */
 // eslint-disable-next-line no-unused-vars
-import { Circle, CircleRounded, Description } from "@mui/icons-material";
-import React, { useEffect, useMemo, useState } from "react";
-
+import React, { useEffect, useState } from "react";
 import { BsCloudLightningRain } from "react-icons/bs";
+import InterpretWeather from "./InterpretWeather";
 
 // eslint-disable-next-line react/prop-types
 const CurrentWeather = ({ data, aqi }) => {
@@ -14,15 +13,15 @@ const CurrentWeather = ({ data, aqi }) => {
 	}, []);
 	console.log("current weather render");
 	let description = `${data.weather[0].description}`;
+
 	let color;
-	if (aqi !== undefined) {
+	if (aqi.length > 0 && aqi[1]) {
 		console.log(aqi[1].Category.Name);
 		if (aqi[1].Category.Name === "Good") {
 			color = "mr-1 h-3 w-3 inline-flex items-center rounded-full bg-green-500";
 		} else if (aqi[1].Category.Name === "Moderate") {
 			color =
 				"mr-1 h-3 w-3 inline-flex items-center rounded-full bg-yellow-500";
-			console.log(color);
 		} else if (aqi[1].Category.Name === "Unhealthy for Sensitive Groups") {
 			color =
 				"mr-1 h-3 w-3 inline-flex items-center rounded-full bg-yellow-600";
@@ -49,6 +48,7 @@ const CurrentWeather = ({ data, aqi }) => {
 	// 		}
 	// 	});
 	// }
+	const weatherIcon = <BsCloudLightningRain size={50} />;
 	return (
 		<div className="flex flex-col text-center items-center justify-between">
 			<div className="text-2xl flex mb-4">Current Weather</div>
@@ -66,7 +66,8 @@ const CurrentWeather = ({ data, aqi }) => {
 						<div className="mt-1">{description}</div>
 					</div>
 					<div className="ml-3">
-						<BsCloudLightningRain size={50} />
+						{weatherIcon}
+						{/* <BsCloudLightningRain size={50} /> */}
 					</div>
 				</div>
 				{/* <div className="mt-3">
@@ -87,13 +88,15 @@ const CurrentWeather = ({ data, aqi }) => {
 					<div className="flex">Feels like</div>
 					<div>{data.main.feels_like}</div>
 				</div>
-				<div className="inline-flex flex-col items-center px-2">
-					<div>Air Quality</div>
-					<div className="inline-flex  flex-row items-center justify-center ">
-						<div className={color}></div>
-						<div>{aqi[1].AQI}</div>
+				{aqi.length > 0 && (
+					<div className="inline-flex flex-col items-center px-2">
+						<div>Air Quality</div>
+						<div className="inline-flex  flex-row items-center justify-center ">
+							<div className={color}></div>
+							<div>{aqi[1].AQI}</div>
+						</div>
 					</div>
-				</div>
+				)}
 				<div className="inline-flex flex-col px-2">
 					<div>Humidity</div>
 					<div>{data.main.humidity}%</div>
