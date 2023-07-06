@@ -204,7 +204,6 @@ const WeatherCode = ({ code, isDay, size }) => {
 	} else {
 		return -1;
 	}
-	console.log(description, icon);
 	// return [description, icon];
 	return <>{icon}</>;
 };

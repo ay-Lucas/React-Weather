@@ -5,7 +5,6 @@ import CurrentWeather from "./components/CurrentWeather.jsx";
 import DailyForecastOutlook from "./components/DailyForecastOutlook";
 import Search from "./components/Search.jsx";
 // import Header from "./components/Header.jsx";
-import { RepeatOneSharp } from "@mui/icons-material";
 import { useState } from "react";
 import {
 	AQI_KEY,
@@ -21,39 +20,22 @@ import SimpleAccordion from "./components/SimpleAccordion.jsx";
 import Today from "./components/Today";
 import "./index.css";
 
-//nav bar bg color: bg-slate-900
-//side bars bg color: bg-[#010409]
-//main content bg color: bg-[#0d1117]
-//main grey content: bg-neutral-900
-//navy blue bg-[#0a1929]/90
-
-/*
-Vision: 
-1. Home(current weather + outlook), hourly, daily and interactive map toggle [modes]  
-TODO Thursday 6/29
-1. Daily Weather
-2. Hourly Weather
-3. API
-*/
-//Weather query params
-//apparent tem
 function App() {
-	console.log("app rendered");
-
-	const imperialUnits = {
-		temperature: "fahrenheit",
-		wind: "mph",
-		precipitation: "inch",
-	};
+	console.log("app.jsx rendered");
 	const [location, setLocation] = useState(null);
 	const [coordinates, setCoordinates] = useState("");
-	const [units, setUnits] = useState(imperialUnits);
 	const [currentWeather, setCurrentWeather] = useState(null);
 	const [forecast, setForecast] = useState(null);
 	const [fiveday, setFiveDay] = useState(null);
 	const [hourly, setHourly] = useState(null);
 	const [daily, setDaily] = useState(null);
 	const [currentAqi, setAqi] = useState(null);
+	const imperialUnits = {
+		temperature: "fahrenheit",
+		wind: "mph",
+		precipitation: "inch",
+	};
+	const [units, setUnits] = useState(imperialUnits);
 	const forecastParams =
 		"&hourly=temperature_2m,relativehumidity_2m,dewpoint_2m,apparent_temperature,precipitation_probability,precipitation,rain,winddirection_10m," +
 		"showers,snowfall,weathercode,uv_index,uv_index_clear_sky,geopotential_height_1000hPa,cloudcover,visibility,windspeed_10m,windgusts_10m" +
@@ -68,12 +50,14 @@ function App() {
 		"&precipitation_unit=" +
 		units.precipitation +
 		"&timezone=" +
-		"auto";
+		"auto" +
+		"&models=best_match,ecmwf_ifs04,gfs_seamless,gfs_global,gfs_hrrr";
+	const model = "gfs_global";
 
 	const handleOnSearchChange = (searchData) => {
+		setUnits(imperialUnits);
 		setLocation(searchData.label);
 		const [lat, lon] = searchData.value.split(" ");
-		console.log(lat, lon);
 		setCoordinates(lat, lon);
 		const forecastUrl =
 			FORECAST_API_URL +
@@ -116,7 +100,6 @@ function App() {
 		const currentAQIFetch = fetch(currentAQI);
 		console.log(forecastUrl);
 		console.log(currentWeatherUrl);
-		console.log(currentAQIFetch);
 		Promise.all([
 			forecastFetch,
 			currentWeatherFetch,
@@ -132,19 +115,17 @@ function App() {
 				setHourly(forecastResponse.hourly);
 				setDaily(forecastResponse.daily);
 				setFiveDay(fiveDayForecastResponse);
-				console.log(forecastResponse.daily);
 				setForecast(forecastResponse);
 				setAqi(currentAQIFetch);
 				console.log(currentWeatherResponse);
-				console.log(forecastResponse);
 				console.log(currentAQIFetch);
-				console.log(fiveDayForecastResponse);
+				console.log(forecastResponse);
+				// console.log(fiveDayForecastResponse);
 			})
 			.catch((error) => {
 				console.log(error);
 			});
 	};
-
 	return (
 		<div className="text-white">
 			<div className="bg-black drop-shadow-2xl">
@@ -174,19 +155,35 @@ function App() {
 						<div className="lg:flex sm:inline-flex w-full">
 							<div className="flex flex-auto mx-1 my-1 bg-[#0a1929]/60 rounded-2xl p-4 lg:w-1/2 sm:w-full justify-evenly">
 								{currentWeather && (
-									<CurrentWeather data={currentWeather} aqi={currentAqi} />
+									<CurrentWeather
+										data={currentWeather}
+										aqi={currentAqi}
+										units={units}
+									/>
 								)}
 							</div>
 							<div className="mx-1 my-1 bg-[#0a1929]/60 rounded-2xl p-5 lg:w-1/2 sm:w-full">
-								{daily && <Today data={daily} />}
+								{daily && <Today data={daily} model={model} units={units} />}
 							</div>
 						</div>
 						<div className="lg:flex sm:inline-flex w-full">
 							<div className="mx-1 my-1 bg-[#0a1929]/60 rounded-2xl p-5 lg:w-1/2 sm:w-full">
-								{fiveday && <HourlyForecastOutlook data={forecast} />}
+								{forecast && (
+									<HourlyForecastOutlook
+										data={forecast}
+										model={model}
+										units={units}
+									/>
+								)}
 							</div>
 							<div className="mx-1 my-1 bg-[#0a1929]/60 rounded-2xl p-5 lg:w-1/2 sm:w-full">
-								<DailyForecastOutlook data={daily} />
+								{forecast && (
+									<DailyForecastOutlook
+										data={forecast}
+										model={model}
+										units={units}
+									/>
+								)}
 							</div>
 						</div>
 						<div className="mx-1 my-1 bg-[#0a1929]/60 rounded-2xl m-auto">
@@ -198,8 +195,5 @@ function App() {
 			</div>
 		</div>
 	);
-	//rgb(23 23 23 / var(--tw-bg-opacity))
-	//lg:flex sm:block  sm:w-full lg:w-1/2
 }
-
 export default App;

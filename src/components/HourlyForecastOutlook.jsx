@@ -1,14 +1,36 @@
 /* eslint-disable react/prop-types */
-import { Icon } from "@mui/material";
 import { useEffect, useState } from "react";
 // import { BsFillCloudLightningRainFill } from "react-icons/bs";
-import { IoPartlySunnyOutline } from "react-icons/io5";
 import InterpretWeather from "./InterpretWeather";
 
-export default function HourlyForecastOutlook({ data }) {
+export default function HourlyForecastOutlook({ data, model, units }) {
 	const [times, setTimes] = useState([]);
 	const [startingIndex, setStartingIndex] = useState(0);
+	const [weathercode, setWeathercode] = useState(0);
+	const [temperature, setTemperature] = useState(0);
+	const [isDay, setIsDay] = useState(false);
 	useEffect(() => {
+		setStartingIndex(new Date(Date.now()).getHours());
+		setIsDay(data.current_weather.is_day);
+		if (model === "gfs_global") {
+			setWeathercode(data.hourly.weathercode_gfs_global);
+			setTemperature(data.hourly.temperature_2m_gfs_global);
+		} else if (model === "gfs_hrrr") {
+			setWeathercode(data.hourly.weathercode_gfs_hrrr);
+			setTemperature(data.hourly.temperature_2m_gfs_hrrr);
+		} else if (model === "gfs_seamless") {
+			setWeathercode(data.hourly.weathercode_gfs_seamless);
+			setTemperature(data.hourly.temperature_2m_gfs_seamless);
+		} else if (model === "ecmwf_ifs04") {
+			setWeathercode(data.hourly.weathercode_ecmwf_ifs04);
+			setTemperature(data.hourly.temperature_2m_ecmwf_ifs04);
+		} else if (model === "best_match") {
+			setWeathercode(data.hourly.weathercode_best_match);
+			setTemperature(data.hourly.temperature_2m_best_match);
+		} else {
+			console.log("Hourly Forecast Outlook: Model not found");
+		}
+
 		const getNextFiveRoundedHours = () => {
 			const currentTime = new Date();
 			const roundedTimes = [];
@@ -16,24 +38,19 @@ export default function HourlyForecastOutlook({ data }) {
 			for (let i = 0; i < 5; i++) {
 				const nextTime = new Date(
 					currentTime.getTime() + (i + 1) * 60 * 60 * 1000
-				); // Add (i+1) hours to the current time
-				nextTime.setMinutes(0, 0, 0); // Reset minutes, seconds, and milliseconds to 0
+				);
 				roundedTimes.push(
 					nextTime.toLocaleTimeString([], {
 						hour: "numeric",
 					})
 				);
 			}
-
 			return roundedTimes;
 		};
-		startingIndex;
-		setStartingIndex(new Date(Date.now()).getHours());
 		setTimes(getNextFiveRoundedHours());
-	}, []);
-	console.log(times[0]);
-	console.log(new Date(Date.now()).getHours());
-	console.log(data.current_weather.weathercode);
+	}, [data, model, units]);
+	// {
+	// 	data.hourly.weathercode_best_match[startingIndex + index];
 
 	// let starting_hourly_index = new Date(data.current_weather.time)
 	// 	.toTimeString()
@@ -57,14 +74,13 @@ export default function HourlyForecastOutlook({ data }) {
 					</h1>
 					<div className="flex items-center justify-center order-2 w-1/3">
 						<InterpretWeather
-							code={data.hourly.weathercode[startingIndex + index]}
-							isDay={data.current_weather.is_day}
+							code={weathercode[startingIndex + index]}
+							isDay={isDay}
 							size={20}
 						/>
 					</div>
 					<h2 className="flex items-center flex-auto order-3 text-md justify-end w-1/3">
-						{Math.round(data.hourly.temperature_2m[startingIndex + index]) +
-							"°"}
+						{Math.round(temperature[startingIndex + index]) + "°"}
 					</h2>
 				</div>
 			))}

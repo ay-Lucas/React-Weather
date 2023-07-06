@@ -18,10 +18,6 @@ const Search = ({ onSearchChange }) => {
 				console.log(response);
 				return {
 					options: response.data.map((city) => {
-						console.log(response.data);
-						console.log(response.data.regionCode);
-						console.log(city.countryCode);
-						console.log(city);
 						return {
 							value: `${city.latitude} ${city.longitude}`,
 							label: `${city.name}, ${city.regionCode}, ${city.countryCode}`,

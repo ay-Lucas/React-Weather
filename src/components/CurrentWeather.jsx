@@ -5,18 +5,26 @@ import { BsCloudLightningRain } from "react-icons/bs";
 import InterpretWeather from "./InterpretWeather";
 
 // eslint-disable-next-line react/prop-types
-const CurrentWeather = ({ data, aqi }) => {
+const CurrentWeather = ({ data, aqi, model, units }) => {
 	const [time, setTime] = useState(new Date());
+	// const [description, setDescription] = useState("");
+	// const [temperature, setTemperature] = useState(0);
+	// const [feels_like, setFeels_like] = useState(0);
+	// const [wind_speed, setWind_speed] = useState(0);
+	// const [pressure, setPressure] = useState(0);
+	// const [humidity, setHumidity] = useState(0);
+	// const [visibility, setVisibility] = useState(0);
 
 	useEffect(() => {
 		setTime(new Date());
+		// if(model === "gfs_global"){
+		// 	setDescription(data.current_weather.weather_descriptions_gfs_global);
+		// 	setTemperature(data.current_weather.temperature_2m_gfs_global);
 	}, []);
-	console.log("current weather render");
 	let description = `${data.weather[0].description}`;
 
 	let color;
 	if (aqi.length > 0 && aqi[1]) {
-		console.log(aqi[1].Category.Name);
 		if (aqi[1].Category.Name === "Good") {
 			color = "mr-1 h-3 w-3 inline-flex items-center rounded-full bg-green-500";
 		} else if (aqi[1].Category.Name === "Moderate") {
@@ -79,15 +87,15 @@ const CurrentWeather = ({ data, aqi }) => {
 						<div className="text-6xl font-light my-4">{data.temperature}°F</div>
 					)}
 				</> */}
-				<div className="text-6xl font-light my-4">{`${Math.round(
-					data.main.temp
-				)}`}</div>
+				<div className="text-6xl font-light my-4">
+					{`${Math.round(data.main.temp)}`}°
+				</div>
 			</div>
 
 			<div className="flex justify-between text-base items-center">
 				<div className="inline-flex flex-col px-2">
 					<div className="flex">Feels like</div>
-					<div>{data.main.feels_like}</div>
+					<div>{data.main.feels_like}°</div>
 				</div>
 				{aqi.length > 0 && (
 					<div className="inline-flex flex-col items-center px-2">
