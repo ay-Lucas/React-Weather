@@ -5,6 +5,7 @@ import {
 	BsCloudDrizzleFill,
 	BsCloudFog2,
 	BsCloudFog2Fill,
+	BsCloudLightningRain,
 	BsCloudMoonFill,
 	BsCloudRain,
 	BsCloudRainFill,
@@ -72,6 +73,7 @@ const WeatherCode = ({ code, isDay, size, includeDescription }) => {
 		icon = <BsCloudFog2Fill size={size} />;
 	} else if (code === 51 && is_day) {
 		icon = <BsCloudDrizzle size={size} />;
+		description = "Light Drizzle";
 	} else if (code === 51 && !is_day) {
 		description = "Light Drizzle";
 		icon = <BsCloudDrizzleFill size={size} />;
@@ -185,19 +187,19 @@ const WeatherCode = ({ code, isDay, size, includeDescription }) => {
 		icon = <BsCloudSnowFill size={size} />;
 	} else if (code === 95 && is_day) {
 		description = "Thunderstorm";
-		icon = <BsFillCloudLightningRainFill size={size} />;
+		icon = <BsCloudLightningRain size={size} />;
 	} else if (code === 95 && !is_day) {
 		description = "Thunderstorm";
 		icon = <BsFillCloudLightningRainFill size={size} />;
 	} else if (code === 96 && is_day) {
 		description = "Thunderstorm";
-		icon = <BsFillCloudLightningRainFill size={size} />;
+		icon = <BsCloudLightningRain size={size} />;
 	} else if (code === 96 && !is_day) {
 		description = "Thunderstorm";
 		icon = <BsFillCloudLightningRainFill size={size} />;
 	} else if (code === 99 && is_day) {
 		description = "Thunderstorm";
-		icon = <BsFillCloudLightningRainFill size={size} />;
+		icon = <BsCloudLightningRain size={size} />;
 	} else if (code === 99 && !is_day) {
 		description = "Thunderstorm";
 		icon = <BsFillCloudLightningRainFill size={size} />;
@@ -208,14 +210,14 @@ const WeatherCode = ({ code, isDay, size, includeDescription }) => {
 	if (includeDescription === true) {
 		return (
 			<>
-				<span className="mx-2">{icon}</span>
-				{description}
+				<div className="m-auto">{icon}</div>
+				<div className="m-auto">{description}</div>
 			</>
 		);
-	} else {
+	} else if (includeDescription === false) {
 		return <>{icon}</>;
+	} else if (includeDescription === "only") {
+		return <>{description}</>;
 	}
 };
-
-// return < size={size}>{description}</ size={size}div>;
 export default WeatherCode;

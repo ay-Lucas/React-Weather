@@ -128,8 +128,8 @@ function App() {
 			});
 	};
 	return (
-		<div className="h-screen text-white">
-			<div className="bg-zinc-900 drop-shadow-2xl">
+		<div className="h-screen">
+			<div className=" bg-[#0a1929] drop-shadow-2xl ">
 				<div className="py-1 items-center text-center lg:flex justify-center sm:flex-auto m-auto w-3/4 ">
 					<h1 className="text-xl text-white xl:visible justify-center lg:w-1/3 sm:1/2">
 						WeatherPal
@@ -148,7 +148,7 @@ function App() {
 					</div>
 				</div>
 			</div>
-			<div className="flex h-screen ">
+			<div className="flex h-screen text-white">
 				<div className="flex mx-auto my-10">
 					<div className="box-content flex-wrap">
 						<div className="flex x-auto m-1 mt-2 p-2 bg-[#0a1929]/60 rounded-xl ">

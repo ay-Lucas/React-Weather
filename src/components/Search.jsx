@@ -1,3 +1,4 @@
+import { withTheme } from "@emotion/react";
 import { useState } from "react";
 import { BsSlack } from "react-icons/bs";
 import { AsyncPaginate } from "react-select-async-paginate";
@@ -7,7 +8,9 @@ const Search = ({ onSearchChange }) => {
 	const [search, setSearch] = useState(null);
 
 	const loadOptions = (inputValue) => {
-		// if (inputValue === "") return Promise.resolve({ options: [] });
+		if (inputValue === "") return Promise.resolve({ options: [] });
+		// if (inputValue === null || inputValue.length < 3) return;
+
 		return fetch(
 			`${AUTOSUGGEST_URL}/cities?minPopulation=10000&namePrefix=${inputValue}`,
 			geoApiOptions
@@ -33,14 +36,40 @@ const Search = ({ onSearchChange }) => {
 	};
 	const customStyles = {
 		control: (baseStyles, state) => ({
-			...baseStyles,
-			border: "",
+			// ...baseStyles,
+			color: state.isSelected ? "white" : "white",
+			// color: "white",
+
+			backgroundColor: "#0a1929",
+			// border: "",
 			display: "inline-flex",
-			height: "2.5rem",
-			width: "75%",
+			// height: "2.5rem",
+			width: "100%",
+			borderRadius: "0.5rem",
 		}),
 		option: (provided, state) => ({
 			...provided,
+			backgroundColor: state.isFocused ? "#2193b0" : "#0a1929",
+		}),
+		menu: (provided, state) => ({
+			...provided,
+			backgroundColor: "#0a1929",
+			color: "white",
+		}),
+		input: (provided, state) => ({
+			...provided,
+			color: "white",
+		}),
+		singleValue: (provided, state) => ({
+			...provided,
+			color: "white",
+		}),
+		indicatorSeparator: (provided, state) => ({
+			...provided,
+		}),
+		placeholder: (provided, state) => ({
+			...provided,
+			color: "white",
 		}),
 	};
 	return (
