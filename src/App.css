@@ -9,3 +9,11 @@ body {
 	margin: 0;
 	background-attachment: fixed;
 }
+.css-122okut-control,
+.css-7tholo-control,
+.css-1pw2ibg-control,
+.css-1nmdiq5-menu {
+	/* color: white !important; */
+	background-color: rgb(10 25 41) !important;
+	/* background-color: #8092a7 !important; */
+}

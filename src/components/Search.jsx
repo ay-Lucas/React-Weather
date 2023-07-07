@@ -1,6 +1,5 @@
-import React, { useState } from "react";
-import { BsFileX } from "react-icons/bs";
-import { MdOutlineSearch } from "react-icons/md";
+import { useState } from "react";
+import { BsSlack } from "react-icons/bs";
 import { AsyncPaginate } from "react-select-async-paginate";
 import { AUTOSUGGEST_URL, geoApiOptions } from "../Api.js";
 // eslint-disable-next-line react/prop-types
@@ -33,21 +32,17 @@ const Search = ({ onSearchChange }) => {
 		onSearchChange(searchData);
 	};
 	const customStyles = {
-		control: (provided, state) => ({
-			...provided,
-			borderRadius: "1rem",
+		control: (baseStyles, state) => ({
+			...baseStyles,
 			border: "",
-			boxShadow: state.isFocused ? "0 0 0 0px #3699FF" : null,
-			display: "flex",
+			display: "inline-flex",
+			height: "2.5rem",
+			width: "75%",
 		}),
 		option: (provided, state) => ({
 			...provided,
-			backgroundColor: state.isFocused ? "#3699FF" : null,
-			color: state.isFocused ? "white" : null,
-			height: "",
 		}),
 	};
-
 	return (
 		<AsyncPaginate
 			styles={customStyles}

@@ -34,6 +34,7 @@ function App() {
 		temperature: "fahrenheit",
 		wind: "mph",
 		precipitation: "inch",
+		pressure: "hPa",
 	};
 	const [units, setUnits] = useState(imperialUnits);
 	const forecastParams =
@@ -127,27 +128,28 @@ function App() {
 			});
 	};
 	return (
-		<div className="text-white">
-			<div className="bg-black drop-shadow-2xl">
+		<div className="h-screen text-white">
+			<div className="bg-zinc-900 drop-shadow-2xl">
 				<div className="py-1 items-center text-center lg:flex justify-center sm:flex-auto m-auto w-3/4 ">
 					<h1 className="text-xl text-white xl:visible justify-center lg:w-1/3 sm:1/2">
 						WeatherPal
 					</h1>
-					<div className="flex-auto lg:w-1/3 sm:1/2">
-						<Button variant="primary">Home</Button>
+					{/* may delete buttons */}
+					{/* <div className="flex-auto lg:w-1/3 sm:1/2"> */}
+					{/* <Button variant="primary">Home</Button>
 						<Button variant="primary">Hourly</Button>
 						<Button variant="primary">Daily</Button>
-						<Button variant="primary">Map</Button>
-					</div>
-					<div className="lg:w-1/3 sm:1/2  text-black justify-center">
-						<div className="w-3/4 m-auto">
+						<Button variant="primary">Map</Button> */}
+					{/* </div> */}
+					<div className="lg:w-1/3 sm:1/2 justify-center">
+						<div className="w-3/4 m-auto ">
 							<Search onSearchChange={handleOnSearchChange} />
 						</div>
 					</div>
 				</div>
 			</div>
-			<div className="flex">
-				<div className="flex mx-auto">
+			<div className="flex h-screen ">
+				<div className="flex mx-auto my-10">
 					<div className="box-content flex-wrap">
 						<div className="flex x-auto m-1 mt-2 p-2 bg-[#0a1929]/60 rounded-xl ">
 							<LocationCard location={location} />
@@ -158,7 +160,9 @@ function App() {
 									<CurrentWeather
 										data={currentWeather}
 										aqi={currentAqi}
+										model={model}
 										units={units}
+										weathercodes={forecast}
 									/>
 								)}
 							</div>
@@ -186,9 +190,9 @@ function App() {
 								)}
 							</div>
 						</div>
-						<div className="mx-1 my-1 bg-[#0a1929]/60 rounded-2xl m-auto">
-							<SimpleAccordion />
-						</div>
+						{/* <div className="mx-1 my-1 bg-[#0a1929]/60 rounded-2xl m-auto"> */}
+						<SimpleAccordion />
+						{/* </div> */}
 						{/* <SimpleAccordion /> */}
 					</div>
 				</div>

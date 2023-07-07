@@ -77,6 +77,7 @@ export default function HourlyForecastOutlook({ data, model, units }) {
 							code={weathercode[startingIndex + index]}
 							isDay={isDay}
 							size={20}
+							includeDescription={true}
 						/>
 					</div>
 					<h2 className="flex items-center flex-auto order-3 text-md justify-end w-1/3">

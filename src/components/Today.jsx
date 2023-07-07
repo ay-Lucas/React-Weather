@@ -80,7 +80,7 @@ const Today = ({ data, model, units }) => {
 				<h2 className="whitespace-nowrap">
 					{/* {data.temperature_2m_max_ecmwf_ifs04[0]} /{" "}
 					{data.temperature_2m_min_ecmwf_ifs04[0]} */}
-					{temp_max[0]}° / {temp_min[0]}°
+					{Math.round(temp_max[0])}° / {Math.round(temp_min[0])}°
 				</h2>
 			</div>
 			<div className="flex flex-row justify-between py-2 border-gray-800 border-b-[1px]">
@@ -88,14 +88,15 @@ const Today = ({ data, model, units }) => {
 				<h2 className="">
 					{/* {data.apparent_temperature_max_ecmwf_ifs04[0]} /{" "}
 					{data.apparent_temperature_min_ecmwf_ifs04[0]} */}
-					{apparent_temp_max[0]}° / {apparent_temp_min[0]}°
+					{Math.round(apparent_temp_max[0])}° /{" "}
+					{Math.round(apparent_temp_min[0])}°
 				</h2>
 			</div>
 			<div className="flex flex-row justify-between py-2 border-gray-800 border-b-[1px]">
-				<h1 className="">Wind Gusts</h1>
+				<h1 className="">Wind</h1>
 				<h2 className="">
 					{/* {data.windgusts_10m_max_best_match[0]} */}
-					{wind_gust[0]} {units.wind}
+					{Math.round(wind_gust[0])} {units.wind}
 				</h2>
 			</div>
 			<div className="flex flex-row justify-between py-2 border-gray-800 border-b-[1px]">
@@ -121,6 +122,10 @@ const Today = ({ data, model, units }) => {
 					})}`}
 				</h2>
 			</div>
+			{/* <div className="flex flex-row justify-between py-2 border-gray-800 border-b-[1px]">
+				<div>Visibility</div>
+				<div>{data.visibility}</div>
+			</div> */}
 			<div className="flex flex-row justify-between my-2">
 				<h1 className="">Precipitation</h1>
 				<h2 className="">

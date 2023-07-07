@@ -15,9 +15,10 @@ export default function HourlyForecastOutlook({ data, model, units }) {
 			setTempMax(data.daily.temperature_2m_max_gfs_global);
 			setTempMin(data.daily.temperature_2m_min_gfs_global);
 		} else if (model === "gfs_hrrr") {
-			//weathercode not available
 			setTempMax(data.daily.temperature_2m_max_gfs_hrrr);
 			setTempMin(data.daily.temperature_2m_min_gfs_hrrr);
+			//weathercode not available
+			setWeathercode(data.daily.weathercode_gfs_global);
 		} else if (model === "gfs_seamless") {
 			setWeathercode(data.daily.weathercode_gfs_seamless);
 			setTempMax(data.daily.temperature_2m_max_gfs_seamless);
@@ -53,7 +54,6 @@ export default function HourlyForecastOutlook({ data, model, units }) {
 
 			return nextFiveDays;
 		};
-
 		setDays(getNextFiveDays());
 	}, [data, model, units]);
 	//border-gray-800 border-b-[1px]
@@ -70,11 +70,12 @@ export default function HourlyForecastOutlook({ data, model, units }) {
 					>
 						{days}
 					</h1>
-					<div className="flex items-center justify-center order-2 w-1/3">
+					<div className="flex items-center justify-center whitespace-nowrap order-2 w-1/3">
 						<InterpretWeather
 							code={weathercode[index]}
 							isDay={isDay}
 							size={20}
+							includeDescription={true}
 						/>
 					</div>
 					<h2 className="flex items-center flex-auto order-3 text-md justify-end w-1/3">

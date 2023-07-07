@@ -1,10 +1,8 @@
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { withStyles } from "@mui/material"; // eslint-disable-next-line no-unused-vars
 import Accordion from "@mui/material/Accordion";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import Typography from "@mui/material/Typography";
-import { createTheme } from "@mui/material/styles";
 
 export default function SimpleAccordion() {
 	// 	// const useStyles = makeStyles((theme) => ({
@@ -26,10 +24,11 @@ export default function SimpleAccordion() {
 		<Accordion
 			variant="root"
 			sx={{
-				backgroundColor: "rgb(23 23 23 / var(--tw-bg-opacity))",
-				color: "white",
-				boxShadow: "none",
-				fontFamily: "Oxygen",
+				// backgroundColor: "rgb(23 23 23 / var(--tw-bg-opacity))",
+				// color: "white",
+				// boxShadow: "none",
+				opacity: 0,
+				// fontFamily: "Oxygen",
 				// marginY: "2rem",
 			}}
 		>
