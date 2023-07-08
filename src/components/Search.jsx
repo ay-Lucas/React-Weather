@@ -1,16 +1,12 @@
-import { withTheme } from "@emotion/react";
 import { useState } from "react";
-import { BsSlack } from "react-icons/bs";
+import { BsSearch } from "react-icons/bs";
 import { AsyncPaginate } from "react-select-async-paginate";
 import { AUTOSUGGEST_URL, geoApiOptions } from "../Api.js";
 // eslint-disable-next-line react/prop-types
 const Search = ({ onSearchChange }) => {
 	const [search, setSearch] = useState(null);
-
 	const loadOptions = (inputValue) => {
 		if (inputValue === "") return Promise.resolve({ options: [] });
-		// if (inputValue === null || inputValue.length < 3) return;
-
 		return fetch(
 			`${AUTOSUGGEST_URL}/cities?minPopulation=10000&namePrefix=${inputValue}`,
 			geoApiOptions
@@ -29,7 +25,6 @@ const Search = ({ onSearchChange }) => {
 				};
 			});
 	};
-
 	const handleOnChange = (searchData) => {
 		setSearch(searchData);
 		onSearchChange(searchData);
@@ -37,19 +32,15 @@ const Search = ({ onSearchChange }) => {
 	const customStyles = {
 		control: (baseStyles, state) => ({
 			// ...baseStyles,
-			color: state.isSelected ? "white" : "white",
-			// color: "white",
-
 			backgroundColor: "#0a1929",
-			// border: "",
-			display: "inline-flex",
-			// height: "2.5rem",
-			width: "100%",
+			color: "#1976d2",
+			display: "flex",
 			borderRadius: "0.5rem",
 		}),
 		option: (provided, state) => ({
 			...provided,
-			backgroundColor: state.isFocused ? "#2193b0" : "#0a1929",
+			backgroundColor: state.isFocused ? "black" : "#0a1929",
+			color: "white",
 		}),
 		menu: (provided, state) => ({
 			...provided,
@@ -58,52 +49,65 @@ const Search = ({ onSearchChange }) => {
 		}),
 		input: (provided, state) => ({
 			...provided,
-			color: "white",
+			color: "#1976d2",
 		}),
 		singleValue: (provided, state) => ({
 			...provided,
-			color: "white",
+			color: "#1976d2",
 		}),
 		indicatorSeparator: (provided, state) => ({
 			...provided,
+			backgroundColor: "#1976d2",
 		}),
 		placeholder: (provided, state) => ({
 			...provided,
-			color: "white",
+			color: "#1976d2",
+		}),
+		dropdownIndicator: (provided, state) => ({
+			...provided,
+			color: "#1976d2",
 		}),
 	};
 	return (
-		<AsyncPaginate
-			styles={customStyles}
-			placeholder="Search for city"
-			debounceTimeout={600}
-			value={search}
-			onChange={handleOnChange}
-			loadOptions={loadOptions}
-		/>
+		<div className="flex items-center md:border-0 border-[1px] border-[#1976d2] border-solid rounded-md text-[#1976d2]">
+			<AsyncPaginate
+				// styles={customStyles}
+				styles={customStyles}
+				placeholder="Search for city"
+				debounceTimeout={600}
+				value={"search"}
+				onChange={handleOnChange}
+				loadOptions={loadOptions}
+				className="w-80 "
+				// theme={{
+				// 	colors: {
+				// 		// primary: "#1976d2",
+				// 		primary25: "#0a1929",
+				// 		// primary50: "#0a1929",
+				// 		// primary75: "#0a1929",
+				// 		// danger: "#1976d2",
+				// 		// dangerLight: "#1976d2",
+				// 		// neutral0: "#0a1929",
+				// 		neutral5: "#1976d2",
+				// 		neutral10: "#1976d2",
+				// 		// neutral20: "#1976d2",
+				// 		// neutral30: "#1976d2",
+				// 		neutral40: "#1976d2",
+				// 		// neutral50: "#1976d2",
+				// 		// neutral60: "#1976d2",
+				// 		neutral70: "#1976d2",
+				// 		neutral80: "#1976d2",
+				// 		// neutral90: "#1976d2",
+				// 	},
+				// 	spacing: { baseUnit: 4, controlHeight: 38, menuGutter: 8 },
+				// 	borderRadius: 4,
+				// 	fontFamily: "Oxygen, sans-serif",
+				// }}
+			/>
+			{/* <span className="absolute right-[47rem]">
+				<BsSearch size={17} color={"#1976d2"} />
+			</span> */}
+		</div>
 	);
 };
 export default Search;
-{
-	/* <div className="flex bg-slate-200 rounded-2xl overflow-hidden text-black">
-				<MdOutlineSearch
-					size="25"
-					color="black"
-					className="p-0 lg:ml-4 sm:ml-2 my-auto"
-				/>
-				<input
-					type="text"
-					placeholder="Enter a location"
-					className="focus:outline-none align-middle lg:mx-2 sm:mx-2 sm:px-1 w-3/4 text-black bg-slate-200"
-					value={search}
-					onChange={handleOnChange}
-					// loadOptions={loadOptions}
-				/>
-			</div> */
-}
-
-// onKeyDown={(e) => {
-// 	if (e.key === "Enter") {
-// 		console.log(e.target.value);
-// 	}
-// }}

@@ -1,8 +1,8 @@
 /* eslint-disable react/prop-types */
 // eslint-disable-next-line no-unused-vars
 import React, { useEffect, useRef, useState } from "react";
+import Header from "./Header";
 import InterpretWeather from "./InterpretWeather";
-
 // eslint-disable-next-line react/prop-types
 const CurrentWeather = ({ data, aqi, model, units, weathercodes }) => {
 	const [time, setTime] = useState(new Date());

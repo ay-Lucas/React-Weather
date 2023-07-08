@@ -1,10 +1,4 @@
 // import { useState } from "react";
-import Button from "@mui/material/Button";
-import "./App.css";
-import CurrentWeather from "./components/CurrentWeather.jsx";
-import DailyForecastOutlook from "./components/DailyForecastOutlook";
-import Search from "./components/Search.jsx";
-// import Header from "./components/Header.jsx";
 import { useState } from "react";
 import {
 	AQI_KEY,
@@ -14,20 +8,22 @@ import {
 	FIVE_DAY_FORECAST_URL,
 	FORECAST_API_URL,
 } from "./Api";
+import "./App.css";
+import CurrentWeather from "./components/CurrentWeather.jsx";
+import DailyForecastOutlook from "./components/DailyForecastOutlook";
+import Header from "./components/Header.jsx";
 import HourlyForecastOutlook from "./components/HourlyForecastOutlook";
 import LocationCard from "./components/LocationCard";
-import SimpleAccordion from "./components/SimpleAccordion.jsx";
 import Today from "./components/Today";
 import "./index.css";
 
 function App() {
 	console.log("app.jsx rendered");
 	const [location, setLocation] = useState(null);
-	const [coordinates, setCoordinates] = useState("");
 	const [currentWeather, setCurrentWeather] = useState(null);
 	const [forecast, setForecast] = useState(null);
-	const [fiveday, setFiveDay] = useState(null);
-	const [hourly, setHourly] = useState(null);
+	// const [fiveday, setFiveDay] = useState(null);
+	// const [hourly, setHourly] = useState(null);
 	const [daily, setDaily] = useState(null);
 	const [currentAqi, setAqi] = useState(null);
 	const imperialUnits = {
@@ -59,7 +55,7 @@ function App() {
 		setUnits(imperialUnits);
 		setLocation(searchData.label);
 		const [lat, lon] = searchData.value.split(" ");
-		setCoordinates(lat, lon);
+		// setCoordinates(lat, lon);
 		const forecastUrl =
 			FORECAST_API_URL +
 			"latitude=" +
@@ -113,49 +109,31 @@ function App() {
 				const currentAQIFetch = await response[2].json();
 				const fiveDayForecastResponse = await response[3].json();
 				setCurrentWeather(currentWeatherResponse);
-				setHourly(forecastResponse.hourly);
+				// setHourly(forecastResponse.hourly);
 				setDaily(forecastResponse.daily);
-				setFiveDay(fiveDayForecastResponse);
+				// setFiveDay(fiveDayForecastResponse);
 				setForecast(forecastResponse);
 				setAqi(currentAQIFetch);
 				console.log(currentWeatherResponse);
 				console.log(currentAQIFetch);
 				console.log(forecastResponse);
-				// console.log(fiveDayForecastResponse);
 			})
 			.catch((error) => {
 				console.log(error);
 			});
 	};
+	//TODO: make Valley Falls default location
 	return (
-		<div className="h-screen">
-			<div className=" bg-[#0a1929] drop-shadow-2xl ">
-				<div className="py-1 items-center text-center lg:flex justify-center sm:flex-auto m-auto w-3/4 ">
-					<h1 className="text-xl text-white xl:visible justify-center lg:w-1/3 sm:1/2">
-						WeatherPal
-					</h1>
-					{/* may delete buttons */}
-					{/* <div className="flex-auto lg:w-1/3 sm:1/2"> */}
-					{/* <Button variant="primary">Home</Button>
-						<Button variant="primary">Hourly</Button>
-						<Button variant="primary">Daily</Button>
-						<Button variant="primary">Map</Button> */}
-					{/* </div> */}
-					<div className="lg:w-1/3 sm:1/2 justify-center">
-						<div className="w-3/4 m-auto ">
-							<Search onSearchChange={handleOnSearchChange} />
-						</div>
-					</div>
-				</div>
-			</div>
+		<div className="h-screen overflow-x-hidden">
+			<Header onSearchChange={handleOnSearchChange} />
 			<div className="flex h-screen text-white">
-				<div className="flex mx-auto my-10">
-					<div className="box-content flex-wrap">
-						<div className="flex x-auto m-1 mt-2 p-2 bg-[#0a1929]/60 rounded-xl ">
+				<div className="flex mx-auto lg:my-10 sm:my-0">
+					<div className="box-content w-screen max-w-screen-lg">
+						<div className="flex x-auto m-1 mt-2 p-2 bg-[#0a1929]/60 rounded-xl">
 							<LocationCard location={location} />
 						</div>
-						<div className="lg:flex sm:inline-flex w-full">
-							<div className="flex flex-auto mx-1 my-1 bg-[#0a1929]/60 rounded-2xl p-4 lg:w-1/2 sm:w-full justify-evenly">
+						<div className="lg:flex sm:inline-flex w-full ">
+							<div className="mx-1 my-1 bg-[#0a1929]/60 rounded-2xl p-7 lg:w-1/2 sm:w-full">
 								{currentWeather && (
 									<CurrentWeather
 										data={currentWeather}
@@ -166,12 +144,12 @@ function App() {
 									/>
 								)}
 							</div>
-							<div className="mx-1 my-1 bg-[#0a1929]/60 rounded-2xl p-5 lg:w-1/2 sm:w-full">
+							<div className="mx-1 my-1 bg-[#0a1929]/60 rounded-2xl p-7 lg:w-1/2 sm:w-full">
 								{daily && <Today data={daily} model={model} units={units} />}
 							</div>
 						</div>
 						<div className="lg:flex sm:inline-flex w-full">
-							<div className="mx-1 my-1 bg-[#0a1929]/60 rounded-2xl p-5 lg:w-1/2 sm:w-full">
+							<div className="mx-1 my-1 bg-[#0a1929]/60 rounded-2xl p-7 lg:w-1/2 sm:w-full">
 								{forecast && (
 									<HourlyForecastOutlook
 										data={forecast}
@@ -180,7 +158,7 @@ function App() {
 									/>
 								)}
 							</div>
-							<div className="mx-1 my-1 bg-[#0a1929]/60 rounded-2xl p-5 lg:w-1/2 sm:w-full">
+							<div className="mx-1 my-1 bg-[#0a1929]/60 rounded-2xl p-7 lg:w-1/2 sm:w-full">
 								{forecast && (
 									<DailyForecastOutlook
 										data={forecast}
@@ -190,10 +168,6 @@ function App() {
 								)}
 							</div>
 						</div>
-						{/* <div className="mx-1 my-1 bg-[#0a1929]/60 rounded-2xl m-auto"> */}
-						<SimpleAccordion />
-						{/* </div> */}
-						{/* <SimpleAccordion /> */}
 					</div>
 				</div>
 			</div>

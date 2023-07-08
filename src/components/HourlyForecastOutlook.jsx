@@ -61,8 +61,8 @@ export default function HourlyForecastOutlook({ data, model, units }) {
 	}, [data, model, startingIndex, units]);
 	return (
 		<div className="mx-2">
-			<div className=" text-left mb-4 ">
-				<h1 className="text-2xl">Hourly</h1>
+			<div className=" text-left mb-4 w-full ">
+				<h1 className="text-2xl ">Hourly</h1>
 			</div>
 			{times.map((time, index) => (
 				<div
@@ -75,7 +75,7 @@ export default function HourlyForecastOutlook({ data, model, units }) {
 					>
 						{time}
 					</h1>
-					<div className="flex  items-center mx-5 order-2 ">
+					<div className="flex items-center mx-5 order-2 ">
 						<InterpretWeather
 							code={weathercode[startingIndex + index]}
 							isDay={isDay}
