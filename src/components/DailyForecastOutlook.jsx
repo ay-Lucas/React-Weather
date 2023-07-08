@@ -71,13 +71,6 @@ export default function HourlyForecastOutlook({ data, model, units }) {
 					>
 						{days}
 					</h1>
-					{/* <InterpretWeather
-							code={weathercode[index]}
-							isDay={isDay}
-							size={20}
-							includeDescription={true}
-							key={days}
-						/> */}
 					<div className="flex  items-center mx-5 order-2">
 						<InterpretWeather
 							code={weathercode[index]}

@@ -8,14 +8,16 @@ function Header({ onSearchChange }) {
 	// const handleOnSearchChange = (e) => {
 	//     setSearch(e.target.value);
 	return (
-		<div className="bg-[#0a1929] drop-shadow-2xl">
+		<div className="bg-[#0a1929] drop-shadow-2xl w-full">
 			<div className="py-1 items-center text-center flex md:justify-evenly justify-center flex-wrap">
 				{/* <div className="hidden md:flex"> */}
 				<div className="flex md:flex md:w-fit order-1">
 					<Button
 						className="text-xl justify-center"
-						color="primary"
+						// sx={{ color: "rgba(255, 0, 128, .8)" }}
+						color="secondary"
 						variant="text"
+						size="large"
 						onClick={() => {
 							window.location.reload();
 						}}
@@ -28,12 +30,13 @@ function Header({ onSearchChange }) {
 				</div>
 				<div className="md:w-[114.39px] md:flex order-3">
 					<Button
-						color="primary"
+						color="secondary"
+						// sx={{ color: "rgba(255, 0, 128, .8)" }}
 						onClick={() => {
 							window.open("https://github.com/ay-Lucas");
 						}}
 					>
-						<BsGithub size={20} />
+						<BsGithub size={25} />
 					</Button>
 				</div>
 			</div>

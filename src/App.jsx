@@ -126,8 +126,8 @@ function App() {
 	return (
 		<div className="h-screen overflow-x-hidden">
 			<Header onSearchChange={handleOnSearchChange} />
-			<div className="flex h-screen text-white">
-				<div className="flex mx-auto lg:my-10 sm:my-0">
+			<div className="flex text-white">
+				<div className="flex mx-auto my-10">
 					<div className="box-content w-screen max-w-screen-lg">
 						<div className="flex x-auto m-1 mt-2 p-2 bg-[#0a1929]/60 rounded-xl">
 							<LocationCard location={location} />

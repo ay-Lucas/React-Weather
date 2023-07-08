@@ -30,26 +30,31 @@ const Search = ({ onSearchChange }) => {
 		onSearchChange(searchData);
 	};
 	const customStyles = {
+		//purple mui secondary: #9c27b0
 		control: (baseStyles, state) => ({
-			// ...baseStyles,
-			backgroundColor: "#0a1929",
+			backgroundColor: "",
 			color: "#1976d2",
 			display: "flex",
 			borderRadius: "0.5rem",
 		}),
 		option: (provided, state) => ({
 			...provided,
-			backgroundColor: state.isFocused ? "black" : "#0a1929",
+			backgroundColor: state.isFocused ? "#9c27b0" : "#0a1929",
 			color: "white",
 		}),
 		menu: (provided, state) => ({
 			...provided,
+			position: "absolute",
+			width: "110%",
+			right: "0px",
+			justifyContent: "center",
 			backgroundColor: "#0a1929",
 			color: "white",
 		}),
 		input: (provided, state) => ({
 			...provided,
-			color: "#1976d2",
+			color: "white",
+			textAlign: "center",
 		}),
 		singleValue: (provided, state) => ({
 			...provided,
@@ -57,28 +62,32 @@ const Search = ({ onSearchChange }) => {
 		}),
 		indicatorSeparator: (provided, state) => ({
 			...provided,
-			backgroundColor: "#1976d2",
+			backgroundColor: "#0a1929",
 		}),
 		placeholder: (provided, state) => ({
 			...provided,
-			color: "#1976d2",
+			color: "#e5e7eb",
 		}),
 		dropdownIndicator: (provided, state) => ({
 			...provided,
-			color: "#1976d2",
+			color: "#0a1929",
 		}),
 	};
 	return (
-		<div className="flex items-center md:border-0 border-[1px] border-[#1976d2] border-solid rounded-md text-[#1976d2]">
+		<div className="flex items-center  md:border-0  bg-[#9c27b0] rounded-md pl-4">
+			<div className="">
+				<BsSearch size={17} color={"black"} className="" />
+				{/* color={"#e5e7eb"} */}
+			</div>
 			<AsyncPaginate
 				// styles={customStyles}
 				styles={customStyles}
-				placeholder="Search for city"
+				placeholder="Search for a city"
 				debounceTimeout={600}
 				value={"search"}
 				onChange={handleOnChange}
 				loadOptions={loadOptions}
-				className="w-80 "
+				className="md:w-80 w-fit"
 				// theme={{
 				// 	colors: {
 				// 		// primary: "#1976d2",
@@ -104,9 +113,6 @@ const Search = ({ onSearchChange }) => {
 				// 	fontFamily: "Oxygen, sans-serif",
 				// }}
 			/>
-			{/* <span className="absolute right-[47rem]">
-				<BsSearch size={17} color={"#1976d2"} />
-			</span> */}
 		</div>
 	);
 };
