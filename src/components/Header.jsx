@@ -1,20 +1,24 @@
-// TODO refactor component
 import Button from "@mui/material/Button";
-import { BsGithub, BsSearch } from "react-icons/bs";
+import { BsCloudCheckFill, BsGithub } from "react-icons/bs";
 import Search from "./Search";
 // eslint-disable-next-line react/prop-types
 function Header({ onSearchChange }) {
-	// const [search, setSearch] = useState("");
-	// const handleOnSearchChange = (e) => {
-	//     setSearch(e.target.value);
 	return (
 		<div className="bg-[#0a1929] drop-shadow-2xl w-full">
-			<div className="py-1 items-center text-center flex md:justify-evenly justify-center flex-wrap">
+			<div className="py-1.5 items-center text-center flex md:justify-evenly justify-center flex-wrap">
 				{/* <div className="hidden md:flex"> */}
-				<div className="flex md:flex md:w-fit order-1">
+				<div className="flex m-0 p-0 md:flex md:w-fit order-1 items-center">
 					<Button
-						className="text-xl justify-center"
-						// sx={{ color: "rgba(255, 0, 128, .8)" }}
+						className="text-xl justify-center "
+						id="logo-button"
+						style={{
+							textTransform: "none",
+							fontFamily: "Oxygen",
+							fontWeight: "bold",
+							fontSize: "1.2rem",
+							margin: "0",
+							padding: "0",
+						}}
 						color="secondary"
 						variant="text"
 						size="large"
@@ -22,16 +26,20 @@ function Header({ onSearchChange }) {
 							window.location.reload();
 						}}
 					>
-						WeatherPal
+						weatherPal
+						<div className="mx-2">
+							<BsCloudCheckFill size={25} color={"#9c27b0"} />
+						</div>
 					</Button>
 				</div>
 				<div className="flex md:order-2 order-4 ">
 					<Search onSearchChange={onSearchChange} />
 				</div>
-				<div className="md:w-[114.39px] md:flex order-3">
+				<div className="md:w-[150.39px] md:flex order-3">
 					<Button
 						color="secondary"
-						// sx={{ color: "rgba(255, 0, 128, .8)" }}
+						style={{ hover: { color: "white" } }}
+						className=" transition-colors duration-200 hover:text-[#63c1d9]"
 						onClick={() => {
 							window.open("https://github.com/ay-Lucas");
 						}}

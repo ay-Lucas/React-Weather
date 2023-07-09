@@ -5,15 +5,16 @@ import InterpretWeather from "./InterpretWeather";
 export default function HourlyForecastOutlook({ data, model, units }) {
 	const [times, setTimes] = useState([]);
 	const [startingIndex, setStartingIndex] = useState(0);
-	const [weathercode, setWeathercode] = useState(0);
-	const [temperature, setTemperature] = useState(0);
-	const [isDay, setIsDay] = useState(false);
-	const [precipChance, setPrecipChance] = useState(0);
+	const [weathercode, setWeathercode] = useState([]);
+	const [temperature, setTemperature] = useState([]);
+	const [isDay, setIsDay] = useState(1);
+	// const [precipChance, setPrecipChance] = useState(0);
+	console.log("HourlyForecastOutlook rendered");
 	useEffect(() => {
 		//need to subtract 1 from the hour because the weathercode array starts at 0
 		//need to account for possible negative number
-		setStartingIndex(new Date(data.current_weather.time).getHours().valueOf());
 		console.log(startingIndex);
+		setStartingIndex(new Date(data.current_weather.time).getHours().valueOf());
 		setIsDay(data.current_weather.is_day);
 		if (model === "gfs_global") {
 			setWeathercode(data.hourly.weathercode_gfs_global);
@@ -39,7 +40,7 @@ export default function HourlyForecastOutlook({ data, model, units }) {
 			console.log("Hourly Forecast Outlook: Model not found");
 		}
 
-		const getNextFiveRoundedHours = () => {
+		const getNextFiveHours = () => {
 			// const currentTime = new Date();
 			const currentTime = new Date(data.current_weather.time);
 			console.log(currentTime);
@@ -57,8 +58,8 @@ export default function HourlyForecastOutlook({ data, model, units }) {
 			}
 			return roundedTimes;
 		};
-		setTimes(getNextFiveRoundedHours());
-	}, [data, model, startingIndex, units]);
+		setTimes(getNextFiveHours());
+	}, [data]);
 	return (
 		<div className="mx-2">
 			<div className=" text-left mb-4 w-full ">
@@ -83,14 +84,6 @@ export default function HourlyForecastOutlook({ data, model, units }) {
 							includeDescription={false}
 							key={time + " " + weathercode[startingIndex + index]}
 						/>
-						{/* <>{precipChance[startingIndex + index]}%</> */}
-						{/* <InterpretWeather
-							code={weathercode[startingIndex + index]}
-							isDay={isDay}
-							size={20}
-							includeDescription={true}
-							key={time + " " + weathercode[startingIndex + index]}
-						/> */}
 						<div className="flex  items-center mx-4 order-3">
 							<InterpretWeather
 								code={weathercode[startingIndex + index]}

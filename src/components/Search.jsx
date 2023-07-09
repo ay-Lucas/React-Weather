@@ -1,12 +1,15 @@
+/* eslint-disable no-unused-vars */
 import { useState } from "react";
 import { BsSearch } from "react-icons/bs";
 import { AsyncPaginate } from "react-select-async-paginate";
 import { AUTOSUGGEST_URL, geoApiOptions } from "../Api.js";
 // eslint-disable-next-line react/prop-types
 const Search = ({ onSearchChange }) => {
+	console.log("Search rendered");
 	const [search, setSearch] = useState(null);
 	const loadOptions = (inputValue) => {
 		if (inputValue === "") return Promise.resolve({ options: [] });
+		if (inputValue.length < 3) return Promise.resolve({ options: [] });
 		return fetch(
 			`${AUTOSUGGEST_URL}/cities?minPopulation=10000&namePrefix=${inputValue}`,
 			geoApiOptions
@@ -62,21 +65,22 @@ const Search = ({ onSearchChange }) => {
 		}),
 		indicatorSeparator: (provided, state) => ({
 			...provided,
-			backgroundColor: "#0a1929",
+			backgroundColor: "#57a4d1",
 		}),
 		placeholder: (provided, state) => ({
 			...provided,
-			color: "#e5e7eb",
+			color: "#57a4d1",
+			fontWeight: "normal",
 		}),
 		dropdownIndicator: (provided, state) => ({
 			...provided,
-			color: "#0a1929",
+			color: "#57a4d1",
 		}),
 	};
 	return (
-		<div className="flex items-center  md:border-0  bg-[#9c27b0] rounded-md pl-4">
+		<div className="flex items-center  bg-[#1b3c5f] rounded-md pl-4 border-x-[1px] border-solid border-[#3253a2]">
 			<div className="">
-				<BsSearch size={17} color={"black"} className="" />
+				<BsSearch size={17} color={"#57a4d1"} className="" />
 				{/* color={"#e5e7eb"} */}
 			</div>
 			<AsyncPaginate

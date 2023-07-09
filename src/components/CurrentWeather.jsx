@@ -1,76 +1,79 @@
 /* eslint-disable react/prop-types */
 // eslint-disable-next-line no-unused-vars
 import React, { useEffect, useRef, useState } from "react";
-import Header from "./Header";
 import InterpretWeather from "./InterpretWeather";
 // eslint-disable-next-line react/prop-types
 const CurrentWeather = ({ data, aqi, model, units, weathercodes }) => {
-	const [time, setTime] = useState(new Date());
-	const [index, setIndex] = useState(0);
-	const [isDay, setIsDay] = useState(false);
+	const [time, setTime] = useState(new Date(weathercodes.current_weather.time));
+	// const [index, setIndex] = useState(null);
+	const [isDay, setIsDay] = useState(true);
 	const [weathercode, setWeathercode] = useState(0);
 	const [AQI, setAQI] = useState(null);
-	const [color, setColor] = useState("white");
+	const [color, setColor] = useState(null);
 	console.log("current weather rendered");
-	let description;
-	useRef((description = `${data.weather[0].description}`));
+	let description, aqiColor;
+	const circle = "mr-1 h-3 w-3 inline-flex items-center rounded-full";
+	// useRef((description = `${data.weather[0].description}`));
 	useEffect(() => {
 		if (model === "gfs_global") {
 			setWeathercode(weathercodes.current_weather.weathercode);
 		} else if (model === "gfs_hrrr") {
 			//weathercode not available
-			setWeathercode(weathercodes.hourly.weathercode_gfs_global[index]);
+			setWeathercode(weathercodes.hourly.weathercode_gfs_global);
 		} else if (model === "gfs_seamless") {
-			setWeathercode(weathercodes.hourly.weathercode_gfs_seamless[index]);
+			setWeathercode(weathercodes.hourly.weathercode_gfs_seamless);
 		} else if (model === "ecmwf_ifs04") {
-			setWeathercode(weathercodes.hourly.weathercode_ecmwf_ifs04[index]);
+			setWeathercode(weathercodes.hourly.weathercode_ecmwf_ifs04);
 		} else if (model === "best_match") {
-			setWeathercode(weathercodes.hourly.weathercode_best_match[index]);
+			setWeathercode(weathercodes.hourly.weathercode_best_match);
 		} else {
 			console.log("Current Weather: Model not found");
 		}
 		console.log(weathercode);
 		setIsDay(weathercodes.current_weather.is_day);
-		setTime(new Date(weathercodes.current_weather.time));
+		// setTime(new Date(weathercodes.current_weather.time));
 		try {
-			setAQI(aqi[0].AQI);
+			let num = 0;
+			for (let i = 0; i < aqi.length; i++) {
+				if (aqi[i].AQI > num) {
+					console.log(aqi[i].AQI);
+					num = aqi[i].AQI;
+				}
+			}
+			setAQI(num);
 		} catch (e) {
 			console.log("AirNow API aqi error" + e);
-			setAQI(null);
 		}
-		console.log("open weather description" + description);
+		// console.log("open weather description" + description);
 		console.log("open-meteo weathercode " + weathercode);
-	}, [data, aqi, model, units, weathercodes, index, weathercode, description]);
-	useEffect(() => {
+		whatColor(aqi);
+	}, [data, weathercodes]);
+
+	const whatColor = (aqi) => {
 		if (aqi.length > 0 && aqi[1]) {
-			let aqiColor;
 			if (aqi[1].Category.Name === "Good") {
-				aqiColor =
-					"mr-1 h-3 w-3 inline-flex items-center rounded-full bg-green-500";
+				aqiColor = " bg-green-500";
 			} else if (aqi[1].Category.Name === "Moderate") {
-				aqiColor =
-					"mr-1 h-3 w-3 inline-flex items-center rounded-full bg-yellow-500";
+				aqiColor = " bg-yellow-500";
 			} else if (aqi[1].Category.Name === "Unhealthy for Sensitive Groups") {
-				aqiColor =
-					"mr-1 h-3 w-3 inline-flex items-center rounded-full bg-yellow-600";
+				aqiColor = " bg-yellow-600";
 			} else if (aqi[1].Category.Name === "Unhealthy") {
-				aqiColor =
-					"mr-1 h-3 w-3 inline-flex items-center rounded-full bg-red-500";
+				aqiColor = " bg-red-500";
 			} else if (aqi[1].Category.Name === "Very Unhealthy") {
-				aqiColor =
-					"mr-1 h-3 w-3 inline-flex items-center rounded-full bg-red-600";
+				aqiColor = " bg-red-600";
 			} else if (aqi[1].Category.Name === "Hazardous") {
-				aqiColor =
-					"mr-1 h-3 w-3 inline-flex items-center rounded-full bg-purple-500";
+				aqiColor = " bg-purple-500";
 			} else {
-				aqiColor =
-					"mr-1 h-3 w-3 inline-flex items-center rounded-full bg-gray-500";
+				aqiColor = " bg-gray-500";
 			}
-			setColor(aqiColor);
+			setColor(circle.concat(aqiColor));
+		} else {
+			setColor(circle.concat("bg-gray-500"));
 		}
-	}, [aqi]);
+	};
+	console.log(color);
 	return (
-		<div className="flex flex-col text-center items-center justify-between">
+		<div className="flex flex-col text-center items-center justify-between ">
 			<div className="text-2xl flex mb-4">Current Weather</div>
 			<div className="text-center items-center flex flex-col ">
 				<div className="flex flex-row">
@@ -83,7 +86,6 @@ const CurrentWeather = ({ data, aqi, model, units, weathercodes }) => {
 								minute: "2-digit",
 							})}
 						</div>
-						{/* <div className="mt-1">{description}</div> */}
 						<div className="ml-5">
 							<InterpretWeather
 								code={weathercode}

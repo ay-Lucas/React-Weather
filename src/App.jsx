@@ -1,5 +1,5 @@
 // import { useState } from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
 	AQI_KEY,
 	AQI_URL,
@@ -18,10 +18,15 @@ import Today from "./components/Today";
 import "./index.css";
 
 function App() {
+	const defaultLocation = {
+		lat: 42.901279,
+		lon: -73.562714,
+	};
 	console.log("app.jsx rendered");
-	const [location, setLocation] = useState(null);
 	const [currentWeather, setCurrentWeather] = useState(null);
 	const [forecast, setForecast] = useState(null);
+	const [location, setLocation] = useState("Valley Falls, NY");
+	const [coordinates, setCoordinates] = useState(defaultLocation);
 	// const [fiveday, setFiveDay] = useState(null);
 	// const [hourly, setHourly] = useState(null);
 	const [daily, setDaily] = useState(null);
@@ -50,64 +55,54 @@ function App() {
 		"auto" +
 		"&models=best_match,ecmwf_ifs04,gfs_seamless,gfs_global,gfs_hrrr";
 	const model = "gfs_global";
+	// setCoordinates(coordinates.lat, coordinates.lon);
+	const forecastUrl =
+		FORECAST_API_URL +
+		"latitude=" +
+		coordinates.lat +
+		"&" +
+		"longitude=" +
+		coordinates.lon +
+		forecastParams;
+	const fiveDayForecaseUrl =
+		FIVE_DAY_FORECAST_URL +
+		"lat=" +
+		coordinates.lat +
+		"&lon=" +
+		coordinates.lon +
+		"&appid=" +
+		CURRENT_WEATHER_KEY;
+	+"&units=imperial";
 
-	const handleOnSearchChange = (searchData) => {
-		setUnits(imperialUnits);
-		setLocation(searchData.label);
-		const [lat, lon] = searchData.value.split(" ");
-		// setCoordinates(lat, lon);
-		const forecastUrl =
-			FORECAST_API_URL +
-			"latitude=" +
-			lat +
-			"&" +
-			"longitude=" +
-			lon +
-			forecastParams;
-		const fiveDayForecaseUrl =
-			FIVE_DAY_FORECAST_URL +
-			"lat=" +
-			lat +
-			"&lon=" +
-			lon +
-			"&appid=" +
-			CURRENT_WEATHER_KEY;
-		+"&units=imperial";
+	const currentWeatherUrl =
+		CUREENT_WEATHER_URL +
+		"lat=" +
+		coordinates.lat +
+		"&lon=" +
+		coordinates.lon +
+		"&appid=" +
+		CURRENT_WEATHER_KEY +
+		"&units=imperial";
+	const currentAQIUrl =
+		AQI_URL +
+		"latitude=" +
+		coordinates.lat +
+		"&longitude=" +
+		coordinates.lon +
+		"&distance=25&API_KEY=" +
+		AQI_KEY;
 
-		const currentWeatherUrl =
-			CUREENT_WEATHER_URL +
-			"lat=" +
-			lat +
-			"&lon=" +
-			lon +
-			"&appid=" +
-			CURRENT_WEATHER_KEY +
-			"&units=imperial";
-		const currentAQI =
-			AQI_URL +
-			"latitude=" +
-			lat +
-			"&longitude=" +
-			lon +
-			"&distance=25&API_KEY=" +
-			AQI_KEY;
-		const fiveDayForecastFetch = fetch(fiveDayForecaseUrl);
+	const fetchData = () => {
+		console.log("fetchData function called");
 		const forecastFetch = fetch(forecastUrl);
 		const currentWeatherFetch = fetch(currentWeatherUrl);
-		const currentAQIFetch = fetch(currentAQI);
-		console.log(forecastUrl);
-		console.log(currentWeatherUrl);
-		Promise.all([
-			forecastFetch,
-			currentWeatherFetch,
-			currentAQIFetch,
-			fiveDayForecastFetch,
-		])
+		const currentAQIFetch = fetch(currentAQIUrl);
+		Promise.all([forecastFetch, currentWeatherFetch, currentAQIFetch])
 			.then(async (response) => {
 				const forecastResponse = await response[0].json();
 				const currentWeatherResponse = await response[1].json();
 				const currentAQIFetch = await response[2].json();
-				const fiveDayForecastResponse = await response[3].json();
+				// const fiveDayForecastResponse = await response[3].json();
 				setCurrentWeather(currentWeatherResponse);
 				// setHourly(forecastResponse.hourly);
 				setDaily(forecastResponse.daily);
@@ -122,18 +117,32 @@ function App() {
 				console.log(error);
 			});
 	};
-	//TODO: make Valley Falls default location
+
+	const handleOnSearchChange = (searchData) => {
+		setUnits(imperialUnits);
+		setLocation(searchData.label);
+		const [lat, lon] = searchData.value.split(" ");
+		setCoordinates({ lat, lon });
+		console.log(forecastUrl);
+		console.log(currentWeatherUrl);
+		console.log(currentAQIUrl);
+	};
+	useEffect(() => {
+		console.log("useEffect called");
+		fetchData();
+	}, []);
+
 	return (
-		<div className="h-screen overflow-x-hidden">
+		<div className="h-screen overflow-x-hidden selection:bg-[#9c27b0]">
 			<Header onSearchChange={handleOnSearchChange} />
 			<div className="flex text-white">
 				<div className="flex mx-auto my-10">
-					<div className="box-content w-screen max-w-screen-lg">
-						<div className="flex x-auto m-1 mt-2 p-2 bg-[#0a1929]/60 rounded-xl">
+					<div className="box-content w-screen max-w-screen-lg ">
+						<div className="flex x-auto m-1 mt-2 p-2 bg-[#0a1929]/30  rounded-xl">
 							<LocationCard location={location} />
 						</div>
 						<div className="lg:flex sm:inline-flex w-full ">
-							<div className="mx-1 my-1 bg-[#0a1929]/60 rounded-2xl p-7 lg:w-1/2 sm:w-full">
+							<div className="mx-1 my-1 bg-[#0a1929]/30 bg-blend-overlay rounded-2xl bg-center p-7 lg:w-1/2 sm:w-full">
 								{currentWeather && (
 									<CurrentWeather
 										data={currentWeather}
@@ -144,12 +153,12 @@ function App() {
 									/>
 								)}
 							</div>
-							<div className="mx-1 my-1 bg-[#0a1929]/60 rounded-2xl p-7 lg:w-1/2 sm:w-full">
+							<div className="mx-1 my-1 bg-[#0a1929]/30 rounded-2xl p-7 lg:w-1/2 sm:w-full">
 								{daily && <Today data={daily} model={model} units={units} />}
 							</div>
 						</div>
 						<div className="lg:flex sm:inline-flex w-full">
-							<div className="mx-1 my-1 bg-[#0a1929]/60 rounded-2xl p-7 lg:w-1/2 sm:w-full">
+							<div className="mx-1 my-1 bg-[#0a1929]/30 rounded-2xl p-7 lg:w-1/2 sm:w-full">
 								{forecast && (
 									<HourlyForecastOutlook
 										data={forecast}
@@ -158,7 +167,7 @@ function App() {
 									/>
 								)}
 							</div>
-							<div className="mx-1 my-1 bg-[#0a1929]/60 rounded-2xl p-7 lg:w-1/2 sm:w-full">
+							<div className="mx-1 my-1 bg-[#0a1929]/30 rounded-2xl p-7 lg:w-1/2 sm:w-full">
 								{forecast && (
 									<DailyForecastOutlook
 										data={forecast}

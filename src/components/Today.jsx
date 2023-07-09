@@ -12,6 +12,7 @@ const Today = ({ data, model, units }) => {
 	const [precipitation_probability_max, setPrecipitationProbabilityMax] =
 		useState(0);
 	useEffect(() => {
+		console.log("Today rendered");
 		setSunrise(data.sunrise);
 		setSunset(data.sunset);
 		if (model === "gfs_global") {
