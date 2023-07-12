@@ -8,11 +8,7 @@ import {
 import { useState } from "react";
 // eslint-disable-next-line react/prop-types
 const Units = ({ onUnitsChange }) => {
-	const [Units, setUnits] = useState("metric");
-	const changeUnits = (event) => {
-		setUnits(event.target.value);
-		console.log(event.target.value);
-	};
+	const [units, setUnits] = useState("metric");
 	const theme = createTheme({
 		palette: {
 			background: {
@@ -41,7 +37,7 @@ const Units = ({ onUnitsChange }) => {
 				<Select
 					labelId="demo-simple-select-label"
 					id="demo-simple-select"
-					value={Units}
+					value={units}
 					label="Units"
 					variant="standard"
 					onChange={handleOnChange}

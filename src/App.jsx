@@ -161,7 +161,7 @@ function App() {
 	useEffect(() => {
 		console.log("useEffect called");
 		fetchData();
-	}, [coordinates]);
+	}, [coordinates, units]);
 
 	return (
 		<div className="h-screen overflow-x-hidden selection:bg-[#9c27b0]">

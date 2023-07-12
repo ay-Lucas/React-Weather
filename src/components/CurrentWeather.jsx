@@ -10,7 +10,7 @@ const CurrentWeather = ({ data, aqi, units }) => {
 	const [isDay, setIsDay] = useState(null);
 	const [AQI, setAQI] = useState(null);
 	const [color, setColor] = useState(null);
-	const [alert, setAlert] = useState(null);
+	const [alert, setAlert] = useState([]);
 	let aqiColor;
 	const circle = "mr-1 h-3 w-3 inline-flex items-center rounded-full";
 	console.log("current weather rendered");
@@ -65,11 +65,31 @@ const CurrentWeather = ({ data, aqi, units }) => {
 		console.log(time.getTime(), sunrise, sunset);
 		console.log(typeof time.getTime(), typeof sunrise, typeof sunset);
 	};
-	if (data.currentConditions.alerts !== undefined) {
-		setAlert(data.currentConditions.alerts[0]);
-	}
 
 	useEffect(() => {
+		if (data.alerts !== undefined) {
+			const alertList = data.alerts.map((alert) => {
+				return (
+					<div
+						key={alert.id}
+						className="flex-row bg-red-500/30 rounded-lg p-1 my-1"
+					>
+						<a
+							href={alert.link}
+							rel="noreferrer noopener"
+							target="_blank"
+							className="flex-col"
+						>
+							{alert.headline}
+						</a>
+					</div>
+				);
+				// console.log(alert.event);
+				// console.log(alert.headline);
+				// console.log(alert.link);
+			});
+			setAlert(alertList);
+		}
 		// setTime(new Date(data.currentConditions.datetimeEpoch));
 		let mili = Date.now();
 		let time = new Date(mili + data.tzoffset * 1000);
@@ -124,7 +144,14 @@ const CurrentWeather = ({ data, aqi, units }) => {
 	return (
 		<div className="flex flex-col text-center items-center justify-between ">
 			<div className="text-2xl flex mb-4">Current Weather</div>
-			{alert && <div className="text-lg flex mb-4">{alert}</div>}
+			{alert && (
+				<>
+					{/* <div className="text-lg flex mb-1 p-1 rounded-lg bg-red-700">
+						Alerts
+					</div> */}
+					<div className="text-sm flex-row mb-4 text-left">{alert}</div>
+				</>
+			)}
 			<div className="text-center items-center flex flex-col ">
 				<div className="flex flex-row items-center justify-center">
 					<div className="flex flex-col">
