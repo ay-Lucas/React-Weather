@@ -24,20 +24,20 @@ import "./index.css";
 	* Open Meteo API will be used for comparing weather models
 	*/
 function App() {
+	console.log("app.jsx rendered");
 	const defaultLocation = {
 		lat: 42.901279,
 		lon: -73.562714,
 	};
-	console.log("app.jsx rendered");
-	const [currentWeather, setCurrentWeather] = useState(null);
-	const [forecast, setForecast] = useState(null);
 	const [visualForecast, setVisualForecast] = useState(null);
 	const [location, setLocation] = useState("Valley Falls, NY");
 	const [coordinates, setCoordinates] = useState(defaultLocation);
-	// const [fiveday, setFiveDay] = useState(null);
-	// const [hourly, setHourly] = useState(null);
-	const [daily, setDaily] = useState(null);
 	const [currentAqi, setAqi] = useState(null);
+	const [currentWeather, setCurrentWeather] = useState(null);
+	const [forecast, setForecast] = useState(null);
+	const [fiveday, setFiveDay] = useState(null);
+	const [hourly, setHourly] = useState(null);
+	const [daily, setDaily] = useState(null);
 	const imperialUnits = {
 		name: "us",
 		temperature: "fahrenheit",
@@ -147,7 +147,7 @@ function App() {
 			setUnits(imperialUnits);
 			console.log("app is now in imperial units");
 		}
-		fetchData();
+		// fetchData();
 	};
 
 	const handleOnSearchChange = (searchData) => {
@@ -155,12 +155,11 @@ function App() {
 		const [lat, lon] = searchData.value.split(" ");
 		setCoordinates({ lat, lon });
 		// console.log(forecastUrl);
-		// console.log(currentWeatherUrl);
 		console.log(currentAQIUrl);
 	};
 	useEffect(() => {
 		console.log("useEffect called");
-		// fetchData();
+		fetchData();
 	}, [coordinates]);
 
 	return (
@@ -177,13 +176,13 @@ function App() {
 						</div>
 						<div className="lg:flex sm:inline-flex w-full ">
 							<div className="mx-1 my-1 bg-[#0a1929]/30 bg-blend-overlay rounded-2xl bg-center p-7 lg:w-1/2 sm:w-full">
-								{currentWeather && (
+								{visualForecast && (
 									<CurrentWeather
-										data={currentWeather}
+										data={visualForecast}
 										aqi={currentAqi}
-										model={model}
 										units={units}
-										weathercodes={forecast}
+										// model={model}
+										// weathercodes={forecast}
 									/>
 								)}
 							</div>
