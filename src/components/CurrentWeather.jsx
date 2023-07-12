@@ -1,8 +1,7 @@
 /* eslint-disable react/prop-types */
 // eslint-disable-next-line no-unused-vars
 import React, { useEffect, useRef, useState } from "react";
-import { icons } from "./Icons";
-import InterpretWeather from "./InterpretWeather";
+import { getIcon } from "./Icons";
 // eslint-disable-next-line react/prop-types
 const CurrentWeather = ({ data, aqi, units }) => {
 	// const [index, setIndex] = useState(null);
@@ -69,6 +68,7 @@ const CurrentWeather = ({ data, aqi, units }) => {
 	if (data.currentConditions.alerts !== undefined) {
 		setAlert(data.currentConditions.alerts[0]);
 	}
+
 	useEffect(() => {
 		// setTime(new Date(data.currentConditions.datetimeEpoch));
 		let mili = Date.now();
@@ -76,24 +76,29 @@ const CurrentWeather = ({ data, aqi, units }) => {
 		setTime(time);
 
 		time && setIsDayTime(time);
-		try {
-			let num = 0;
-			for (let i = 0; i < aqi.length; i++) {
-				if (aqi[i].AQI > num) {
-					console.log(aqi[i].AQI);
-					num = aqi[i].AQI;
+		if (aqi !== undefined) {
+			try {
+				let num = 0;
+				for (let i = 0; i < aqi.length; i++) {
+					if (aqi[i].AQI > num) {
+						console.log(aqi[i].AQI);
+						num = aqi[i].AQI;
+					}
 				}
+				setAQI(num);
+				whatColor(aqi);
+			} catch (e) {
+				console.log("AirNow API aqi error" + e);
 			}
-			setAQI(num);
-		} catch (e) {
-			console.log("AirNow API aqi error" + e);
+		} else {
+			console.log("AirNow API aqi error");
 		}
 		// console.log("open weather description" + description);
 		// console.log("open-meteo weathercode " + weathercode);
-		whatColor(aqi);
 	}, [data]);
+
 	const whatColor = (aqi) => {
-		if (aqi.length > 0 && aqi[1]) {
+		if (aqi !== undefined && aqi !== null) {
 			if (aqi[1].Category.Name === "Good") {
 				aqiColor = " bg-green-500";
 			} else if (aqi[1].Category.Name === "Moderate") {
@@ -110,10 +115,9 @@ const CurrentWeather = ({ data, aqi, units }) => {
 				aqiColor = " bg-gray-500";
 			}
 			setColor(circle.concat(aqiColor));
-		} else {
-			setColor(circle.concat("bg-gray-500"));
 		}
 	};
+
 	console.log(color);
 	console.log(time);
 	console.log(isDay);
@@ -122,7 +126,7 @@ const CurrentWeather = ({ data, aqi, units }) => {
 			<div className="text-2xl flex mb-4">Current Weather</div>
 			{alert && <div className="text-lg flex mb-4">{alert}</div>}
 			<div className="text-center items-center flex flex-col ">
-				<div className="flex flex-row">
+				<div className="flex flex-row items-center justify-center">
 					<div className="flex flex-col">
 						<div className="tracking-wide text-gray-300 dark:text-gray-400">
 							As of{" "}
@@ -133,7 +137,7 @@ const CurrentWeather = ({ data, aqi, units }) => {
 									minute: "2-digit",
 								})}
 						</div>
-						<div className="ml-5">
+						<div className="ml-5 mix-blend-overlay">
 							{/* <InterpretWeather
 								code={weathercode}
 								isDay={isDay}
@@ -144,7 +148,7 @@ const CurrentWeather = ({ data, aqi, units }) => {
 						</div>
 					</div>
 					<div className="ml-5">
-						{icons.cloudy.icon}
+						{getIcon(data.currentConditions.icon, 60)}
 						{/* <InterpretWeather
 							code={weathercode}
 							isDay={isDay}
@@ -163,7 +167,7 @@ const CurrentWeather = ({ data, aqi, units }) => {
 					<div className="flex">Feels like</div>
 					<div>{Math.round(data.currentConditions.feelslike)}°</div>
 				</div>
-				{AQI && (
+				{aqi !== null && (
 					<div className="inline-flex flex-col items-center px-2">
 						<div>Air Quality</div>
 						<div className="inline-flex  flex-row items-center justify-center ">
@@ -174,7 +178,7 @@ const CurrentWeather = ({ data, aqi, units }) => {
 				)}
 				<div className="inline-flex flex-col px-2">
 					<div>Humidity</div>
-					<div>{data.currentConditions.humidity}%</div>
+					<div>{Math.round(data.currentConditions.humidity)}%</div>
 				</div>
 				<div className="inline-flex flex-col px-2">
 					<div>Wind</div>
@@ -185,7 +189,7 @@ const CurrentWeather = ({ data, aqi, units }) => {
 				<div className="inline-flex flex-col px-2">
 					<div>Pressure</div>
 					<div>
-						{data.currentConditions.pressure} {units.pressure}
+						{Math.round(data.currentConditions.pressure)} {units.pressure}
 					</div>
 				</div>
 			</div>

@@ -1,52 +1,58 @@
 import {
-	BsCloudDrizzle,
-	BsCloudFog2,
+	BsCloudFog,
 	BsCloudLightningRain,
+	BsCloudLightningRainFill,
 	BsCloudRain,
-	BsCloudSleet,
+	BsCloudRainHeavy,
 	BsCloudSnow,
-	BsCloudSun,
+	BsCloudSnowFill,
 	BsClouds,
-	BsWind,
+	BsMoonStarsFill,
+	BsSun,
 } from "react-icons/bs";
-import { IoCloudyNightOutline } from "react-icons/io5";
-import { RiWindyLine } from "react-icons/ri";
+import { FaCloudMoonRain } from "react-icons/fa";
+import { IoCloudyNight, IoPartlySunnyOutline } from "react-icons/io5";
+import { PiWind } from "react-icons/pi";
 
-export const icons = {
-	"rain": {
-		icon: <BsCloudRain size={25} />,
-	},
-	"snow": {
-		icon: <BsCloudSnow size={25} />,
-	},
-	"sun": {
-		icon: <BsCloudSun size={25} />,
-	},
-	"cloudy": {
-		icon: <BsClouds size={25} />,
-	},
-	"fog": {
-		icon: <BsCloudFog2 size={25} />,
-	},
-	"drizzle": {
-		icon: <BsCloudDrizzle size={25} />,
-	},
-	"thunderstorm": {
-		icon: <BsCloudLightningRain size={25} />,
-	},
-	"wind": {
-		icon: <RiWindyLine size={25} />,
-	},
-	"partly-cloudy-night": {
-		icon: <IoCloudyNightOutline size={25} />,
-	},
+export const getIcon = (weather, num) => {
+	if (num === undefined) num = 30;
+	switch (weather) {
+		case "snow":
+			return <BsCloudSnow size={num} />;
+		case "snow-showers-day":
+			return <BsCloudSnow size={num} />;
+		case "snow-showers-night":
+			return <BsCloudSnowFill size={num} />;
+		case "thunder-rain":
+			return <BsCloudLightningRain size={num} />;
+		case "thunder-showers-day":
+			return <BsCloudLightningRain size={num} />;
+		case "thunder-showers-night":
+			return <BsCloudLightningRainFill size={num} />;
+		case "rain":
+			return <BsCloudRainHeavy size={num} />;
+		case "showers-day":
+			return <BsCloudRain size={num} />;
+		case "showers-night":
+			return <FaCloudMoonRain size={num} />;
+		case "fog":
+			return <BsCloudFog size={num} />;
+		case "wind":
+			return <PiWind size={num} />;
+		case "cloudy":
+			return <BsClouds size={num} />;
+		case "sun":
+			return <BsSun size={num} />;
+		case "partly-cloudy-day":
+			return <IoPartlySunnyOutline size={num} />;
+		case "partly-cloudy-night":
+			return <IoCloudyNight size={num} />;
+		case "clear-day":
+			return <BsSun size={num} />;
+		case "clear-night":
+			return <BsMoonStarsFill size={num} />;
+		default:
+			console.log("icons.jsx: invalid weather condition");
+			return null;
+	}
 };
-
-export const snow = <BsCloudSnow size={25} />;
-export const sun = <BsCloudSun size={25} />;
-export const cloudy = <BsClouds size={25} />;
-export const fog = <BsCloudFog2 size={25} />;
-export const drizzle = <BsCloudDrizzle size={25} />;
-export const thunderstorm = <BsCloudLightningRain size={25} />;
-export const sleet = <BsCloudSleet size={25} />;
-export const wind = <BsWind size={25} />;

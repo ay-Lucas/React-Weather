@@ -78,15 +78,14 @@ function App() {
 	// 	"longitude=" +
 	// 	coordinates.lon +
 	// 	forecastParams;
-	// const currentWeatherUrl =
+	// const OpenWeatherAQIUrl =
 	// 	CUREENT_WEATHER_URL +
 	// 	"lat=" +
 	// 	coordinates.lat +
 	// 	"&lon=" +
 	// 	coordinates.lon +
 	// 	"&appid=" +
-	// 	CURRENT_WEATHER_KEY +
-	// 	"&units=imperial";
+	// 	CURRENT_WEATHER_KEY;
 	const currentAQIUrl =
 		AQI_URL +
 		"latitude=" +
@@ -102,38 +101,40 @@ function App() {
 		coordinates.lon +
 		"?unitGroup=" +
 		units.name +
-		"&contentType=json" +
 		"&key=" +
-		VISUAL_KEY;
+		VISUAL_KEY +
+		"&contentType=json" +
+		"&iconSet=icons2" +
+		"&elements=%2Bpm1,%2Bpm2p5,%2Bpm10,%2Bo3,%2Bno2,%2Bso2,%2Bco,%2Baqius,%2Baqieur";
 	const fetchData = () => {
 		console.log("fetchData function called");
-		// const forecastFetch = fetch(forecastUrl);
-		// const currentWeatherFetch = fetch(currentWeatherUrl);
 		const visualForecastFetch = fetch(visualForecastUrl);
 		const currentAQIFetch = fetch(currentAQIUrl);
+		// const OpenWeatherAQIFetch = fetch(OpenWeatherAQIUrl);
 		Promise.all([
 			// forecastFetch,
-			// currentWeatherFetch,
 			visualForecastFetch,
 			currentAQIFetch,
+			// OpenWeatherAQIFetch,
 		])
 			.then(async (response) => {
 				// const forecastResponse = await response[0].json();
-				// const currentWeatherResponse = await response[1].json();
 				const visualForecastResponse = await response[0].json();
-				const currentAQIFetch = await response[1].json();
+				const currentAQIResponse = await response[1].json();
+				// const OpenWeatherAQI = await response[2].json();
 				// const fiveDayForecastResponse = await response[3].json();
 				// setFiveDay(fiveDayForecastResponse);
 				// setHourly(forecastResponse.hourly);
 				// setForecast(forecastResponse);
 				// setCurrentWeather(currentWeatherResponse);
 				setVisualForecast(visualForecastResponse);
-				setAqi(currentAQIFetch);
+				setAqi(currentAQIResponse);
 				// setDaily(forecastResponse.daily);
 				// console.log(currentWeatherResponse);
 				// console.log(forecastResponse);
 				console.log(visualForecastResponse);
-				console.log(currentAQIFetch);
+				console.log(currentAQIResponse);
+				// console.log(OpenWeatherAQI);
 			})
 			.catch((error) => {
 				console.log(error);
