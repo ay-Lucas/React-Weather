@@ -1,71 +1,14 @@
 /* eslint-disable react/prop-types */
-// eslint-disable-next-line no-unused-vars
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { getIcon } from "./Icons";
-// eslint-disable-next-line react/prop-types
 const CurrentWeather = ({ data, aqi, units }) => {
-	// const [index, setIndex] = useState(null);
-	// const [weathercode, setWeathercode] = useState(0);
 	const [time, setTime] = useState(null);
-	const [isDay, setIsDay] = useState(null);
 	const [AQI, setAQI] = useState(null);
 	const [color, setColor] = useState(null);
 	const [alert, setAlert] = useState([]);
 	let aqiColor;
 	const circle = "mr-1 h-3 w-3 inline-flex items-center rounded-full";
 	console.log("current weather rendered");
-	// useRef((description = `${data.weather[0].description}`));
-	// useEffect(() => {
-	// 	if (model === "gfs_global") {
-	// 		setWeathercode(weathercodes.current_weather.weathercode);
-	// 	} else if (model === "gfs_hrrr") {
-	// 		//weathercode not available
-	// 		setWeathercode(weathercodes.hourly.weathercode_gfs_global);
-	// 	} else if (model === "gfs_seamless") {
-	// 		setWeathercode(weathercodes.hourly.weathercode_gfs_seamless);
-	// 	} else if (model === "ecmwf_ifs04") {
-	// 		setWeathercode(weathercodes.hourly.weathercode_ecmwf_ifs04);
-	// 	} else if (model === "best_match") {
-	// 		setWeathercode(weathercodes.hourly.weathercode_best_match);
-	// 	} else {
-	// 		console.log("Current Weather: Model not found");
-	// 	}
-	// 	console.log(weathercode);
-	// 	setIsDay(weathercodes.current_weather.is_day);
-	// 	// setTime(new Date(weathercodes.current_weather.time));
-	// 	try {
-	// 		let num = 0;
-	// 		for (let i = 0; i < aqi.length; i++) {
-	// 			if (aqi[i].AQI > num) {
-	// 				console.log(aqi[i].AQI);
-	// 				num = aqi[i].AQI;
-	// 			}
-	// 		}
-	// 		setAQI(num);
-	// 	} catch (e) {
-	// 		console.log("AirNow API aqi error" + e);
-	// 	}
-	// 	// console.log("open weather description" + description);
-	// 	console.log("open-meteo weathercode " + weathercode);
-	// 	whatColor(aqi);
-	// }, [data, weathercodes]);
-	const setIsDayTime = (time) => {
-		//offset is negative
-		let offset = data.tzoffset;
-		const sunrise = new Date(data.currentConditions.sunriseEpoch + offset);
-		const sunset = new Date(data.currentConditions.sunsetEpoch + offset);
-		if (time.getTime() > sunrise && time.getTime() < sunset) {
-			setIsDay(true);
-		} else {
-			setIsDay(false);
-		}
-		console.log(
-			"is day: " + time.getTime() > sunrise && time.getTime() < sunset
-		);
-		console.log(time.getTime(), sunrise, sunset);
-		console.log(typeof time.getTime(), typeof sunrise, typeof sunset);
-	};
-
 	useEffect(() => {
 		if (data.alerts !== undefined) {
 			const alertList = data.alerts.map((alert) => {
@@ -84,18 +27,12 @@ const CurrentWeather = ({ data, aqi, units }) => {
 						</a>
 					</div>
 				);
-				// console.log(alert.event);
-				// console.log(alert.headline);
-				// console.log(alert.link);
 			});
 			setAlert(alertList);
 		}
-		// setTime(new Date(data.currentConditions.datetimeEpoch));
 		let mili = Date.now();
 		let time = new Date(mili + data.tzoffset * 1000);
 		setTime(time);
-
-		time && setIsDayTime(time);
 		if (aqi !== undefined) {
 			try {
 				let num = 0;
@@ -113,9 +50,7 @@ const CurrentWeather = ({ data, aqi, units }) => {
 		} else {
 			console.log("AirNow API aqi error");
 		}
-		// console.log("open weather description" + description);
-		// console.log("open-meteo weathercode " + weathercode);
-	}, [data]);
+	}, [data, aqi, units]);
 
 	const whatColor = (aqi) => {
 		if (aqi !== undefined && aqi !== null) {
@@ -140,7 +75,6 @@ const CurrentWeather = ({ data, aqi, units }) => {
 
 	console.log(color);
 	console.log(time);
-	console.log(isDay);
 	return (
 		<div className="flex flex-col text-center items-center justify-between ">
 			<div className="text-2xl flex mb-4">Current Weather</div>
@@ -163,32 +97,12 @@ const CurrentWeather = ({ data, aqi, units }) => {
 								hour: "numeric",
 								minute: "numeric",
 							})}`}
-							{/* {time &&
-								time.toLocaleTimeString([], {
-									hour: "2-digit",
-									hour12: true,
-									minute: "2-digit",
-								})} */}
 						</div>
 						<div className="ml-5 mix-blend-overlay">
-							{/* <InterpretWeather
-								code={weathercode}
-								isDay={isDay}
-								size={0}
-								includeDescription={"only"}
-							/> */}
 							{data.currentConditions.conditions}
 						</div>
 					</div>
-					<div className="ml-5">
-						{getIcon(data.currentConditions.icon, 60)}
-						{/* <InterpretWeather
-							code={weathercode}
-							isDay={isDay}
-							size={60}
-							includeDescription={false}
-						/> */}
-					</div>
+					<div className="ml-5">{getIcon(data.currentConditions.icon, 60)}</div>
 				</div>
 				<div className="text-6xl font-light my-4">
 					{`${Math.round(data.currentConditions.temp)}`}°

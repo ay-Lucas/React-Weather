@@ -8,7 +8,7 @@ import {
 import { useState } from "react";
 // eslint-disable-next-line react/prop-types
 const Units = ({ onUnitsChange }) => {
-	const [units, setUnits] = useState("metric");
+	const [units, setUnits] = useState("imperial");
 	const theme = createTheme({
 		palette: {
 			background: {
@@ -43,11 +43,9 @@ const Units = ({ onUnitsChange }) => {
 					onChange={handleOnChange}
 					sx={{ mx: 3, width: 90, maxWidth: 150, maxHeight: 40, p: 0 }}
 				>
-					<MenuItem value={"us"}>Imperial</MenuItem>
-					<MenuItem value={"metric"}>
-						{/* sx={{ ":hover": { bgcolor: "#9c27b0" } }} */}
-						Metric
-					</MenuItem>
+					{/* sx={{ ":hover": { bgcolor: "#9c27b0" } }} */}
+					<MenuItem value={"imperial"}>Imperial</MenuItem>
+					<MenuItem value={"metric"}>Metric</MenuItem>
 				</Select>
 			</FormControl>
 		</ThemeProvider>

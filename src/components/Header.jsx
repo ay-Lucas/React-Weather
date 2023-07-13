@@ -7,7 +7,6 @@ function Header({ onSearchChange, onUnitsChange }) {
 	return (
 		<div className="bg-[#0a1929] drop-shadow-2xl w-full">
 			<div className="py-1.5 items-center text-center flex md:justify-evenly justify-center flex-wrap">
-				{/* <div className="hidden md:flex"> */}
 				<div className="flex m-0 p-0 order-1 items-center md:w-1/3 justify-center">
 					<Button
 						className="text-xl justify-center "
