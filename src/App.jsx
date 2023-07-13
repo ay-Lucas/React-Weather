@@ -44,6 +44,7 @@ function App() {
 		wind: "mph",
 		precipitation: "inch",
 		pressure: "hPa",
+		visibility: "mi",
 	};
 	const metricUnits = {
 		name: "metric",
@@ -51,6 +52,7 @@ function App() {
 		wind: "km/h",
 		precipitation: "mm",
 		pressure: "hPa",
+		visibility: "km",
 	};
 	const [units, setUnits] = useState(imperialUnits);
 	// const forecastParams =
@@ -188,25 +190,28 @@ function App() {
 								)}
 							</div>
 							<div className="mx-1 my-1 bg-[#0a1929]/30 rounded-2xl p-7 lg:w-1/2 sm:w-full">
-								{daily && <Today data={daily} model={model} units={units} />}
+								{visualForecast && (
+									<Today data={visualForecast} units={units} />
+									// model={model}
+								)}
 							</div>
 						</div>
 						<div className="lg:flex sm:inline-flex w-full">
 							<div className="mx-1 my-1 bg-[#0a1929]/30 rounded-2xl p-7 lg:w-1/2 sm:w-full">
-								{forecast && (
+								{visualForecast && (
 									<HourlyForecastOutlook
-										data={forecast}
-										model={model}
+										data={visualForecast}
 										units={units}
+										// model={model}
 									/>
 								)}
 							</div>
 							<div className="mx-1 my-1 bg-[#0a1929]/30 rounded-2xl p-7 lg:w-1/2 sm:w-full">
-								{forecast && (
+								{visualForecast && (
 									<DailyForecastOutlook
-										data={forecast}
-										model={model}
+										data={visualForecast}
 										units={units}
+										// model={model}
 									/>
 								)}
 							</div>

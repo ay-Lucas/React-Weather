@@ -1,42 +1,42 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
-import InterpretWeather from "./InterpretWeather";
+import { getIcon } from "./Icons";
 export default function HourlyForecastOutlook({ data, model, units }) {
 	const [days, setDays] = useState([]);
-	const [weathercode, setWeathercode] = useState(0);
-	const [tempMax, setTempMax] = useState(0);
-	const [tempMin, setTempMin] = useState(0);
-	const [isDay, setIsDay] = useState(1);
+	// const [weathercode, setWeathercode] = useState(0);
+	// const [tempMax, setTempMax] = useState(0);
+	// const [tempMin, setTempMin] = useState(0);
+	// const [isDay, setIsDay] = useState(1);
 	useEffect(() => {
-		setIsDay(data.current_weather.is_day);
-		if (model === "gfs_global") {
-			setWeathercode(data.daily.weathercode_gfs_global);
-			setTempMax(data.daily.temperature_2m_max_gfs_global);
-			setTempMin(data.daily.temperature_2m_min_gfs_global);
-		} else if (model === "gfs_hrrr") {
-			setTempMax(data.daily.temperature_2m_max_gfs_hrrr);
-			setTempMin(data.daily.temperature_2m_min_gfs_hrrr);
-			//weathercode not available
-			setWeathercode(data.daily.weathercode_gfs_global);
-		} else if (model === "gfs_seamless") {
-			setWeathercode(data.daily.weathercode_gfs_seamless);
-			setTempMax(data.daily.temperature_2m_max_gfs_seamless);
-			setTempMin(data.daily.temperature_2m_min_gfs_seamless);
-		} else if (model === "ecmwf_ifs04") {
-			setWeathercode(data.daily.weathercode_ecmwf_ifs04);
-			setTempMax(data.daily.temperature_2m_max_ecmwf_ifs04);
-			setTempMin(data.daily.temperature_2m_min_ecmwf_ifs04);
-		} else if (model === "best_match") {
-			setWeathercode(data.daily.weathercode_best_match);
-			setTempMin(data.daily.temperature_2m_min_best_match);
-			setTempMax(data.daily.temperature_2m_max_best_match);
-		} else {
-			console.log("Daily Forecast Outlook: Model not found");
-		}
-		const getNextFiveDays = () => {
-			const currentDay = new Date(data.current_weather.time);
+		// setIsDay(data.current_weather.is_day);
+		// if (model === "gfs_global") {
+		// 	setWeathercode(data.daily.weathercode_gfs_global);
+		// 	setTempMax(data.daily.temperature_2m_max_gfs_global);
+		// 	setTempMin(data.daily.temperature_2m_min_gfs_global);
+		// } else if (model === "gfs_hrrr") {
+		// 	setTempMax(data.daily.temperature_2m_max_gfs_hrrr);
+		// 	setTempMin(data.daily.temperature_2m_min_gfs_hrrr);
+		// 	//weathercode not available
+		// 	setWeathercode(data.daily.weathercode_gfs_global);
+		// } else if (model === "gfs_seamless") {
+		// 	setWeathercode(data.daily.weathercode_gfs_seamless);
+		// 	setTempMax(data.daily.temperature_2m_max_gfs_seamless);
+		// 	setTempMin(data.daily.temperature_2m_min_gfs_seamless);
+		// } else if (model === "ecmwf_ifs04") {
+		// 	setWeathercode(data.daily.weathercode_ecmwf_ifs04);
+		// 	setTempMax(data.daily.temperature_2m_max_ecmwf_ifs04);
+		// 	setTempMin(data.daily.temperature_2m_min_ecmwf_ifs04);
+		// } else if (model === "best_match") {
+		// 	setWeathercode(data.daily.weathercode_best_match);
+		// 	setTempMin(data.daily.temperature_2m_min_best_match);
+		// 	setTempMax(data.daily.temperature_2m_max_best_match);
+		// } else {
+		// 	console.log("Daily Forecast Outlook: Model not found");
+		// }
+		const getNextDays = () => {
+			const currentDay = new Date(data.currentConditions.datetimeEpoch * 1000);
 			const nextFiveDays = [];
-			for (let i = 0; i < 5; i++) {
+			for (let i = 0; i < data.days.length; i++) {
 				const nextDay = new Date(
 					currentDay.getTime() + i * 60 * 60 * 1000 * 24
 				);
@@ -53,7 +53,7 @@ export default function HourlyForecastOutlook({ data, model, units }) {
 
 			return nextFiveDays;
 		};
-		setDays(getNextFiveDays());
+		setDays(getNextDays());
 	}, [data, model, units]);
 	return (
 		<div className="mx-2">
@@ -72,25 +72,21 @@ export default function HourlyForecastOutlook({ data, model, units }) {
 						{days}
 					</h1>
 					<div className="flex  items-center mx-5 order-2">
-						<InterpretWeather
+						{getIcon(data.days[index].icon, 30)}
+						{/* <InterpretWeather
 							code={weathercode[index]}
 							isDay={isDay}
 							size={25}
 							includeDescription={false}
 							key={days}
-						/>
+						/> */}
 						<div className="flex  items-center mx-4 order-3">
-							<InterpretWeather
-								code={weathercode[index]}
-								isDay={isDay}
-								size={20}
-								includeDescription={"only"}
-								key={days}
-							/>
+							{data.days[index].conditions}
 						</div>
 					</div>
 					<h2 className="flex items-center flex-auto order-4 text-md justify-end">
-						{Math.round(tempMax[index])}° / {Math.round(tempMin[index])}°
+						{Math.round(data.days[index].tempmax)}° /{" "}
+						{Math.round(data.days[index].tempmin)}°
 					</h2>
 				</div>
 			))}

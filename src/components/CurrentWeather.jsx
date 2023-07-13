@@ -157,12 +157,18 @@ const CurrentWeather = ({ data, aqi, units }) => {
 					<div className="flex flex-col">
 						<div className="tracking-wide text-gray-300 dark:text-gray-400">
 							As of{" "}
-							{time &&
+							{`${new Date(
+								data.currentConditions.datetimeEpoch * 1000
+							).toLocaleTimeString(undefined, {
+								hour: "numeric",
+								minute: "numeric",
+							})}`}
+							{/* {time &&
 								time.toLocaleTimeString([], {
 									hour: "2-digit",
 									hour12: true,
 									minute: "2-digit",
-								})}
+								})} */}
 						</div>
 						<div className="ml-5 mix-blend-overlay">
 							{/* <InterpretWeather
