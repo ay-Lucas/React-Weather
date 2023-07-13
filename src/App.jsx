@@ -11,11 +11,11 @@ import "./index.css";
 function App() {
 	console.log("app.jsx rendered");
 	const defaultLocation = {
-		lat: 42.901279,
-		lon: -73.562714,
+		lat: 34.0007,
+		lon: -81.0348,
 	};
 	const [visualForecast, setVisualForecast] = useState(null);
-	const [location, setLocation] = useState("Valley Falls, NY");
+	const [location, setLocation] = useState("Columbia, SC");
 	const [coordinates, setCoordinates] = useState(defaultLocation);
 	const [currentAqi, setAqi] = useState(null);
 	const imperialUnits = {
@@ -100,6 +100,7 @@ function App() {
 	useEffect(() => {
 		console.log("useEffect called");
 		fetchData();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [coordinates, units, location]);
 
 	return (

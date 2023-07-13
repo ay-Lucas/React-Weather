@@ -4,15 +4,22 @@ import { v4 as uuidv4 } from "uuid";
 import { getIcon } from "./Icons";
 export default function HourlyForecastOutlook({ data, units }) {
 	console.log("HourlyForecastOutlook rendered");
-	const [times, setTimes] = useState([]);
-	const [startingIndex, setStartingIndex] = useState([]);
-	const [hours, setHours] = useState([]);
-	const numOfDays = 5;
-	const date = new Date();
 	const options = Intl.DateTimeFormat().resolvedOptions();
+
+	const date = new Date();
+	const [times, setTimes] = useState([]);
+	const [startingIndex, setStartingIndex] = useState(date.getHours());
+	const [hours, setHours] = useState([]);
+	const numOfDays = 3;
 	const hourFormatter = Intl.DateTimeFormat(options.locale, {
 		timeZone: options.timeZone,
 		hour: "numeric",
+		// minute: "numeric",
+	});
+	const hoursInDay = Intl.DateTimeFormat(options.locale, {
+		timeZone: options.timeZone,
+		hour12: false,
+		hour: "2-digit",
 		// minute: "numeric",
 	});
 	const dateFormatter = Intl.DateTimeFormat(options.locale, {
@@ -20,10 +27,14 @@ export default function HourlyForecastOutlook({ data, units }) {
 		month: "numeric",
 		day: "numeric",
 	});
-
+	useEffect(() => {
+		setTimes(getHours());
+		setHours(getFutureData());
+	}, [data]);
 	const getHours = () => {
-		const currentHourStr = dateFormatter.format(date);
-		let currentHourNum = new Date(currentHourStr).getHours() + 1;
+		const currentHourStr = hoursInDay.format(date);
+		let currentHourNum = parseInt(currentHourStr.split("/")[0]);
+		console.log(currentHourNum);
 		setStartingIndex(currentHourNum);
 		const formattedTimes = [];
 		for (let i = 0; i < numOfDays * 24; i++) {
@@ -33,24 +44,21 @@ export default function HourlyForecastOutlook({ data, units }) {
 
 		return formattedTimes;
 	};
-	useEffect(() => {
-		setTimes(getHours());
-		setHours(getFutureData());
-	}, [data, startingIndex, units]);
 
 	const getFutureData = () => {
 		let array = [];
 		data.days.forEach((day, i) => {
 			day.hours.map((hour, index) => {
-				if (!(i === 0 && index < startingIndex)) {
+				if (!(i === 0 && index < startingIndex + 1)) {
 					array.push(hour);
 				}
 			});
 		});
-		// let daysCopy = [...data.days];
+		console.log(array);
+		// let daysCopy = data.days;
 		// daysCopy.slice(0, numOfDays);
-		// daysCopy[0].hours.splice(0, startingIndex);
-		// console.log(days);
+		// daysCopy[0].hours.splice(0, startingIndex + 1);
+		// console.log(daysCopy);
 		// daysCopy.forEach((day) => {
 		// 	day.hours.map((hour) => {
 		// 		array.push(hour);
@@ -59,6 +67,7 @@ export default function HourlyForecastOutlook({ data, units }) {
 		// console.log(array);
 		return array;
 	};
+
 	return (
 		<div className="mx-2">
 			<div className=" text-left mb-4 w-full ">
@@ -89,7 +98,7 @@ export default function HourlyForecastOutlook({ data, units }) {
 						</div>
 						<h2 className="flex items-center flex-auto order-4 text-md justify-end ">
 							{Math.round(hours[index].temp) + "°"}
-							{/* {hours[index].datetime} */}
+							{hours[index].datetime}
 						</h2>
 					</div>
 				</div>
