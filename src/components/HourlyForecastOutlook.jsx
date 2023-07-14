@@ -14,6 +14,7 @@ export default function HourlyForecastOutlook({ data, units }) {
 	const hourFormatter = Intl.DateTimeFormat(options.locale, {
 		timeZone: options.timeZone,
 		hour: "numeric",
+
 		// minute: "numeric",
 	});
 	const hoursInDay = Intl.DateTimeFormat(options.locale, {
@@ -24,6 +25,7 @@ export default function HourlyForecastOutlook({ data, units }) {
 	});
 	const dateFormatter = Intl.DateTimeFormat(options.locale, {
 		timeZone: options.timeZone,
+		weekday: "long",
 		month: "numeric",
 		day: "numeric",
 	});

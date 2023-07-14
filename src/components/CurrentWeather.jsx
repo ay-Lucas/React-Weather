@@ -6,8 +6,6 @@ const CurrentWeather = ({ data, aqi, units }) => {
 	const [AQI, setAQI] = useState(null);
 	const [color, setColor] = useState(null);
 	const [alert, setAlert] = useState([]);
-	let aqiColor;
-	const circle = "mr-1 h-3 w-3 inline-flex items-center rounded-full";
 	console.log("current weather rendered");
 	useEffect(() => {
 		if (data.alerts !== undefined) {
@@ -33,7 +31,7 @@ const CurrentWeather = ({ data, aqi, units }) => {
 		let mili = Date.now();
 		let time = new Date(mili + data.tzoffset * 1000);
 		setTime(time);
-		if (aqi !== undefined) {
+		if (aqi !== undefined && aqi.length > 0) {
 			try {
 				let num = 0;
 				for (let i = 0; i < aqi.length; i++) {
@@ -43,33 +41,35 @@ const CurrentWeather = ({ data, aqi, units }) => {
 					}
 				}
 				setAQI(num);
-				whatColor(aqi);
+				whatColor(num);
 			} catch (e) {
 				console.log("AirNow API aqi error" + e);
 			}
 		} else {
+			setAQI(null);
+			setColor(null);
 			console.log("AirNow API aqi error");
 		}
 	}, [data, aqi, units]);
 
 	const whatColor = (aqi) => {
 		if (aqi !== undefined && aqi !== null) {
-			if (aqi[1].Category.Name === "Good") {
-				aqiColor = " bg-green-500";
-			} else if (aqi[1].Category.Name === "Moderate") {
-				aqiColor = " bg-yellow-500";
-			} else if (aqi[1].Category.Name === "Unhealthy for Sensitive Groups") {
-				aqiColor = " bg-yellow-600";
-			} else if (aqi[1].Category.Name === "Unhealthy") {
-				aqiColor = " bg-red-500";
-			} else if (aqi[1].Category.Name === "Very Unhealthy") {
-				aqiColor = " bg-red-600";
-			} else if (aqi[1].Category.Name === "Hazardous") {
-				aqiColor = " bg-purple-500";
+			if (aqi <= 50) {
+				setColor("green");
+			} else if (aqi <= 100) {
+				setColor("yellow");
+			} else if (aqi <= 150) {
+				setColor("orange");
+			} else if (aqi <= 200) {
+				setColor("red");
+			} else if (aqi <= 300) {
+				setColor("purple");
+			} else if (aqi > 300) {
+				setColor("maroon");
 			} else {
-				aqiColor = " bg-gray-500";
+				setColor("gray");
 			}
-			setColor(circle.concat(aqiColor));
+			console.log(aqi);
 		}
 	};
 
@@ -114,11 +114,17 @@ const CurrentWeather = ({ data, aqi, units }) => {
 					<div className="flex">Feels like</div>
 					<div>{Math.round(data.currentConditions.feelslike)}°</div>
 				</div>
-				{aqi !== null && (
+				{aqi.length > 0 && (
 					<div className="inline-flex flex-col items-center px-2">
 						<div>Air Quality</div>
 						<div className="inline-flex  flex-row items-center justify-center ">
-							<div className={color}></div>
+							<div
+								className={
+									"mr-1 h-3 w-3 inline-flex items-center rounded-full bg-" +
+									color +
+									"-500"
+								}
+							></div>
 							<div>{AQI}</div>
 						</div>
 					</div>
