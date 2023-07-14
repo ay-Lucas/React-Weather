@@ -88,33 +88,35 @@ const CurrentWeather = ({ data, aqi, units, timezone }) => {
 
 	return (
 		<div className="flex flex-col items-center justify-between">
-			<div className="text-2xl flex mb-0">Current Weather</div>
-			<div className="tracking-wide flex flex-row justify-start dark:text-gray-400">
-				As of{" "}
-				{locationHourFormatter.format(
-					data.currentConditions.datetimeEpoch * 1000
-				)}
+			<div className="inline-flex items-baseline justify-left w-full">
+				<div className="text-2xl text-left inline-flex mb-0 mr-2">
+					Current Weather
+				</div>
+				<div className="tracking-wide inline-flex dark:text-gray-400">
+					As of{" "}
+					{locationHourFormatter.format(
+						data.currentConditions.datetimeEpoch * 1000
+					)}
+				</div>
 			</div>
 			{alert.length > 0 && (
 				<>
 					<div className="text-md flex-row mb-4 text-left">{alert}</div>
 				</>
 			)}
-			<div className="text-center items-center flex flex-col">
-				<div className="flex flex-row items-center justify-center">
-					<div className="flex flex-col">
-						<div className="mix-blend-overlay items-center">
-							{data.currentConditions.conditions}
-						</div>
-					</div>
-					<div className="ml-5">{getIcon(data.currentConditions.icon, 60)}</div>
-				</div>
-				<div className="text-6xl font-light my-4">
+			<div className="flex flex-row w-full items-center my-16">
+				<div className="">{getIcon(data.currentConditions.icon, 60)}</div>
+				<div className="text-6xl font-light ml-3">
 					{`${Math.round(data.currentConditions.temp)}`}°
 				</div>
+				<label className="mix-blend-overlay mt-8">
+					{data.currentConditions.conditions}
+				</label>
 			</div>
-
-			<div className="justify-between text-base items-center flex flex-wrap mt-3">
+			<div className="flex flex-row items-center justify-center">
+				<div className="flex flex-col"></div>
+			</div>
+			<div className="justify-between text-base w-full items-center flex flex-wrap">
 				<div className="inline-flex flex-col  mx-3 ">
 					<div className="flex text-md">Feels like</div>
 					<div>{Math.round(data.currentConditions.feelslike)}°</div>
