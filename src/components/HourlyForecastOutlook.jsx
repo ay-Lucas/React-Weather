@@ -2,30 +2,28 @@
 import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { getIcon } from "./Icons";
-export default function HourlyForecastOutlook({ data, units }) {
+export default function HourlyForecastOutlook({ data, units, timezone }) {
 	console.log("HourlyForecastOutlook rendered");
-	const options = Intl.DateTimeFormat().resolvedOptions();
 	const date = new Date();
 	const [times, setTimes] = useState([]);
 	const [startingIndex, setStartingIndex] = useState(date.getHours());
 	const [hours, setHours] = useState([]);
-	const [timeZone, setTimeZone] = useState([data.timezone]);
 	const numOfDays = 3;
-	const hoursInDay = Intl.DateTimeFormat(options.locale, {
-		timeZone: timeZone,
+	const hoursInDay = Intl.DateTimeFormat(timezone.options.locale, {
+		timeZone: timezone.timezone,
 		hour12: false,
 		hour: "2-digit",
 		// minute: "numeric",
 	});
-	const dateFormatter = Intl.DateTimeFormat(options.locale, {
-		timeZone: options.timeZone,
+	const dateFormatter = Intl.DateTimeFormat(timezone.options.locale, {
+		timeZone: timezone.timezone,
 		weekday: "long",
 		month: "numeric",
 		day: "numeric",
 	});
 
-	const locationHourFormatter = Intl.DateTimeFormat(options.locale, {
-		timeZone: timeZone,
+	const locationHourFormatter = Intl.DateTimeFormat(timezone.options.locale, {
+		timeZone: timezone.timezone,
 		hour: "numeric",
 	});
 	const getHours = () => {
@@ -43,9 +41,8 @@ export default function HourlyForecastOutlook({ data, units }) {
 	};
 	useEffect(() => {
 		setTimes(getHours());
-		setTimeZone(data.timezone);
 		setHours(getFutureData());
-	}, [data, startingIndex, timeZone, units]);
+	}, [data, startingIndex, units]);
 
 	// const getHours = () => {
 	// 	const currentHourStr = hoursInDay.format(date);
@@ -114,7 +111,7 @@ export default function HourlyForecastOutlook({ data, units }) {
 						</div>
 						<h2 className="flex items-center flex-auto order-4 text-md justify-end ">
 							{Math.round(hours[index].temp) + "°"}
-							{hours[index].datetime}
+							{/* {hours[index].datetime} */}
 						</h2>
 					</div>
 				</div>

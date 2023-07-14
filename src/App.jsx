@@ -8,6 +8,7 @@ import HourlyForecastOutlook from "./components/HourlyForecastOutlook";
 import LocationCard from "./components/LocationCard";
 import Today from "./components/Today";
 import "./index.css";
+// import Time from "./components/Time";
 function App() {
 	console.log("app.jsx rendered");
 	const defaultLocation = {
@@ -18,6 +19,7 @@ function App() {
 	const [location, setLocation] = useState("Columbia, SC");
 	const [coordinates, setCoordinates] = useState(defaultLocation);
 	const [currentAqi, setAqi] = useState(null);
+	const [timeZone, setTimeZone] = useState([null]);
 	const imperialUnits = {
 		name: "us",
 		temperature: "fahrenheit",
@@ -71,7 +73,9 @@ function App() {
 				// const OpenWeatherAQI = await response[2].json();
 				setVisualForecast(visualForecastResponse);
 				setAqi(currentAQIResponse);
-
+				const timezone = visualForecastResponse.timezone;
+				const options = Intl.DateTimeFormat().resolvedOptions();
+				setTimeZone({ timezone, options });
 				console.log(visualForecastResponse);
 				console.log(currentAQIResponse);
 				// console.log(OpenWeatherAQI);
@@ -122,24 +126,37 @@ function App() {
 										data={visualForecast}
 										aqi={currentAqi}
 										units={units}
+										timezone={timeZone}
 									/>
 								)}
 							</div>
 							<div className="mx-1 my-1 bg-[#0a1929]/30 rounded-2xl p-7 lg:w-1/2 sm:w-full">
 								{visualForecast && (
-									<Today data={visualForecast} units={units} />
+									<Today
+										data={visualForecast}
+										units={units}
+										timezone={timeZone}
+									/>
 								)}
 							</div>
 						</div>
 						<div className="lg:flex sm:inline-flex w-full">
 							<div className="mx-1 my-1 bg-[#0a1929]/30 rounded-2xl p-7 lg:w-1/2 sm:w-full">
 								{visualForecast && (
-									<HourlyForecastOutlook data={visualForecast} units={units} />
+									<HourlyForecastOutlook
+										data={visualForecast}
+										units={units}
+										timezone={timeZone}
+									/>
 								)}
 							</div>
 							<div className="mx-1 my-1 bg-[#0a1929]/30 rounded-2xl p-7 lg:w-1/2 sm:w-full">
 								{visualForecast && (
-									<DailyForecastOutlook data={visualForecast} units={units} />
+									<DailyForecastOutlook
+										data={visualForecast}
+										units={units}
+										timezone={timeZone}
+									/>
 								)}
 							</div>
 						</div>

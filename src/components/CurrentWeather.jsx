@@ -3,11 +3,25 @@ import { colors } from "@mui/material";
 import { green, orange, red, yellow } from "@mui/material/colors";
 import { useEffect, useState } from "react";
 import { getIcon } from "./Icons";
-const CurrentWeather = ({ data, aqi, units }) => {
-	const [time, setTime] = useState(null);
+const CurrentWeather = ({ data, aqi, units, timezone }) => {
+	// const [time, setTime] = useState(null);
 	const [AQI, setAQI] = useState(null);
 	const [color, setColor] = useState(green[500]);
 	const [alert, setAlert] = useState([]);
+	const locationHourFormatter = Intl.DateTimeFormat(timezone.options.locale, {
+		timeZone: timezone.timezone,
+		hour: "numeric",
+		minute: "numeric",
+		timeZoneName: "shortGeneric",
+	});
+
+	// const dateFormatter = Intl.DateTimeFormat(timezone.options.locale, {
+	// 	timeZone: timezone.timezone,
+	// 	weekday: "long",
+	// 	month: "numeric",
+	// 	day: "numeric",
+	// });
+
 	console.log("current weather rendered");
 	useEffect(() => {
 		if (data.alerts !== undefined) {
@@ -49,9 +63,8 @@ const CurrentWeather = ({ data, aqi, units }) => {
 			console.log(aqi);
 			console.log(color);
 		};
-		let mili = Date.now();
-		let time = new Date(mili + data.tzoffset * 1000);
-		setTime(time);
+		// let time = new Date(date.getTime() * 1000);
+		// setTime(dateFormatter.format(time));
 		if (aqi !== undefined && aqi.length > 0) {
 			try {
 				let num = 0;
@@ -73,28 +86,24 @@ const CurrentWeather = ({ data, aqi, units }) => {
 		}
 	}, [data, color, aqi, AQI]);
 
-	console.log(time);
 	return (
-		<div className="flex flex-col text-center items-center justify-between ">
-			<div className="text-2xl flex mb-4">Current Weather</div>
-			{alert && (
+		<div className="flex flex-col items-center justify-between">
+			<div className="text-2xl flex mb-0">Current Weather</div>
+			<div className="tracking-wide flex flex-row justify-start dark:text-gray-400">
+				As of{" "}
+				{locationHourFormatter.format(
+					data.currentConditions.datetimeEpoch * 1000
+				)}
+			</div>
+			{alert.length > 0 && (
 				<>
-					<div className="text-sm flex-row mb-4 text-left">{alert}</div>
+					<div className="text-md flex-row mb-4 text-left">{alert}</div>
 				</>
 			)}
-			<div className="text-center items-center flex flex-col ">
+			<div className="text-center items-center flex flex-col">
 				<div className="flex flex-row items-center justify-center">
 					<div className="flex flex-col">
-						<div className="tracking-wide text-gray-300 dark:text-gray-400">
-							As of{" "}
-							{`${new Date(
-								data.currentConditions.datetimeEpoch * 1000
-							).toLocaleTimeString(undefined, {
-								hour: "numeric",
-								minute: "numeric",
-							})}`}
-						</div>
-						<div className="ml-5 mix-blend-overlay">
+						<div className="mix-blend-overlay items-center">
 							{data.currentConditions.conditions}
 						</div>
 					</div>
@@ -105,36 +114,38 @@ const CurrentWeather = ({ data, aqi, units }) => {
 				</div>
 			</div>
 
-			<div className="flex justify-between text-base items-center">
-				<div className="inline-flex flex-col px-2">
-					<div className="flex">Feels like</div>
+			<div className="justify-between text-base items-center flex flex-wrap mt-3">
+				<div className="inline-flex flex-col  mx-3 ">
+					<div className="flex text-md">Feels like</div>
 					<div>{Math.round(data.currentConditions.feelslike)}°</div>
 				</div>
 				{aqi.length > 0 && (
-					<div className="inline-flex flex-col items-center px-2">
-						<div>Air Quality</div>
-						<div className="inline-flex  flex-row items-center justify-center ">
+					<div className="inline-flex flex-col mx-2">
+						<div className="text-md">Air Quality</div>
+						<div className="flex items-center">
 							<div
 								style={{ backgroundColor: color }}
-								className={"mr-1 h-3 w-3 inline-flex items-center rounded-full"}
+								className={
+									"mr-1 ml-1 h-3 w-3 inline-flex items-center rounded-full"
+								}
 							></div>
 
-							<div>{AQI}</div>
+							<div className="">{AQI}</div>
 						</div>
 					</div>
 				)}
-				<div className="inline-flex flex-col px-2">
-					<div>Humidity</div>
+				<div className="inline-flex flex-col mx-2">
+					<div className="text-md">Humidity</div>
 					<div>{Math.round(data.currentConditions.humidity)}%</div>
 				</div>
-				<div className="inline-flex flex-col px-2">
-					<div>Wind</div>
+				<div className="inline-flex flex-col mx-2">
+					<div className="text-md">Wind</div>
 					<div>
 						{Math.round(data.currentConditions.windspeed)} {units.wind}
 					</div>
 				</div>
-				<div className="inline-flex flex-col px-2">
-					<div>Pressure</div>
+				<div className="inline-flex flex-col mx-2">
+					<div className="text-md">Pressure</div>
 					<div>
 						{Math.round(data.currentConditions.pressure)} {units.pressure}
 					</div>

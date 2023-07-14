@@ -1,18 +1,24 @@
-import { useEffect, useState } from "react";
-
 /* eslint-disable react/prop-types */
-const Today = ({ data, model, units }) => {
-	const options = Intl.DateTimeFormat().resolvedOptions();
-	const hourFormatter = Intl.DateTimeFormat(options.locale, {
-		timeZone: options.timeZone,
+const Today = ({ data, units, timezone }) => {
+	const hourFormatter = Intl.DateTimeFormat(timezone.options.locale, {
+		timeZone: timezone.timezone,
 		hour: "numeric",
 		minute: "numeric",
 		// minute: "numeric",
 	});
+	const dateFormatter = Intl.DateTimeFormat(timezone.options.locale, {
+		timeZone: timezone.timezone,
+		day: "numeric",
+		month: "numeric",
+		weekday: "long",
+	});
 	return (
 		<div className="mx-2 lg:text-md sm:text-md">
-			<div className="w-full text-left items-center">
-				<label className="text-2xl mr-3">Today</label>
+			<div className="w-full items-center flex flex-row justify-between">
+				<div className="text-2xl inline-flex mr-3">Today</div>
+				<div className="text-md text-gray-300 ">
+					{dateFormatter.format(new Date())}
+				</div>
 			</div>
 			<div className="flex flex-row justify-between py-2 border-gray-800 border-b-[1px]">
 				<label>High/Low</label>
