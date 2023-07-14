@@ -5,20 +5,14 @@ import { getIcon } from "./Icons";
 export default function HourlyForecastOutlook({ data, units }) {
 	console.log("HourlyForecastOutlook rendered");
 	const options = Intl.DateTimeFormat().resolvedOptions();
-
 	const date = new Date();
 	const [times, setTimes] = useState([]);
 	const [startingIndex, setStartingIndex] = useState(date.getHours());
 	const [hours, setHours] = useState([]);
+	const [timeZone, setTimeZone] = useState([data.timezone]);
 	const numOfDays = 3;
-	const hourFormatter = Intl.DateTimeFormat(options.locale, {
-		timeZone: options.timeZone,
-		hour: "numeric",
-
-		// minute: "numeric",
-	});
 	const hoursInDay = Intl.DateTimeFormat(options.locale, {
-		timeZone: options.timeZone,
+		timeZone: timeZone,
 		hour12: false,
 		hour: "2-digit",
 		// minute: "numeric",
@@ -29,10 +23,11 @@ export default function HourlyForecastOutlook({ data, units }) {
 		month: "numeric",
 		day: "numeric",
 	});
-	useEffect(() => {
-		setTimes(getHours());
-		setHours(getFutureData());
-	}, [data]);
+
+	const locationHourFormatter = Intl.DateTimeFormat(options.locale, {
+		timeZone: timeZone,
+		hour: "numeric",
+	});
 	const getHours = () => {
 		const currentHourStr = hoursInDay.format(date);
 		let currentHourNum = parseInt(currentHourStr.split("/")[0]);
@@ -41,11 +36,30 @@ export default function HourlyForecastOutlook({ data, units }) {
 		const formattedTimes = [];
 		for (let i = 0; i < numOfDays * 24; i++) {
 			const nextTime = new Date(date.getTime() + (i + 1) * 60 * 60 * 1000);
-			formattedTimes.push(hourFormatter.format(nextTime));
+			formattedTimes.push(locationHourFormatter.format(nextTime));
 		}
 
 		return formattedTimes;
 	};
+	useEffect(() => {
+		setTimes(getHours());
+		setTimeZone(data.timezone);
+		setHours(getFutureData());
+	}, [data, startingIndex, timeZone, units]);
+
+	// const getHours = () => {
+	// 	const currentHourStr = hoursInDay.format(date);
+	// 	let currentHourNum = parseInt(currentHourStr.split("/")[0]);
+	// 	console.log(currentHourNum);
+	// 	setStartingIndex(currentHourNum);
+	// 	const formattedTimes = [];
+	// 	for (let i = 0; i < numOfDays * 24; i++) {
+	// 		const nextTime = new Date(date.getTime() + (i + 1) * 60 * 60 * 1000);
+	// 		formattedTimes.push(hourFormatter.format(nextTime));
+	// 	}
+
+	// 	return formattedTimes;
+	// };
 
 	const getFutureData = () => {
 		let array = [];

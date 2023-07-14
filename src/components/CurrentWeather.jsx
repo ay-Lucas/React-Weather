@@ -1,10 +1,12 @@
 /* eslint-disable react/prop-types */
+import { colors } from "@mui/material";
+import { green, orange, red, yellow } from "@mui/material/colors";
 import { useEffect, useState } from "react";
 import { getIcon } from "./Icons";
 const CurrentWeather = ({ data, aqi, units }) => {
 	const [time, setTime] = useState(null);
 	const [AQI, setAQI] = useState(null);
-	const [color, setColor] = useState(null);
+	const [color, setColor] = useState(green[500]);
 	const [alert, setAlert] = useState([]);
 	console.log("current weather rendered");
 	useEffect(() => {
@@ -28,6 +30,25 @@ const CurrentWeather = ({ data, aqi, units }) => {
 			});
 			setAlert(alertList);
 		}
+		const whatColor = (aqi) => {
+			if (aqi <= 50) {
+				setColor(green[500]);
+			} else if (aqi <= 100) {
+				setColor(yellow[500]);
+			} else if (aqi <= 150) {
+				setColor(orange[600]);
+			} else if (aqi <= 200) {
+				setColor(orange[900]);
+			} else if (aqi <= 300) {
+				setColor(red[500]);
+			} else if (aqi > 300) {
+				setColor(red[900]);
+			} else {
+				setColor("gray");
+			}
+			console.log(aqi);
+			console.log(color);
+		};
 		let mili = Date.now();
 		let time = new Date(mili + data.tzoffset * 1000);
 		setTime(time);
@@ -44,45 +65,20 @@ const CurrentWeather = ({ data, aqi, units }) => {
 				whatColor(num);
 			} catch (e) {
 				console.log("AirNow API aqi error" + e);
+				setAQI(null);
+				whatColor(null);
 			}
 		} else {
-			setAQI(null);
-			setColor(null);
 			console.log("AirNow API aqi error");
 		}
-	}, [data, aqi, units]);
+	}, [data, color, aqi, AQI]);
 
-	const whatColor = (aqi) => {
-		if (aqi !== undefined && aqi !== null) {
-			if (aqi <= 50) {
-				setColor("green");
-			} else if (aqi <= 100) {
-				setColor("yellow");
-			} else if (aqi <= 150) {
-				setColor("orange");
-			} else if (aqi <= 200) {
-				setColor("red");
-			} else if (aqi <= 300) {
-				setColor("purple");
-			} else if (aqi > 300) {
-				setColor("maroon");
-			} else {
-				setColor("gray");
-			}
-			console.log(aqi);
-		}
-	};
-
-	console.log(color);
 	console.log(time);
 	return (
 		<div className="flex flex-col text-center items-center justify-between ">
 			<div className="text-2xl flex mb-4">Current Weather</div>
 			{alert && (
 				<>
-					{/* <div className="text-lg flex mb-1 p-1 rounded-lg bg-red-700">
-						Alerts
-					</div> */}
 					<div className="text-sm flex-row mb-4 text-left">{alert}</div>
 				</>
 			)}
@@ -119,12 +115,10 @@ const CurrentWeather = ({ data, aqi, units }) => {
 						<div>Air Quality</div>
 						<div className="inline-flex  flex-row items-center justify-center ">
 							<div
-								className={
-									"mr-1 h-3 w-3 inline-flex items-center rounded-full bg-" +
-									color +
-									"-500"
-								}
+								style={{ backgroundColor: color }}
+								className={"mr-1 h-3 w-3 inline-flex items-center rounded-full"}
 							></div>
+
 							<div>{AQI}</div>
 						</div>
 					</div>
