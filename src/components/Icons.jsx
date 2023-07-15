@@ -6,6 +6,7 @@ import {
 	BsFillCloudLightningRainFill,
 	BsFillCloudRainHeavyFill,
 	BsMoonStarsFill,
+	BsSun,
 	BsSunFill,
 } from "react-icons/bs";
 import { FaCloudMoonRain } from "react-icons/fa";

@@ -19,17 +19,17 @@ export default function HourlyForecastOutlook({
 	useEffect(() => {
 		const getNextDays = () => {
 			const currentDay = new Date(data.currentConditions.datetimeEpoch * 1000);
-			const nextFourteenDays = [];
+			const nextDays = [];
 			for (let i = 0; i < data.days.length; i++) {
 				const nextDay = new Date(
 					currentDay.getTime() + i * 60 * 60 * 1000 * 24
 				);
-				nextFourteenDays.push(
+				nextDays.push(
 					weekDay.format(nextDay) + " " + dayFormatter.format(nextDay)
 				);
 			}
 
-			return nextFourteenDays;
+			return nextDays;
 		};
 		// const getNextDays = () => {
 		// 	const currentDay = new Date(data.currentConditions.datetimeEpoch * 1000);

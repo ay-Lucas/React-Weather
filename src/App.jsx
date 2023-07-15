@@ -8,7 +8,8 @@ import HourlyForecastOutlook from "./components/HourlyForecastOutlook";
 import LocationCard from "./components/LocationCard";
 import Today from "./components/Today";
 import "./index.css";
-// import Time from "./components/Time";
+//TODO: Visualize Air Quality
+//TODO: Horizontal Scroll for Hourly Forecast
 function App() {
 	console.log("app.jsx rendered");
 	const defaultLocation = {
@@ -52,6 +53,7 @@ function App() {
 		coordinates.lat +
 		"," +
 		coordinates.lon +
+		"/next7days?" +
 		"?unitGroup=" +
 		units.name +
 		"&key=" +
@@ -122,7 +124,7 @@ function App() {
 							<LocationCard location={location} />
 						</div>
 						<div className="lg:flex sm:inline-flex w-full ">
-							<div className="mx-1 my-1 bg-[#0a1929]/30 bg-blend-overlay rounded-2xl bg-center p-7 lg:w-1/2 sm:w-full">
+							<div className="mx-1 my-1 bg-[#0a1929]/30 bg-blend-overlay rounded-2xl bg-center p-7 md:w-1/2 w-full">
 								{visualForecast && (
 									<CurrentWeather
 										data={visualForecast}

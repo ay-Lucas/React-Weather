@@ -8,7 +8,7 @@ export default function HourlyForecastOutlook({ data, units, timezone }) {
 	const [times, setTimes] = useState([]);
 	const [startingIndex, setStartingIndex] = useState(date.getHours());
 	const [hours, setHours] = useState([]);
-	const numOfDays = 3;
+	const numOfDays = 2;
 	const hoursInDay = Intl.DateTimeFormat(timezone.options.locale, {
 		timeZone: timezone.timezone,
 		hour12: false,

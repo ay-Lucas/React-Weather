@@ -14,6 +14,18 @@ const CurrentWeather = ({ data, aqi, units, timezone }) => {
 		minute: "numeric",
 		timeZoneName: "shortGeneric",
 	});
+	const hoursInDay = Intl.DateTimeFormat(timezone.options.locale, {
+		timeZone: timezone.timezone,
+		hour12: false,
+		hour: "2-digit",
+		// minute: "numeric",
+	});
+	const getStartingIndex = () => {
+		const date = new Date();
+		const currentHourStr = hoursInDay.format(date);
+		let currentHourNum = parseInt(currentHourStr.split("/")[0]);
+		return currentHourNum - 1;
+	};
 
 	// const dateFormatter = Intl.DateTimeFormat(timezone.options.locale, {
 	// 	timeZone: timezone.timezone,
@@ -65,8 +77,8 @@ const CurrentWeather = ({ data, aqi, units, timezone }) => {
 		};
 		// let time = new Date(date.getTime() * 1000);
 		// setTime(dateFormatter.format(time));
-		if (aqi !== undefined && aqi.length > 0) {
-			try {
+		try {
+			if (aqi !== undefined && aqi.length > 0) {
 				let num = 0;
 				for (let i = 0; i < aqi.length; i++) {
 					if (aqi[i].AQI > num) {
@@ -76,20 +88,27 @@ const CurrentWeather = ({ data, aqi, units, timezone }) => {
 				}
 				setAQI(num);
 				whatColor(num);
-			} catch (e) {
-				console.log("AirNow API aqi error" + e);
-				setAQI(null);
-				whatColor(null);
+			} else {
+				// console.log(data.days[0].aqius);
+				const aqius = data.days[0].hours[getStartingIndex()].aqius;
+				setAQI(aqius);
+				whatColor(aqius);
+				console.log(getStartingIndex());
+				console.log(
+					"visual API aqi: " + data.days[0].hours[getStartingIndex()].aqius
+				);
 			}
-		} else {
-			console.log("AirNow API aqi error");
+		} catch (e) {
+			console.log("AirNow API aqi error" + e);
+			setAQI(null);
+			whatColor(null);
 		}
-	}, [data, color, aqi, AQI]);
+	}, [data, color, aqi, AQI, timezone]);
 
 	return (
-		<div className="flex flex-col items-center justify-between">
+		<div className="flex flex-col items-center justify-between h-full">
 			<div className="inline-flex items-baseline justify-left w-full">
-				<div className="text-2xl text-left inline-flex mb-0 mr-2">
+				<div className="text-2xl text-left inline-flex mb-7 mr-2">
 					Current Weather
 				</div>
 				<div className="tracking-wide inline-flex dark:text-gray-400">
@@ -104,25 +123,27 @@ const CurrentWeather = ({ data, aqi, units, timezone }) => {
 					<div className="text-md flex-row mb-4 text-left">{alert}</div>
 				</>
 			)}
-			<div className="flex flex-row w-full items-center my-16">
-				<div className="">{getIcon(data.currentConditions.icon, 60)}</div>
+			<div className="flex flex-row w-full items-center">
+				<div className="mix-blend-overlay">
+					{getIcon(data.currentConditions.icon, 60)}
+				</div>
 				<div className="text-6xl font-light ml-3">
 					{`${Math.round(data.currentConditions.temp)}`}°
 				</div>
-				<label className="mix-blend-overlay mt-8">
+				<label className="mix-blend-overlay mt-10">
 					{data.currentConditions.conditions}
 				</label>
 			</div>
 			<div className="flex flex-row items-center justify-center">
 				<div className="flex flex-col"></div>
 			</div>
-			<div className="justify-between text-base w-full items-center flex flex-wrap">
-				<div className="inline-flex flex-col  mx-3 ">
+			<div className="text-base w-full justify-between flex flex-wrap my-3">
+				<div className="inline-flex flex-col">
 					<div className="flex text-md">Feels like</div>
 					<div>{Math.round(data.currentConditions.feelslike)}°</div>
 				</div>
-				{aqi.length > 0 && (
-					<div className="inline-flex flex-col mx-2">
+				{AQI !== null && (
+					<div className="inline-flex flex-col">
 						<div className="text-md">Air Quality</div>
 						<div className="flex items-center">
 							<div
@@ -136,17 +157,17 @@ const CurrentWeather = ({ data, aqi, units, timezone }) => {
 						</div>
 					</div>
 				)}
-				<div className="inline-flex flex-col mx-2">
+				<div className="inline-flex flex-col">
 					<div className="text-md">Humidity</div>
 					<div>{Math.round(data.currentConditions.humidity)}%</div>
 				</div>
-				<div className="inline-flex flex-col mx-2">
+				<div className="inline-flex flex-col">
 					<div className="text-md">Wind</div>
 					<div>
 						{Math.round(data.currentConditions.windspeed)} {units.wind}
 					</div>
 				</div>
-				<div className="inline-flex flex-col mx-2">
+				<div className="inline-flex flex-col">
 					<div className="text-md">Pressure</div>
 					<div>
 						{Math.round(data.currentConditions.pressure)} {units.pressure}
