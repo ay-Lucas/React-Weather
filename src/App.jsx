@@ -106,9 +106,9 @@ function App() {
 		console.log(currentAQIUrl);
 	};
 	useEffect(() => {
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 		console.log("useEffect called");
 		fetchData();
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [coordinates, units, location]);
 
 	return (
@@ -145,7 +145,7 @@ function App() {
 							</div>
 						</div>
 						<div className="lg:flex sm:inline-flex w-full">
-							<div className="mx-1 my-1 bg-[#0a1929]/30 rounded-2xl p-7 md:w-1/2 w-full">
+							{/* <div className="mx-1 my-1 bg-[#0a1929]/30 rounded-2xl p-7 md:w-1/2 w-full">
 								{visualForecast && (
 									<HourlyForecastOutlook
 										data={visualForecast}
@@ -153,8 +153,8 @@ function App() {
 										timezone={timeZone}
 									/>
 								)}
-							</div>
-							<div className="mx-1 my-1 bg-[#0a1929]/30 rounded-2xl p-7 md:w-1/2 w-full">
+							</div> */}
+							<div className="mx-1 my-1 rounded-2xl  w-full">
 								{visualForecast && (
 									<DailyForecastOutlook
 										data={visualForecast}
