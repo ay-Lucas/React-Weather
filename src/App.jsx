@@ -53,7 +53,7 @@ function App() {
 		coordinates.lat +
 		"," +
 		coordinates.lon +
-		"/next7days?" +
+		// "/next7days?" +
 		"?unitGroup=" +
 		units.name +
 		"&key=" +
@@ -120,11 +120,11 @@ function App() {
 			<div className="flex text-white">
 				<div className="flex mx-auto my-10">
 					<div className="box-content w-screen max-w-screen-lg ">
-						<div className="flex x-auto m-1 mt-2 p-2 bg-[#0a1929]/30  rounded-xl">
+						<div className="flex x-auto m-1 mt-2 p-2 bg-[#0a1929]/30 rounded-xl">
 							<LocationCard location={location} />
 						</div>
 						<div className="lg:flex sm:inline-flex w-full ">
-							<div className="mx-1 my-1 bg-[#0a1929]/30 bg-blend-overlay rounded-2xl bg-center p-7 md:w-1/2 w-full">
+							<div className="mx-1 my-1 bg-[#0a1929]/30 rounded-2xl p-7 md:w-1/2 w-full">
 								{visualForecast && (
 									<CurrentWeather
 										data={visualForecast}

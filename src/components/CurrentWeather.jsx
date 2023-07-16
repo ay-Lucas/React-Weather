@@ -2,6 +2,7 @@
 import { colors } from "@mui/material";
 import { green, orange, red, yellow } from "@mui/material/colors";
 import { useEffect, useState } from "react";
+import { GiWaterDrop } from "react-icons/gi";
 import { getIcon } from "./Icons";
 const CurrentWeather = ({ data, aqi, units, timezone }) => {
 	// const [time, setTime] = useState(null);
@@ -123,25 +124,33 @@ const CurrentWeather = ({ data, aqi, units, timezone }) => {
 					<div className="text-md flex-row mb-4 text-left">{alert}</div>
 				</>
 			)}
-			<div className="flex flex-row w-full items-center">
-				<div className="mix-blend-overlay">
-					{getIcon(data.currentConditions.icon, 60)}
-				</div>
+			<div className="flex flex-row w-full h-full items-center">
+				<div className="">{getIcon(data.currentConditions.icon, 60)}</div>
 				<div className="text-6xl font-light ml-3">
 					{`${Math.round(data.currentConditions.temp)}`}°
 				</div>
-				<label className="mix-blend-overlay mt-10">
-					{data.currentConditions.conditions}
-				</label>
+				<div className="flex flex-col ml-3 items-baseline ">
+					<label className="mix-blend-overlay">
+						{data.currentConditions.conditions}
+					</label>
+					<div className="inline-flex">
+						<label className="mr-1.5">Feels like </label>
+						{Math.round(data.currentConditions.feelslike)}°
+					</div>
+					{data.currentConditions.precipprob > 0 && (
+						<div className="inline-flex items-center">
+							<GiWaterDrop size={17} className="text-sky-500 -ml-1 mr-1" />
+							<div className="">
+								{Math.round(data.currentConditions.precipprob)}%
+							</div>
+						</div>
+					)}
+				</div>
 			</div>
 			<div className="flex flex-row items-center justify-center">
 				<div className="flex flex-col"></div>
 			</div>
-			<div className="text-base w-full justify-between flex flex-wrap my-3">
-				<div className="inline-flex flex-col">
-					<div className="flex text-md">Feels like</div>
-					<div>{Math.round(data.currentConditions.feelslike)}°</div>
-				</div>
+			<div className="text-base w-full flex flex-wrap justify-between my-3">
 				{AQI !== null && (
 					<div className="inline-flex flex-col">
 						<div className="text-md">Air Quality</div>
