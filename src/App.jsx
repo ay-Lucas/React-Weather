@@ -134,7 +134,7 @@ function App() {
 									/>
 								)}
 							</div>
-							<div className="mx-1 my-1 bg-[#0a1929]/30 rounded-2xl p-7 lg:w-1/2 sm:w-full">
+							<div className="mx-1 my-1 bg-[#0a1929]/30 rounded-2xl p-7 md:w-1/2 w-full">
 								{visualForecast && (
 									<Today
 										data={visualForecast}
@@ -145,7 +145,7 @@ function App() {
 							</div>
 						</div>
 						<div className="lg:flex sm:inline-flex w-full">
-							<div className="mx-1 my-1 bg-[#0a1929]/30 rounded-2xl p-7 lg:w-1/2 sm:w-full">
+							<div className="mx-1 my-1 bg-[#0a1929]/30 rounded-2xl p-7 md:w-1/2 w-full">
 								{visualForecast && (
 									<HourlyForecastOutlook
 										data={visualForecast}
@@ -154,7 +154,7 @@ function App() {
 									/>
 								)}
 							</div>
-							<div className="mx-1 my-1 bg-[#0a1929]/30 rounded-2xl p-7 lg:w-1/2 sm:w-full">
+							<div className="mx-1 my-1 bg-[#0a1929]/30 rounded-2xl p-7 md:w-1/2 w-full">
 								{visualForecast && (
 									<DailyForecastOutlook
 										data={visualForecast}
