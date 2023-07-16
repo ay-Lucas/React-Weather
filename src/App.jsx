@@ -28,7 +28,7 @@ function App() {
 		precipitation: "inch",
 		pressure: "hPa",
 		visibility: "mi",
-		tempSign: "F°",
+		tempSign: "°F",
 	};
 	const metricUnits = {
 		name: "metric",
@@ -37,7 +37,7 @@ function App() {
 		precipitation: "mm",
 		pressure: "hPa",
 		visibility: "km",
-		tempSign: "C°",
+		tempSign: "°C",
 	};
 	const [units, setUnits] = useState(imperialUnits);
 	const currentAQIUrl =

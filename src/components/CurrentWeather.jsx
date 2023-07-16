@@ -127,8 +127,9 @@ const CurrentWeather = ({ data, aqi, units, timezone }) => {
 			<div className="flex flex-row w-full h-full items-center">
 				<div className="">{getIcon(data.currentConditions.icon, 60)}</div>
 				<div className="text-6xl font-light ml-3">
-					{`${Math.round(data.currentConditions.temp)}`}°
+					{`${Math.round(data.currentConditions.temp)}`}
 				</div>
+				<span className="text-3xl font-light pb-5">{units.tempSign}</span>
 				<div className="flex flex-col ml-3 items-baseline ">
 					<label className="mix-blend-overlay">
 						{data.currentConditions.conditions}
