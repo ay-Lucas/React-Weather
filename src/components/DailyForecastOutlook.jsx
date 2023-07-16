@@ -63,7 +63,7 @@ export default function HourlyForecastOutlook({
 		setDays(getNextDays());
 	}, [data, model, units]);
 	return (
-		<div className="pt-5 bg-[#0a1929]/30 rounded-2xl shadow-2xl ">
+		<div className="pt-5 bg-[#0a1929]/30 rounded-2xl shadow-2xl pb-2.5">
 			<div className="text-left mb-4">
 				<h1 className="text-2xl text-left ml-4">Daily Forecast</h1>
 			</div>
