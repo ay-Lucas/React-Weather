@@ -1,15 +1,14 @@
 /* eslint-disable react/prop-types */
-import { ClassNames } from "@emotion/react";
-import { RoundedCorner, Style } from "@mui/icons-material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Accordion from "@mui/material/Accordion";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
-import Typography from "@mui/material/Typography";
 import { useEffect, useState } from "react";
+import { GiWaterDrop } from "react-icons/gi";
+import { PiWindFill } from "react-icons/pi";
 import { v4 as uuidv4 } from "uuid";
+import { degreesToWindDirection } from "../utility";
 import { getIcon } from "./Icons";
-Accordion;
 export default function HourlyForecastOutlook({
 	data,
 	model,
@@ -63,7 +62,7 @@ export default function HourlyForecastOutlook({
 		setDays(getNextDays());
 	}, [data, model, units]);
 	return (
-		<div className="pt-5 bg-[#0a1929]/30 rounded-2xl shadow-2xl pb-2.5">
+		<div className="pt-5 bg-[#0a1929]/30 rounded-2xl shadow-2xl pb-2.5 justify-evenly">
 			<div className="text-left mb-4">
 				<h1 className="text-2xl text-left ml-4">Daily Forecast</h1>
 			</div>
@@ -81,21 +80,36 @@ export default function HourlyForecastOutlook({
 					>
 						<div
 							key={days + " " + index}
-							className="flex items-center flex-nowrap  whitespace-nowrap w-full py-2"
+							className="flex items-center w-full py-2"
 						>
-							<h1 className="flex items-center order-1 lg:text-lg sm:text-md flex-nowrap w-1/4">
+							<h1 className="flex items-center order-1 lg:text-lg sm:text-md basis-44 flex-wrap">
 								{days}
 							</h1>
-							<div className="flex items-center mx-5 order-2">
+							<h2 className="flex items-center basis-44 order-2 text-md">
+								<span className="font-semibold">
+									{Math.round(data.days[index].tempmax)}° /{" "}
+								</span>
+								{Math.round(data.days[index].tempmin)}°
+							</h2>
+							<div className="flex items-center basis-0 md:basis-80 order-3 justify-start">
 								{getIcon(data.days[index].icon, 30)}
-								<div className="flex  items-center mx-4 order-3">
+								<div className="flex  items-center ml-1 md:ml-4 ">
 									{data.days[index].conditions}
 								</div>
 							</div>
-							<h2 className="flex items-center flex-auto order-4 text-md justify-end">
-								{Math.round(data.days[index].tempmax)}° /{" "}
-								{Math.round(data.days[index].tempmin)}°
-							</h2>
+							<div className="flex order-4 md:basis-36 basis-auto items-center">
+								<GiWaterDrop size={17} className="text-sky-500" />
+								<div className="">
+									{Math.round(data.days[index].precipprob)}%
+								</div>
+							</div>
+
+							<div className="flex order-5 md:basis-36 basis-auto justify-start items-center">
+								<span>
+									<PiWindFill size={20} className="text-gray-400 mr-1" />
+								</span>
+								{degreesToWindDirection(data.days[index].winddir)}
+							</div>
 						</div>
 					</AccordionSummary>
 					<AccordionDetails color="primary">ello</AccordionDetails>
