@@ -2,7 +2,9 @@ export const degreesToWindDirection = (degrees) => {
 	if (degrees === null || degrees === undefined) {
 		return null;
 	}
-	if (degrees >= 348.75 && degrees <= 11.25) {
+	if (degrees >= 0 && degrees <= 11.25) {
+		return "N";
+	} else if (degrees >= 348.75 && degrees <= 360) {
 		return "N";
 	} else if (degrees >= 11.25 && degrees <= 33.75) {
 		return "NNE";
@@ -36,5 +38,80 @@ export const degreesToWindDirection = (degrees) => {
 		return "NNW";
 	} else {
 		console.log("utility.js: invalid degrees");
+		console.log(typeof degrees);
+		console.log(degrees);
+	}
+};
+export const uvIndexToRisk = (uvIndex) => {
+	if (uvIndex === null || uvIndex === undefined) {
+		return null;
+	}
+	if (uvIndex <= 2) {
+		return "Low";
+	} else if (uvIndex <= 5) {
+		return "Moderate";
+	} else if (uvIndex <= 7) {
+		return "High";
+	} else if (uvIndex <= 10) {
+		return "Very High";
+	} else if (uvIndex > 10) {
+		return "Extreme";
+	} else {
+		console.log("uvIndexToRisk: invalid uvIndex");
+	}
+};
+export const uvIndexToColor = (uvIndex) => {
+	if (uvIndex === null || uvIndex === undefined) {
+		return null;
+	}
+	if (uvIndex <= 2) {
+		return "green";
+	} else if (uvIndex <= 5) {
+		return "yellow";
+	} else if (uvIndex <= 7) {
+		return "orange";
+	} else if (uvIndex <= 10) {
+		return "red";
+	} else if (uvIndex > 10) {
+		return "purple";
+	} else {
+		console.log("uvIndexToColor: invalid uvIndex");
+	}
+};
+export const uvIndexToPercent = (uvIndex) => {
+	if (uvIndex === null || uvIndex === undefined) {
+		return null;
+	}
+	switch (uvIndex) {
+		case 1:
+			return "9%";
+		case 2:
+			return "18%";
+		case 3:
+			return "27%";
+		case 4:
+			return "36%";
+		case 5:
+			return "45%";
+		case 6:
+			return "55%";
+		case 7:
+			return "63%";
+		case 8:
+			return "72%";
+		case 9:
+			return "81%";
+		case 10:
+			return "91%";
+		case 11:
+			return "100%";
+		case 12:
+			return "100%";
+		case 13:
+			return "100%";
+		case 14:
+			return "100%";
+		case 15:
+			return "100%";
 	}
 };
