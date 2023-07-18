@@ -15,6 +15,13 @@ const CurrentWeather = ({ data, aqi, units, timezone }) => {
 		minute: "numeric",
 		timeZoneName: "shortGeneric",
 	});
+	const dateFormatter = Intl.DateTimeFormat(timezone.options.locale, {
+		timeZone: timezone.timezone,
+		month: "numeric",
+		day: "numeric",
+		hour: "numeric",
+		minute: "numeric",
+	});
 	const hoursInDay = Intl.DateTimeFormat(timezone.options.locale, {
 		timeZone: timezone.timezone,
 		hour12: false,
@@ -52,6 +59,10 @@ const CurrentWeather = ({ data, aqi, units, timezone }) => {
 						>
 							{alert.headline}
 						</a>
+						<div className="text-gray-400">
+							{dateFormatter.format(new Date(alert.onset))} -{" "}
+							{dateFormatter.format(new Date(alert.ends))}
+						</div>
 					</div>
 				);
 			});
@@ -159,6 +170,7 @@ const CurrentWeather = ({ data, aqi, units, timezone }) => {
 			<div className="flex flex-row items-center justify-center">
 				<div className="flex flex-col"></div>
 			</div>
+			{alert.length > 0 && <div className="my-5"></div>}
 			<div className="text-base items-center w-full flex flex-wrap justify-between">
 				{AQI !== null && (
 					<div className="inline-flex flex-col">
