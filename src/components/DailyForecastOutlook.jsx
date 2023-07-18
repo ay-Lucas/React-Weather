@@ -1,13 +1,20 @@
 /* eslint-disable react/prop-types */
+import { BorderColor } from "@mui/icons-material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Accordion from "@mui/material/Accordion";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import { useEffect, useState } from "react";
+import { BsFillCircleFill } from "react-icons/bs";
 import { GiWaterDrop } from "react-icons/gi";
 import { PiWindFill } from "react-icons/pi";
 import { v4 as uuidv4 } from "uuid";
-import { degreesToWindDirection } from "../utility";
+import {
+	degreesToWindDirection,
+	uvIndexToColor,
+	uvIndexToPercent,
+	uvIndexToRisk,
+} from "../utility";
 import { getIcon } from "./Icons";
 export default function HourlyForecastOutlook({
 	data,
@@ -64,13 +71,14 @@ export default function HourlyForecastOutlook({
 	return (
 		<div className="pt-5 bg-[#0a1929]/30 rounded-2xl shadow-2xl pb-2.5 justify-evenly">
 			<div className="text-left mb-4">
-				<h1 className="text-2xl text-left ml-4">Daily Forecast</h1>
+				<div className="text-2xl text-left ml-4">Daily Forecast</div>
 			</div>
 			{days.map((days, index) => (
 				<Accordion
 					key={uuidv4()}
 					variant="outlined"
 					disableGutters
+					// expanded={index === 0}
 					className="bg-[#3d759a] text-white opacity-100 bg-clip-text hover:opacity-100  hover:bg-[#3d759a] hover:bg-opacity-100 hover:shadow-md hover:text-white "
 				>
 					<AccordionSummary
@@ -82,15 +90,15 @@ export default function HourlyForecastOutlook({
 							key={days + " " + index}
 							className="flex items-center w-full py-2"
 						>
-							<h1 className="flex items-center order-1 lg:text-lg sm:text-md basis-44 flex-wrap">
+							<div className="flex items-center order-1 lg:text-lg sm:text-md basis-44 flex-wrap">
 								{days}
-							</h1>
-							<h2 className="flex items-center basis-44 order-2 text-md">
+							</div>
+							<div className="flex items-center basis-44 order-2 text-md">
 								<span className="font-semibold">
 									{Math.round(data.days[index].tempmax)}° /{" "}
 								</span>
 								{Math.round(data.days[index].tempmin)}°
-							</h2>
+							</div>
 							<div className="flex items-center basis-0 md:basis-80 order-3 justify-start">
 								{getIcon(data.days[index].icon, 30)}
 								<div className="flex  items-center ml-1 md:ml-4 ">
@@ -112,7 +120,58 @@ export default function HourlyForecastOutlook({
 							</div>
 						</div>
 					</AccordionSummary>
-					<AccordionDetails color="primary">ello</AccordionDetails>
+					<AccordionDetails
+						color="primary"
+						className="border-t-[1.5px] border-slate-950/30"
+					>
+						<div className="flex flex-row justify-evenly">
+							<div
+								className="flex flex-col 
+							 items-center rounded-lg p-2 mr-2"
+							>
+								<div className="text-sky-300">UV Index</div>
+								<div className="text-left text-lg">
+									<div className="inline-flex">{data.days[index].uvindex}</div>
+									{" - "}
+									{uvIndexToRisk(data.days[index].uvindex)}
+									<div
+										style={{
+											marginTop: "0.75rem",
+											height: "0.2rem",
+											borderRadius: "0.5rem",
+											background:
+												"linear-gradient(to right, green, yellow, orange, red, violet )",
+										}}
+										className=""
+									>
+										{" "}
+									</div>
+									<BsFillCircleFill
+										size={8}
+										className=" border-[1.75px] rounded-full"
+										color={`${uvIndexToColor(data.days[index].uvindex)}`}
+										style={{
+											color: `${uvIndexToColor(data.days[index].uvindex)}`,
+											marginTop: "-.35rem",
+											marginLeft: `${uvIndexToPercent(
+												data.days[index].uvindex
+											)}`,
+										}}
+									/>
+								</div>
+							</div>
+							<div
+								className="flex flex-col items-center 
+							 rounded-lg p-2"
+							>
+								<div className="text-sky-300">Humidity</div>
+								<div className="text-left text-lg">
+									{Math.round(data.days[index].humidity)}%
+								</div>
+							</div>
+							<div className="flex flex-col"></div>
+						</div>
+					</AccordionDetails>
 				</Accordion>
 			))}
 		</div>
