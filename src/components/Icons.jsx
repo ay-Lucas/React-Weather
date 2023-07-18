@@ -55,3 +55,39 @@ export const getIcon = (weather, num) => {
 			return null;
 	}
 };
+// export const decimalToMoonPhaseIcon = (decimal) => {
+// 	if (decimal === null || decimal === undefined) {
+// 		return null;
+// 	}
+// 	  if (decimal <= 0.07) {
+// 			return <WiMoonNew />;
+// 		} else if (decimal <= 0.14) {
+// 			return <WiMoonAltWaxingCrescent1/>
+// 		} else if (decimal <= 0.21) {
+// 			return <WiMoonAltWaxingCrescent2/>;
+// 		} else if (decimal <= 0.29) {
+// 			return <WiMoonAltWaxingCrescent3/>;
+// 		} else if (decimal <= 0.36) {
+// 			return <WiMoonAltWaxingCrescent4/>;
+// 		} else if (decimal <= 0.43) {
+// 			return <WiMoonAltWaxingCrescent5/>;
+// 		} else if (decimal <= 0.5) {
+// 			return <WiMoonAltWaxingCrescent6/>;
+// 		} else if (decimal <= 0.57) {
+// 			return <WiMoonAltSe;
+// 		} else if (decimal <= 0.64) {
+// 			stage = "Waxing Gibbous";
+// 		} else if (decimal <= 0.71) {
+// 			stage = "Waxing Gibbous";
+// 		} else if (decimal <= 0.79) {
+// 			stage = "Full Moon";
+// 		} else if (decimal <= 0.86) {
+// 			stage = "Waning Gibbous";
+// 		} else if (decimal <= 0.93) {
+// 			stage = "Third Quarter Waning Gibbous";
+// 		} else if (decimal <= 1) {
+// 			stage = "Waning Crescent";
+// 		} else {
+// 			console.log("decimalToMoonPhase: invalid decimal");
+// 		}
+// };

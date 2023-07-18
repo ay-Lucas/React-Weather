@@ -1,5 +1,4 @@
 /* eslint-disable react/prop-types */
-import { BorderColor } from "@mui/icons-material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Accordion from "@mui/material/Accordion";
 import AccordionDetails from "@mui/material/AccordionDetails";
@@ -16,6 +15,7 @@ import {
 	uvIndexToRisk,
 } from "../utility";
 import { getIcon } from "./Icons";
+import MoonIcons from "./MoonIcons";
 export default function HourlyForecastOutlook({
 	data,
 	model,
@@ -124,6 +124,9 @@ export default function HourlyForecastOutlook({
 						color="primary"
 						className="border-t-[1.5px] border-slate-950/30"
 					>
+						<div className="flex flex-row justify-start">
+							{data.days[index].description}
+						</div>
 						<div className="flex flex-row justify-evenly">
 							<div
 								className="flex flex-col 
@@ -167,6 +170,15 @@ export default function HourlyForecastOutlook({
 								<div className="text-sky-300">Humidity</div>
 								<div className="text-left text-lg">
 									{Math.round(data.days[index].humidity)}%
+								</div>
+							</div>
+							<div
+								className="flex flex-col items-center 
+							 rounded-lg p-2"
+							>
+								<div className="text-sky-300">Moon</div>
+								<div className="text-left text-lg">
+									<MoonIcons decimal={data.days[index].moonphase} />
 								</div>
 							</div>
 							<div className="flex flex-col"></div>
