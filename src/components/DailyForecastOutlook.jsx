@@ -210,7 +210,7 @@ export default function HourlyForecastOutlook({ data, model, units, timezone }) 
 								</div>
 							</div>
 							<div className="flex flex-row items-center p-2 w-full flex-wrap justify-around ">
-								<div className="flex flex-col items-center p-4 bg-slate-800/80 rounded-lg shadow-lg">
+								<div className="flex flex-col items-center p-4 bg-slate-800/20 rounded-xl shadow-sm">
 									<div className="text-sky-300">Max UV Index</div>
 									<div className="text-left">
 										<div className="inline-flex">{data.days[index].uvindex}</div>
@@ -239,7 +239,7 @@ export default function HourlyForecastOutlook({ data, model, units, timezone }) 
 										/>
 									</div>
 								</div>
-								<div className="flex flex-col items-center p-3.5 px-4 bg-slate-800/70 rounded-lg shadow-lg">
+								<div className="flex flex-col items-center p-3.5 px-4 bg-slate-800/20 rounded-xl shadow-sm">
 									<div className="text-sky-300 mb-2">Moon</div>
 									<div className="inline-flex items-center mb-2">
 										<MoonIcons decimal={data.days[index].moonphase} size={23} />
@@ -247,7 +247,7 @@ export default function HourlyForecastOutlook({ data, model, units, timezone }) 
 										<div className="text-left text-lg"></div>
 									</div>
 								</div>
-								<div className="flex flex-col items-start p-4 py-5 bg-slate-800/60 rounded-lg shadow-lg">
+								<div className="flex flex-col items-start p-4 py-5 bg-slate-800/20 rounded-xl shadow-sm">
 									<div className="flex flex-row items-center mb-2">
 										<BsSunrise size={16} className="mx-1" color="orange" />
 										<div className="text-sky-300 flex items-center mr-2">Sunrise</div>
