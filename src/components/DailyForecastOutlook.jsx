@@ -4,7 +4,7 @@ import Accordion from "@mui/material/Accordion";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import { useEffect, useState } from "react";
-import { BsEye, BsFillCircleFill, BsSunrise, BsSunset, BsThermometerHalf, BsUmbrella } from "react-icons/bs";
+import { BsCloud, BsCloudFill, BsEye, BsFillCircleFill, BsSunrise, BsSunset, BsThermometerHalf, BsUmbrella } from "react-icons/bs";
 import { GiDew, GiWaterDrop } from "react-icons/gi";
 import { MdDewPoint } from "react-icons/md";
 import { PiWindFill } from "react-icons/pi";
@@ -120,46 +120,69 @@ export default function HourlyForecastOutlook({ data, model, units, timezone }) 
 					</AccordionSummary>
 					<AccordionDetails color="primary" className="border-t-[1.5px] border-slate-950/30 py-10">
 						<div className="flex flex-row justify-start mb-3 ml-1">{data.days[index].description}</div>
-						<div className="flex flex-row flex-wrap pb-5 justify-around items-center border-2 border-slate-950/30 rounded-lg">
-							<div className="flex flex-row w-1/2 flex-wrap justify-normal items-center p-2">
-								<div className="flex flex-col items-center p-2">
-									<div className="text-sky-300">Feels Like</div>
-									<div>
-										{Math.round(data.days[index].feelslikemax)}° / {Math.round(data.days[index].feelslikemin)}°
+						<div className="flex flex-row flex-wrap pb-5 items-center border-2 border-slate-950/30 rounded-lg">
+							<div className="flex sm:flex-row flex-col w-full flex-wrap justify-around p-2">
+								<div className="flex flex-col sm:mr-3 mr-0 justify-evenly flex-1">
+									<div className="flex flex-row justify-between py-2 border-gray-800 border-b-[1px]">
+										<div className="flex flex-row">
+											<BsThermometerHalf size={20} className="flex flex-col mt-1 mr-1" />
+											<div className="text-sky-300">Feels Like</div>
+										</div>
+										<div>
+											{Math.round(data.days[index].feelslikemax)}° / {Math.round(data.days[index].feelslikemin)}°
+										</div>
+									</div>
+									<div className="flex flex-row justify-between py-2 border-gray-800 border-b-[1px]">
+										<div className="flex flex-row">
+											<BsUmbrella size={20} className="flex flex-col mt-1 mr-2" />
+											<div className="text-sky-300">Precipitation</div>
+										</div>
+										<div>
+											{data.days[index].precip} {units.precipitation}
+										</div>
+									</div>
+									<div className="flex flex-row justify-between py-2 border-gray-800 border-b-[1px]">
+										<div className="flex flex-row">
+											<WiHumidity size={25} className="flex flex-col mt-.5 mr-0.5" />
+											<div className="text-sky-300">Humidity</div>
+										</div>
+										<div>{Math.round(data.days[index].humidity)}%</div>
+									</div>
+									<div className="flex flex-row justify-between py-2 border-gray-800 border-b-[1px]">
+										<div className="flex flex-row">
+											<PiWindFill size={20} className="flex flex-col mt-1 mr-2" />
+											<div className="text-sky-300">Wind Gusts</div>
+										</div>
+										<div>
+											{Math.round(data.days[index].windgust)} {units.wind}
+										</div>
 									</div>
 								</div>
-								<div className="flex flex-col items-center p-2">
-									<div className="text-sky-300">Precipitation</div>
-									<div className="">
-										{data.days[index].precip} {units.precipitation}
+								<div className="flex flex-col sm:ml-3 ml-0 flex-1">
+									<div className="flex flex-row justify-between py-2 border-gray-800 border-b-[1px]">
+										<div className="flex flex-row">
+											<GiDew size={20} className="flex flex-col mt-1 mr-2" />
+											<div className="text-sky-300">Dew Point</div>
+										</div>
+										<div>{Math.round(data.days[index].dew)}°</div>
 									</div>
-								</div>
-								<div className="flex flex-col items-center p-2">
-									<div className="text-sky-300">Humidity</div>
-									<div className="text-left text-lg">{Math.round(data.days[index].humidity)}%</div>
-								</div>
-								<div className="flex flex-col items-center p-2">
-									<div className="text-sky-300">Wind Gusts</div>
-									<div>
-										{Math.round(data.days[index].windgust)} {units.wind}
+									<div className="flex flex-row justify-between py-2 border-gray-800 border-b-[1px]">
+										<div className="flex flex-row">
+											<BsCloudFill size={20} className="flex flex-col mt-1 mr-2" />
+											<div className="text-sky-300">Cloud Cover</div>
+										</div>
+										<div>{Math.round(data.days[index].cloudcover)}%</div>
 									</div>
-								</div>
-								<div className="flex flex-col items-center p-2">
-									<div className="text-sky-300">Dew Point</div>
-									<div>{Math.round(data.days[index].dew)}°</div>
-								</div>
-								<div className="flex flex-col items-center p-2">
-									<div className="text-sky-300">Cloud Cover</div>
-									<div>{Math.round(data.days[index].cloudcover)}%</div>
-								</div>
-								<div className="flex flex-col items-center p-2">
-									<div className="text-sky-300">Pressure</div>
-									<div>
+									<div className="flex flex-row justify-between py-2 border-gray-800 border-b-[1px]">
+										<div className="flex flex-row">
+											<TbGauge size={20} className="flex flex-col mt-1 mr-2" />
+											<div className="text-sky-300">Pressure</div>
+										</div>
 										{Math.round(data.days[index].pressure)} {units.pressure}
 									</div>
 								</div>
 							</div>
-							<div className="flex flex-row items-center p-2 w-1/2 flex-wrap justify-around ">
+							<div className="flex flex-row items-center p-2 w-full flex-wrap justify-around ">
 								<div className="flex flex-col items-center p-2">
 									<div className="text-sky-300">Moon</div>
 									<div className="inline-flex items-center">
