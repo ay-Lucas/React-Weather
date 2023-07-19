@@ -28,46 +28,45 @@ import {
 	WiMoonWaxingGibbous6,
 } from "react-icons/wi";
 
-function MoonIcons({ decimal }) {
+function MoonIcons({ decimal, size }) {
 	if (decimal === null || decimal === undefined) {
 		return null;
 	}
-	console.log(decimal);
 
 	// Define an array of moon decimal icons
 	if (decimal <= 0.03 || decimal > 0.95) {
-		return <WiMoonNew />;
+		return <WiMoonNew size={size} />;
 	} else if (decimal <= 0.09) {
-		return <WiMoonWaxingCrescent1 />;
+		return <WiMoonWaxingCrescent1 size={size} />;
 	} else if (decimal <= 0.15) {
-		return <WiMoonWaxingCrescent3 />;
+		return <WiMoonWaxingCrescent3 size={size} />;
 	} else if (decimal <= 0.21) {
-		return <WiMoonWaxingCrescent5 />;
+		return <WiMoonWaxingCrescent5 size={size} />;
 	} else if (decimal <= 0.28) {
-		return <WiMoonFirstQuarter />;
+		return <WiMoonFirstQuarter size={size} />;
 	} else if (decimal <= 0.36) {
-		return <WiMoonWaxingGibbous4 />;
+		return <WiMoonWaxingGibbous4 size={size} />;
 	} else if (decimal <= 0.45) {
-		return <WiMoonWaxingGibbous6 />;
+		return <WiMoonWaxingGibbous6 size={size} />;
 	} else if (decimal <= 0.55) {
 		//half way
-		return <WiMoonFull />;
+		return <WiMoonFull size={size} />;
 	} else if (decimal <= 0.6) {
-		return <WiMoonWaningGibbous1 />;
+		return <WiMoonWaningGibbous1 size={size} />;
 	} else if (decimal <= 0.64) {
-		return <WiMoonWaningGibbous3 />;
+		return <WiMoonWaningGibbous3 size={size} />;
 	} else if (decimal <= 0.68) {
-		return <WiMoonWaningGibbous5 />;
+		return <WiMoonWaningGibbous5 size={size} />;
 	} else if (decimal <= 0.73) {
-		return <WiMoonThirdQuarter />;
+		return <WiMoonThirdQuarter size={size} />;
 	} else if (decimal <= 0.77) {
-		return <WiMoonWaningCrescent1 />;
+		return <WiMoonWaningCrescent1 size={size} />;
 	} else if (decimal <= 0.83) {
-		return <WiMoonWaningCrescent3 />;
+		return <WiMoonWaningCrescent3 size={size} />;
 	} else if (decimal <= 0.89) {
-		return <WiMoonWaningCrescent5 />;
+		return <WiMoonWaningCrescent5 size={size} />;
 	} else if (decimal <= 0.95) {
-		return <WiMoonWaningCrescent6 />;
+		return <WiMoonWaningCrescent6 size={size} />;
 	}
 }
 
@@ -98,6 +97,6 @@ function MoonIcons({ decimal }) {
 // 	const MoonPhaseIconComponent = moonPhaseIcons[index];
 // 	console.log(index);
 // 	console.log(decimal);
-// 	return <MoonPhaseIconComponent />;
+// 	return <MoonPhaseIconComponent size={size} />;
 // }
 export default MoonIcons;

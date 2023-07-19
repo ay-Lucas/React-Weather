@@ -4,11 +4,12 @@ import Accordion from "@mui/material/Accordion";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import { useEffect, useState } from "react";
-import { BsFillCircleFill } from "react-icons/bs";
+import { BsFillCircleFill, BsSunrise, BsSunset } from "react-icons/bs";
 import { GiWaterDrop } from "react-icons/gi";
 import { PiWindFill } from "react-icons/pi";
 import { v4 as uuidv4 } from "uuid";
 import {
+	decimalToMoonPhase,
 	degreesToWindDirection,
 	uvIndexToColor,
 	uvIndexToPercent,
@@ -23,6 +24,9 @@ export default function HourlyForecastOutlook({
 	timezone,
 }) {
 	const [days, setDays] = useState([]);
+	const [sunrise, setSunrise] = useState(0);
+	const [sunset, setSunset] = useState(0);
+	const [dayLength, setDayLength] = useState(0);
 	const weekDay = Intl.DateTimeFormat(timezone.options.locale, {
 		timeZone: timezone.timezone,
 		weekday: "short",
@@ -30,6 +34,11 @@ export default function HourlyForecastOutlook({
 	const dayFormatter = Intl.DateTimeFormat(timezone.options.locale, {
 		timeZone: timezone.timezone,
 		day: "numeric",
+	});
+	const hourFormatter = Intl.DateTimeFormat(timezone.options.locale, {
+		timeZone: timezone.timezone,
+		hour: "numeric",
+		minute: "numeric",
 	});
 	useEffect(() => {
 		const getNextDays = () => {
@@ -68,6 +77,25 @@ export default function HourlyForecastOutlook({
 		// };
 		setDays(getNextDays());
 	}, [data, model, units]);
+	function getDayLength(sunriseEpoch, sunsetEpoch) {
+		const sunrise = new Date(sunriseEpoch * 1000);
+		const sunset = new Date(sunsetEpoch * 1000);
+		const dayLengthMilliseconds = sunset - sunrise;
+		const dayLengthHours = Math.floor(dayLengthMilliseconds / (1000 * 60 * 60));
+		const dayLengthMinutes = Math.floor(
+			(dayLengthMilliseconds % (1000 * 60 * 60)) / (1000 * 60)
+		);
+		const nightLengthMilliseconds = 24 * 60 * 60 * 1000 - dayLengthMilliseconds;
+		const nightLengthHours = Math.floor(
+			nightLengthMilliseconds / (1000 * 60 * 60)
+		);
+		const nightLengthMinutes = Math.floor(
+			(nightLengthMilliseconds % (1000 * 60 * 60)) / (1000 * 60)
+		);
+
+		// console.log(dayLengthHours, dayLengthMinutes);
+		return `${dayLengthHours} hrs ${dayLengthMinutes} min ${nightLengthHours} hrs ${nightLengthMinutes} min`;
+	}
 	return (
 		<div className="pt-5 bg-[#0a1929]/30 rounded-2xl shadow-2xl pb-2.5 justify-evenly">
 			<div className="text-left mb-4">
@@ -78,7 +106,7 @@ export default function HourlyForecastOutlook({
 					key={uuidv4()}
 					variant="outlined"
 					disableGutters
-					// expanded={index === 0}
+					expanded={index === 0}
 					className="bg-[#3d759a] text-white opacity-100 bg-clip-text hover:opacity-100  hover:bg-[#3d759a] hover:bg-opacity-100 hover:shadow-md hover:text-white "
 				>
 					<AccordionSummary
@@ -114,74 +142,164 @@ export default function HourlyForecastOutlook({
 
 							<div className="flex order-5 md:basis-36 basis-auto justify-start items-center">
 								<span>
-									<PiWindFill size={20} className="text-gray-400 mr-1" />
+									<PiWindFill size={20} className="text-gray-400" />
 								</span>
-								{degreesToWindDirection(data.days[index].winddir)}
+								<div className="text-gray-300 mx-1 text-sm">
+									{degreesToWindDirection(data.days[index].winddir)}{" "}
+								</div>
+								<div>
+									{data.days[index].windspeed} {units.wind}
+								</div>
 							</div>
 						</div>
 					</AccordionSummary>
 					<AccordionDetails
 						color="primary"
-						className="border-t-[1.5px] border-slate-950/30"
+						className="border-t-[1.5px] border-slate-950/30 py-10"
 					>
-						<div className="flex flex-row justify-start">
+						<div className="flex flex-row justify-start mb-3 ml-1">
 							{data.days[index].description}
 						</div>
-						<div className="flex flex-row justify-evenly">
-							<div
-								className="flex flex-col 
-							 items-center rounded-lg p-2 mr-2"
-							>
-								<div className="text-sky-300">UV Index</div>
-								<div className="text-left text-lg">
-									<div className="inline-flex">{data.days[index].uvindex}</div>
-									{" - "}
-									{uvIndexToRisk(data.days[index].uvindex)}
-									<div
-										style={{
-											marginTop: "0.75rem",
-											height: "0.2rem",
-											borderRadius: "0.5rem",
-											background:
-												"linear-gradient(to right, green, yellow, orange, red, violet )",
-										}}
-										className=""
-									>
-										{" "}
+						<div className="flex flex-row flex-wrap pb-5 justify-around items-center border-2 border-slate-950/30 rounded-lg">
+							<div className="flex flex-row w-1/2 flex-wrap justify-around items-center p-2">
+								<div
+									className="flex flex-col items-center 
+							 rounded-lg p-2"
+								>
+									<div className="text-sky-300">Humidity</div>
+									<div className="text-left text-lg">
+										{Math.round(data.days[index].humidity)}%
 									</div>
-									<BsFillCircleFill
-										size={8}
-										className=" border-[1.75px] rounded-full"
-										color={`${uvIndexToColor(data.days[index].uvindex)}`}
-										style={{
-											color: `${uvIndexToColor(data.days[index].uvindex)}`,
-											marginTop: "-.35rem",
-											marginLeft: `${uvIndexToPercent(
-												data.days[index].uvindex
-											)}`,
-										}}
-									/>
+								</div>
+
+								<div
+									className="flex flex-col items-center 
+							  p-2"
+								>
+									<div className="text-sky-300">Precipitation</div>
+									<div className="">
+										{data.days[index].precip} {units.precipitation}
+									</div>
+								</div>
+								<div
+									className="flex flex-col items-center 
+							  p-2"
+								>
+									<div className="text-sky-300">Feels Like</div>
+									<div>
+										{data.days[index].feelslikemax}° /{" "}
+										{data.days[index].feelslikemin}°
+									</div>
+								</div>
+								<div
+									className="flex flex-col items-center 
+							  p-2"
+								>
+									<div className="text-sky-300">Dew Point</div>
+									<div>{data.days[index].dew}°</div>
+								</div>
+								<div
+									className="flex flex-col items-center 
+							  p-2"
+								>
+									<div className="text-sky-300">Wind Gusts</div>
+									<div>
+										{data.days[index].windgust} {units.wind}
+									</div>
+								</div>
+								<div
+									className="flex flex-col items-center 
+							  p-2"
+								>
+									<div className="text-sky-300">Cloud Cover</div>
+									<div>{data.days[index].cloudcover}%</div>
 								</div>
 							</div>
-							<div
-								className="flex flex-col items-center 
+							<div className="flex flex-row items-center p-2 w-1/2 flex-wrap justify-around ">
+								<div
+									className="flex flex-col items-center 
 							 rounded-lg p-2"
-							>
-								<div className="text-sky-300">Humidity</div>
-								<div className="text-left text-lg">
-									{Math.round(data.days[index].humidity)}%
+								>
+									<div className="text-sky-300">Moon</div>
+									<div className="inline-flex items-center">
+										<MoonIcons decimal={data.days[index].moonphase} size={23} />
+										<div className="ml-2">
+											{decimalToMoonPhase(data.days[index].moonphase)}
+										</div>
+										<div className="text-left text-lg"></div>
+									</div>
+								</div>
+								<div
+									className="flex flex-col
+							 items-center p-2"
+								>
+									<div className="text-sky-300">Max UV Index</div>
+									<div className="text-left text-lg">
+										<div className="inline-flex">
+											{data.days[index].uvindex}
+										</div>
+										{" - "}
+										{uvIndexToRisk(data.days[index].uvindex)}
+										<div
+											style={{
+												marginTop: "0.75rem",
+												height: "0.2rem",
+												borderRadius: "0.5rem",
+												background:
+													"linear-gradient(to right, green, yellow, orange, red, violet )",
+											}}
+											className=""
+										>
+											{" "}
+										</div>
+										<BsFillCircleFill
+											size={8}
+											className=" border-[1.75px] rounded-full"
+											color={`${uvIndexToColor(data.days[index].uvindex)}`}
+											style={{
+												color: `${uvIndexToColor(data.days[index].uvindex)}`,
+												marginTop: "-.35rem",
+												marginLeft: `${uvIndexToPercent(
+													data.days[index].uvindex
+												)}`,
+											}}
+										/>
+									</div>
+								</div>
+								<div
+									className="flex flex-row items-center 
+							  p-2"
+								>
+									<div className="flex flex-col mx-2">
+										<div className="text-sky-300 flex items-center">
+											Sunrise
+											<BsSunrise size={16} className="mx-1" color="orange" />
+										</div>
+										<div className="flex flex-row">
+											{`${hourFormatter.format(
+												new Date(data.days[index].sunriseEpoch * 1000)
+											)}`}{" "}
+										</div>
+									</div>
+									<div className="flex flex-col mx-2">
+										<div className="text-sky-300 flex items-center">
+											Sunset{" "}
+											<BsSunset size={16} className="mx-1" color="orange" />
+										</div>
+										<div className="flex flex-row">
+											{`${hourFormatter.format(
+												new Date(data.days[index].sunsetEpoch * 1000)
+											)}`}
+										</div>
+										{/* <div>
+									{getDayLength(
+										data.days[index].sunriseEpoch,
+										data.days[index].sunsetEpoch
+									)}
+								</div> */}
+									</div>
 								</div>
 							</div>
-							<div
-								className="flex flex-col items-center 
-							 rounded-lg p-2"
-							>
-								<div className="text-sky-300">Moon</div>
-								<div className="text-left text-lg">
-									<MoonIcons decimal={data.days[index].moonphase} />
-								</div>
-							</div>
-							<div className="flex flex-col"></div>
 						</div>
 					</AccordionDetails>
 				</Accordion>
