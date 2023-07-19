@@ -115,3 +115,29 @@ export const uvIndexToPercent = (uvIndex) => {
 			return "100%";
 	}
 };
+export const decimalToMoonPhase = (decimal) => {
+	if (decimal === null || decimal === undefined) {
+		return null;
+	}
+	if (decimal >= 0 && decimal < 0.0625) {
+		return "New Moon";
+	} else if (decimal >= 0.0625 && decimal < 0.1875) {
+		return "Waxing Crescent";
+	} else if (decimal >= 0.1875 && decimal < 0.3125) {
+		return "First Quarter";
+	} else if (decimal >= 0.3125 && decimal < 0.4375) {
+		return "Waxing Gibbous";
+	} else if (decimal >= 0.4375 && decimal < 0.5625) {
+		return "Full Moon";
+	} else if (decimal >= 0.5625 && decimal < 0.6875) {
+		return "Waning Gibbous";
+	} else if (decimal >= 0.6875 && decimal < 0.8125) {
+		return "Last Quarter";
+	} else if (decimal >= 0.8125 && decimal < 0.9375) {
+		return "Waning Crescent";
+	} else if (decimal >= 0.9375 && decimal <= 1) {
+		return "New Moon";
+	} else {
+		console.log("decimalToMoonPhase: invalid decimal");
+	}
+};

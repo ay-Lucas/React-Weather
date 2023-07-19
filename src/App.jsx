@@ -25,7 +25,7 @@ function App() {
 		name: "us",
 		temperature: "fahrenheit",
 		wind: "mph",
-		precipitation: "inch",
+		precipitation: "in",
 		pressure: "hPa",
 		visibility: "mi",
 		tempSign: "°F",
