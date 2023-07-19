@@ -158,7 +158,7 @@ export default function HourlyForecastOutlook({
 									{degreesToWindDirection(data.days[index].winddir)}{" "}
 								</div>
 								<div>
-									{data.days[index].windspeed} {units.wind}
+									{Math.round(data.days[index].windspeed)} {units.wind}
 								</div>
 							</div>
 						</div>
@@ -197,8 +197,8 @@ export default function HourlyForecastOutlook({
 								>
 									<div className="text-sky-300">Feels Like</div>
 									<div>
-										{data.days[index].feelslikemax}° /{" "}
-										{data.days[index].feelslikemin}°
+										{Math.round(data.days[index].feelslikemax)}° /{" "}
+										{Math.round(data.days[index].feelslikemin)}°
 									</div>
 								</div>
 								<div
@@ -207,7 +207,7 @@ export default function HourlyForecastOutlook({
 								>
 									<div className="text-sky-300">Wind Gusts</div>
 									<div>
-										{data.days[index].windgust} {units.wind}
+										{Math.round(data.days[index].windgust)} {units.wind}
 									</div>
 								</div>
 								<div
@@ -215,7 +215,7 @@ export default function HourlyForecastOutlook({
 							  p-2"
 								>
 									<div className="text-sky-300">Dew Point</div>
-									<div>{data.days[index].dew}°</div>
+									<div>{Math.round(data.days[index].dew)}°</div>
 								</div>
 
 								<div
@@ -223,7 +223,7 @@ export default function HourlyForecastOutlook({
 							  p-2"
 								>
 									<div className="text-sky-300">Cloud Cover</div>
-									<div>{data.days[index].cloudcover}%</div>
+									<div>{Math.round(data.days[index].cloudcover)}%</div>
 								</div>
 							</div>
 							<div className="flex flex-row items-center p-2 w-1/2 flex-wrap justify-around ">
