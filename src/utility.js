@@ -38,8 +38,6 @@ export const degreesToWindDirection = (degrees) => {
 		return "NNW";
 	} else {
 		console.log("utility.js: invalid degrees");
-		console.log(typeof degrees);
-		console.log(degrees);
 	}
 };
 export const uvIndexToRisk = (uvIndex) => {

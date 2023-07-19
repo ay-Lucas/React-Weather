@@ -1,6 +1,5 @@
 /* eslint-disable react/prop-types */
 import {
-	WiMoonAltNew,
 	WiMoonFirstQuarter,
 	WiMoonFull,
 	WiMoonNew,
@@ -10,21 +9,12 @@ import {
 	WiMoonWaningCrescent5,
 	WiMoonWaningCrescent6,
 	WiMoonWaningGibbous1,
-	WiMoonWaningGibbous2,
 	WiMoonWaningGibbous3,
-	WiMoonWaningGibbous4,
 	WiMoonWaningGibbous5,
-	WiMoonWaningGibbous6,
 	WiMoonWaxingCrescent1,
-	WiMoonWaxingCrescent2,
 	WiMoonWaxingCrescent3,
-	WiMoonWaxingCrescent4,
 	WiMoonWaxingCrescent5,
-	WiMoonWaxingGibbous1,
-	WiMoonWaxingGibbous2,
-	WiMoonWaxingGibbous3,
 	WiMoonWaxingGibbous4,
-	WiMoonWaxingGibbous5,
 	WiMoonWaxingGibbous6,
 } from "react-icons/wi";
 
