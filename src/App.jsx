@@ -3,9 +3,9 @@ import { AQI_KEY, AQI_URL, VISUAL_API_URL, VISUAL_KEY } from "./Api";
 import "./App.css";
 import CurrentWeather from "./components/CurrentWeather.jsx";
 import DailyForecastOutlook from "./components/DailyForecastOutlook";
-import Header from "./components/Header.jsx";
 import HourlyForecastOutlook from "./components/HourlyForecastOutlook";
 import LocationCard from "./components/LocationCard";
+import Header from "./components/Navbar/Header.jsx";
 import Today from "./components/Today";
 import "./index.css";
 //TODO: Visualize Air Quality

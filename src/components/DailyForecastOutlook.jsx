@@ -4,9 +4,19 @@ import Accordion from "@mui/material/Accordion";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import { useEffect, useState } from "react";
-import { BsFillCircleFill, BsSunrise, BsSunset } from "react-icons/bs";
-import { GiWaterDrop } from "react-icons/gi";
+import {
+	BsEye,
+	BsFillCircleFill,
+	BsSunrise,
+	BsSunset,
+	BsThermometerHalf,
+	BsUmbrella,
+} from "react-icons/bs";
+import { GiDew, GiWaterDrop } from "react-icons/gi";
+import { MdDewPoint } from "react-icons/md";
 import { PiWindFill } from "react-icons/pi";
+import { TbGauge } from "react-icons/tb";
+import { WiHumidity } from "react-icons/wi";
 import { v4 as uuidv4 } from "uuid";
 import {
 	decimalToMoonPhase,
@@ -195,18 +205,19 @@ export default function HourlyForecastOutlook({
 									className="flex flex-col items-center 
 							  p-2"
 								>
-									<div className="text-sky-300">Dew Point</div>
-									<div>{data.days[index].dew}°</div>
-								</div>
-								<div
-									className="flex flex-col items-center 
-							  p-2"
-								>
 									<div className="text-sky-300">Wind Gusts</div>
 									<div>
 										{data.days[index].windgust} {units.wind}
 									</div>
 								</div>
+								<div
+									className="flex flex-col items-center 
+							  p-2"
+								>
+									<div className="text-sky-300">Dew Point</div>
+									<div>{data.days[index].dew}°</div>
+								</div>
+
 								<div
 									className="flex flex-col items-center 
 							  p-2"

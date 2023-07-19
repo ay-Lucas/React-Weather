@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { BsSearch } from "react-icons/bs";
 import { AsyncPaginate } from "react-select-async-paginate";
-import { AUTOSUGGEST_URL, geoApiOptions } from "../Api.js";
+import { AUTOSUGGEST_URL, geoApiOptions } from "../../Api.js";
 // eslint-disable-next-line react/prop-types
 const Search = ({ onSearchChange }) => {
 	console.log("Search rendered");
