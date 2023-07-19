@@ -88,7 +88,7 @@ export default function HourlyForecastOutlook({ data, model, units, timezone }) 
 					key={uuidv4()}
 					variant="outlined"
 					disableGutters
-					expanded={index === 0}
+					// expanded={index === 0}
 					className="bg-[#3d759a] text-white opacity-100 bg-clip-text hover:opacity-100  hover:bg-[#3d759a] hover:bg-opacity-100 hover:shadow-md hover:text-white "
 				>
 					<AccordionSummary expandIcon={<ExpandMoreIcon style={{ color: "white" }} />} aria-controls="panel1a-content" id="panel1a-header">
