@@ -118,12 +118,12 @@ export default function HourlyForecastOutlook({ data, model, units, timezone }) 
 							</div>
 						</div>
 					</AccordionSummary>
-					<AccordionDetails color="primary" className="border-t-[1.5px] border-slate-950/30 py-10">
-						<div className="flex flex-row justify-start mb-3 ml-1">{data.days[index].description}</div>
-						<div className="flex flex-row flex-wrap pb-5 items-center border-2 border-slate-950/30 rounded-lg">
-							<div className="flex sm:flex-row flex-col w-full flex-wrap justify-around p-2">
-								<div className="flex flex-col sm:mr-3 mr-0 justify-evenly flex-1">
-									<div className="flex flex-row justify-between py-2 border-gray-800 border-b-[1px]">
+					<AccordionDetails color="primary" className="border-t-[1.5px]  bg-gray-100/10 border-slate-950/30 pt-5">
+						<div className="flex flex-row justify-start mb-2 ml-4 text-gray-100 ">{data.days[index].description}</div>
+						<div className="flex flex-row flex-wrap items-center border-slate-950/30 rounded-lg">
+							<div className="flex sm:flex-row flex-col w-full flex-wrap justify-around p-2 mb-0  border-slate-950/30">
+								<div className="flex flex-col sm:mr-3 mr-0 justify-evenly flex-1  ">
+									<div className="flex flex-row justify-between py-2 border-gray-800/50 border-b-[1px] ">
 										<div className="flex flex-auto items-center justify-start">
 											<div className="basis-7 mt-1">
 												<BsThermometerHalf size={20} className="" />
@@ -134,7 +134,7 @@ export default function HourlyForecastOutlook({ data, model, units, timezone }) 
 											{Math.round(data.days[index].feelslikemax)}° / {Math.round(data.days[index].feelslikemin)}°
 										</div>
 									</div>
-									<div className="flex flex-row justify-between py-2 border-gray-800 border-b-[1px]">
+									<div className="flex flex-row justify-between py-2 border-gray-800/50 border-b-[1px] ">
 										<div className="flex flex-auto items-center justify-start">
 											<div className="basis-7 mt-1">
 												<BsUmbrella size={20} className="" />
@@ -145,7 +145,7 @@ export default function HourlyForecastOutlook({ data, model, units, timezone }) 
 											{data.days[index].precip} {units.precipitation}
 										</div>
 									</div>
-									<div className="flex flex-row justify-between py-2 border-gray-800 border-b-[1px]">
+									<div className="flex flex-row justify-between py-2 border-gray-800/50 border-b-[1px] ">
 										<div className="flex flex-auto items-center justify-start">
 											<div className="basis-7 mt-1 justify-start">
 												<WiHumidity size={23} className="" />
@@ -154,7 +154,7 @@ export default function HourlyForecastOutlook({ data, model, units, timezone }) 
 										</div>
 										<div>{Math.round(data.days[index].humidity)}%</div>
 									</div>
-									<div className="flex flex-row justify-between py-2 border-gray-800 border-b-[1px]">
+									<div className="flex flex-row justify-between py-2 border-gray-800/50 border-b-[1px] ">
 										<div className="flex flex-auto items-center justify-start">
 											<div className="basis-7 mt-1">
 												<PiWindFill size={20} />
@@ -167,7 +167,7 @@ export default function HourlyForecastOutlook({ data, model, units, timezone }) 
 									</div>
 								</div>
 								<div className="flex flex-col sm:ml-3 ml-0 justify-evenly flex-1">
-									<div className="flex flex-row justify-between py-2 border-gray-800 border-b-[1px]">
+									<div className="flex flex-row justify-between py-2 border-gray-800/50 border-b-[1px] ">
 										<div className="flex flex-auto items-start justify-start">
 											<div className="basis-7 mt-1">
 												<GiDew size={17} className="" />
@@ -176,7 +176,7 @@ export default function HourlyForecastOutlook({ data, model, units, timezone }) 
 										</div>
 										<div>{Math.round(data.days[index].dew)}°</div>
 									</div>
-									<div className="flex flex-row justify-between py-2 border-gray-800 border-b-[1px]">
+									<div className="flex flex-row justify-between py-2 border-gray-800/50 border-b-[1px] ">
 										<div className="flex flex-auto items-start justify-start">
 											<div className="basis-7 mt-1">
 												<BsCloudFill size={17} className="" />
@@ -185,7 +185,7 @@ export default function HourlyForecastOutlook({ data, model, units, timezone }) 
 										</div>
 										<div>{Math.round(data.days[index].cloudcover)}%</div>
 									</div>
-									<div className="flex flex-row justify-between py-2 border-gray-800 border-b-[1px]">
+									<div className="flex flex-row justify-between py-2 border-gray-800/50 border-b-[1px] ">
 										<div className="flex flex-auto items-start justify-start">
 											<div className="basis-7 mt-1">
 												<TbGauge size={17} className="" />
@@ -196,7 +196,7 @@ export default function HourlyForecastOutlook({ data, model, units, timezone }) 
 											{Math.round(data.days[index].pressure)} {units.pressure}
 										</div>
 									</div>
-									<div className="flex flex-row justify-between py-2 border-gray-800 border-b-[1px]">
+									<div className="flex flex-row justify-between py-2 border-gray-800/50 border-b-[1px] ">
 										<div className="flex flex-auto items-start justify-start">
 											<div className="basis-7 mt-1">
 												<BsEye size={17} className="" />
@@ -210,17 +210,9 @@ export default function HourlyForecastOutlook({ data, model, units, timezone }) 
 								</div>
 							</div>
 							<div className="flex flex-row items-center p-2 w-full flex-wrap justify-around ">
-								<div className="flex flex-col items-center p-2">
-									<div className="text-sky-300">Moon</div>
-									<div className="inline-flex items-center">
-										<MoonIcons decimal={data.days[index].moonphase} size={23} />
-										<div className="ml-2">{decimalToMoonPhase(data.days[index].moonphase)}</div>
-										<div className="text-left text-lg"></div>
-									</div>
-								</div>
-								<div className="flex flex-col items-center p-2">
+								<div className="flex flex-col items-center p-4 bg-slate-800/80 rounded-lg shadow-lg">
 									<div className="text-sky-300">Max UV Index</div>
-									<div className="text-left text-lg">
+									<div className="text-left">
 										<div className="inline-flex">{data.days[index].uvindex}</div>
 										{" - "}
 										{uvIndexToRisk(data.days[index].uvindex)}
@@ -247,18 +239,23 @@ export default function HourlyForecastOutlook({ data, model, units, timezone }) 
 										/>
 									</div>
 								</div>
-								<div className="flex flex-col items-center p-2">
-									<div className="flex flex-col mx-2">
-										<div className="text-sky-300 flex items-center">
-											Sunrise
-											<BsSunrise size={16} className="mx-1" color="orange" />
-										</div>
+								<div className="flex flex-col items-center p-3.5 px-4 bg-slate-800/70 rounded-lg shadow-lg">
+									<div className="text-sky-300 mb-2">Moon</div>
+									<div className="inline-flex items-center mb-2">
+										<MoonIcons decimal={data.days[index].moonphase} size={23} />
+										<div className="ml-2">{decimalToMoonPhase(data.days[index].moonphase)}</div>
+										<div className="text-left text-lg"></div>
+									</div>
+								</div>
+								<div className="flex flex-col items-start p-4 py-5 bg-slate-800/60 rounded-lg shadow-lg">
+									<div className="flex flex-row items-center mb-2">
+										<BsSunrise size={16} className="mx-1" color="orange" />
+										<div className="text-sky-300 flex items-center mr-2">Sunrise</div>
 										<div className="flex flex-row">{`${hourFormatter.format(new Date(data.days[index].sunriseEpoch * 1000))}`} </div>
 									</div>
-									<div className="flex flex-col mx-2">
-										<div className="text-sky-300 flex items-center">
-											Sunset <BsSunset size={16} className="mx-1" color="orange" />
-										</div>
+									<div className="flex flex-row items-center">
+										<BsSunset size={16} className="mx-1" color="orange" />
+										<div className="text-sky-300 flex items-center mr-3">Sunset</div>
 										<div className="flex flex-row">{`${hourFormatter.format(new Date(data.days[index].sunsetEpoch * 1000))}`}</div>
 										{/* <div>
 									{getDayLength(
