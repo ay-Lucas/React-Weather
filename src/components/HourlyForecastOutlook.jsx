@@ -90,24 +90,15 @@ export default function HourlyForecastOutlook({ data, units, timezone }) {
 				<div key={uuidv4()} className="text-center">
 					{(time === "12 AM" || time === "0") && (
 						<div className="my-3 text-[#63c1ff] font-semibold  rounded-lg w-full py-4">
-							{dateFormatter.format(
-								new Date(
-									hours[index].datetimeEpoch * 1000 +
-										`${index / 24}` * 24 * 60 * 60
-								)
-							)}
+							{dateFormatter.format(new Date(hours[index].datetimeEpoch * 1000 + `${index / 24}` * 24 * 60 * 60))}
 						</div>
 					)}
 					<div className="flex items-center flex-nowrap whitespace-nowrap w-full py-2">
-						<h1 className="flex items-center order-1 lg:text-lg sm:text-md flex-nowrap w-1/4">
-							{time}
-						</h1>
+						<h1 className="flex items-center order-1 lg:text-lg sm:text-md flex-nowrap w-1/4">{time}</h1>
 						<div className="flex items-center mx-5 order-2 ">
 							{getIcon(hours[index].icon)}
 
-							<div className="flex  items-center mx-4 order-3">
-								{hours[index].conditions}
-							</div>
+							<div className="flex  items-center mx-4 order-3">{hours[index].conditions}</div>
 						</div>
 						<h2 className="flex items-center flex-auto order-4 text-md justify-end ">
 							{Math.round(hours[index].temp) + "°"}

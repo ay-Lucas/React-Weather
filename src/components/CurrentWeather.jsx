@@ -40,16 +40,8 @@ const CurrentWeather = ({ data, aqi, units, timezone }) => {
 		if (data.alerts !== undefined) {
 			const alertList = data.alerts.map((alert) => {
 				return (
-					<div
-						key={alert.id}
-						className="flex-row bg-red-500/30 rounded-lg p-1 my-1"
-					>
-						<a
-							href={alert.link}
-							rel="noreferrer noopener"
-							target="_blank"
-							className="flex-col"
-						>
+					<div key={alert.id} className="flex-row bg-red-500/30 rounded-lg p-1 my-1">
+						<a href={alert.link} rel="noreferrer noopener" target="_blank" className="flex-col">
 							{alert.headline}
 						</a>
 					</div>
@@ -95,9 +87,7 @@ const CurrentWeather = ({ data, aqi, units, timezone }) => {
 				setAQI(aqius);
 				whatColor(aqius);
 				console.log(getStartingIndex());
-				console.log(
-					"visual API aqi: " + data.days[0].hours[getStartingIndex()].aqius
-				);
+				console.log("visual API aqi: " + data.days[0].hours[getStartingIndex()].aqius);
 			}
 		} catch (e) {
 			console.log("AirNow API aqi error" + e);
@@ -109,15 +99,8 @@ const CurrentWeather = ({ data, aqi, units, timezone }) => {
 	return (
 		<div className="flex flex-col items-center justify-between h-full">
 			<div className="inline-flex items-baseline justify-left w-full">
-				<div className="text-2xl text-left inline-flex mb-7 mr-2">
-					Current Weather
-				</div>
-				<div className="tracking-wide inline-flex dark:text-gray-400">
-					As of{" "}
-					{locationHourFormatter.format(
-						data.currentConditions.datetimeEpoch * 1000
-					)}
-				</div>
+				<div className="text-2xl text-left inline-flex mb-7 mr-2">Current Weather</div>
+				<div className="tracking-wide inline-flex dark:text-gray-400">As of {locationHourFormatter.format(data.currentConditions.datetimeEpoch * 1000)}</div>
 			</div>
 			{alert.length > 0 && (
 				<>
@@ -126,14 +109,10 @@ const CurrentWeather = ({ data, aqi, units, timezone }) => {
 			)}
 			<div className="flex flex-row w-full h-full items-center">
 				<div className="">{getIcon(data.currentConditions.icon, 60)}</div>
-				<div className="text-6xl font-light ml-3">
-					{`${Math.round(data.currentConditions.temp)}`}
-				</div>
+				<div className="text-6xl font-light ml-3">{`${Math.round(data.currentConditions.temp)}`}</div>
 				<span className="text-3xl font-light pb-5">{units.tempSign}</span>
 				<div className="flex flex-col ml-3 items-baseline ">
-					<label className="mix-blend-overlay">
-						{data.currentConditions.conditions}
-					</label>
+					<label className="mix-blend-overlay">{data.currentConditions.conditions}</label>
 					<div className="inline-flex">
 						<label className="mr-1.5">Feels like </label>
 						{Math.round(data.currentConditions.feelslike)}°
@@ -141,9 +120,7 @@ const CurrentWeather = ({ data, aqi, units, timezone }) => {
 					{data.currentConditions.precipprob > 0 && (
 						<div className="inline-flex items-center">
 							<GiWaterDrop size={17} className="text-sky-500 -ml-1 mr-1" />
-							<div className="">
-								{Math.round(data.currentConditions.precipprob)}%
-							</div>
+							<div className="">{Math.round(data.currentConditions.precipprob)}%</div>
 						</div>
 					)}
 				</div>
@@ -156,12 +133,7 @@ const CurrentWeather = ({ data, aqi, units, timezone }) => {
 					<div className="inline-flex flex-col">
 						<div className="text-md">Air Quality</div>
 						<div className="flex items-center">
-							<div
-								style={{ backgroundColor: color }}
-								className={
-									"mr-1 ml-1 h-3 w-3 inline-flex items-center rounded-full"
-								}
-							></div>
+							<div style={{ backgroundColor: color }} className={"mr-1 ml-1 h-3 w-3 inline-flex items-center rounded-full"}></div>
 
 							<div className="">{AQI}</div>
 						</div>
