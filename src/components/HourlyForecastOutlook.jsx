@@ -83,27 +83,24 @@ export default function HourlyForecastOutlook({ data, units, timezone }) {
 	};
 
 	return (
-		<div className=" text-left w-full ">
-			<h1 className="text-2xl mb-2">Hourly</h1>
+		<div>
+			<div className="text-2xl mb-2 ml-4 ">Hourly</div>
 			<HorizontalScroll>
 				{times.map((time, index) => (
-					<div key={uuidv4()} className="text-center bg-slate-600 rounded-lg mx-2">
-						{(time === "12 AM" || time === "0") && (
-							<div className="my-3 text-[#63c1ff] font-semibold  rounded-lg w-full py-4">
-								{dateFormatter.format(new Date(hours[index].datetimeEpoch * 1000 + `${index / 24}` * 24 * 60 * 60))}
-							</div>
-						)}
-						<div className="flex items-center flex-nowrap whitespace-nowrap w-full py-2">
-							<h1 className="flex items-center order-1 lg:text-lg sm:text-md flex-nowrap w-1/4">{time}</h1>
-							<div className="flex items-center mx-5 order-2 ">
-								{getIcon(hours[index].icon)}
-
-								<div className="flex  items-center mx-4 order-3">{hours[index].conditions}</div>
-							</div>
-							<h2 className="flex items-center flex-auto order-4 text-md justify-end ">
+					<div key={uuidv4()} className="flex flex-col justify-center items-center">
+						<div key={uuidv4()} className="flex flex-col py-1 justify-evenly bg-slate-950/20 rounded-lg mr-3">
+							{(time === "12 AM" || time === "0") && (
+								<div className="ml-2 text-center  text-gray-100 text-sm my-2 font-semibold">
+									{dateFormatter.format(new Date(hours[index].datetimeEpoch * 1000 + `${index / 24}` * 24 * 60 * 60))}
+								</div>
+							)}
+							<div className="flex justify-center items-center text-sky-300 font-semibold">{time}</div>
+							<div className=" my-2 text-2xl inline-flex items-center justify-center">
+								<div className="mr-2">{getIcon(hours[index].icon, 25)}</div>
 								{Math.round(hours[index].temp) + "°"}
 								{/* {hours[index].datetime} */}
-							</h2>
+							</div>
+							<div className="flex flex-row flex-wrap justify-center w-40">{hours[index].conditions}</div>
 						</div>
 					</div>
 				))}
