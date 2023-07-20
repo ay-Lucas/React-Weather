@@ -111,27 +111,19 @@ function App() {
 				<div className="flex mx-auto">
 					<div className="box-content w-screen max-w-screen-lg">
 						<div className="mx-3 my-3">
-							<div className="flex mx-auto p-2 bg-[#0a1929]/30 rounded-lg ">
+							<div className="flex mx-auto p-2 bg-slate-950/20 shadow-sm rounded-lg ">
 								<LocationCard location={location} />
 							</div>
 							<div className="mt-3 lg:flex sm:inline-flex w-full ">
-								<div className="mr-0 sm:mr-1.5 bg-[#0a1929]/30 rounded-lg p-7 md:w-1/2 w-full">
+								<div className="mr-0 sm:mr-1.5 bg-slate-950/20 rounded-lg shadow-sm p-7 md:w-1/2 w-full">
 									{visualForecast && <CurrentWeather data={visualForecast} aqi={currentAqi} units={units} timezone={timeZone} />}
 								</div>
-								<div className="ml-0 sm:ml-1.5 mt-3 sm:mt-0 bg-[#0a1929]/30 rounded-lg p-7 md:w-1/2 w-full">
+								<div className="ml-0 sm:ml-1.5 mt-3 sm:mt-0 bg-slate-950/20 rounded-lg shadow-sm p-7 md:w-1/2 w-full">
 									{visualForecast && <Today data={visualForecast} units={units} timezone={timeZone} />}
 								</div>
 							</div>
-							<div className="my-5 w-full">
-								<div className="bg-[#0a1929]/30 rounded-lg p-5 w-full">
-									{visualForecast && <HourlyForecastOutlook data={visualForecast} units={units} timezone={timeZone} />}
-								</div>
-							</div>
-							<div className="w-full">
-								<div className="w-full pt-5 bg-[#0a1929]/30 rounded-lg shadow-2xl pb-2.5 justify-evenly">
-									{visualForecast && <DailyForecastOutlook data={visualForecast} units={units} timezone={timeZone} />}
-								</div>
-							</div>
+							<div className="mb-8 mt-4">{visualForecast && <HourlyForecastOutlook data={visualForecast} units={units} timezone={timeZone} />}</div>
+							<div>{visualForecast && <DailyForecastOutlook data={visualForecast} units={units} timezone={timeZone} />}</div>
 						</div>
 					</div>
 				</div>
