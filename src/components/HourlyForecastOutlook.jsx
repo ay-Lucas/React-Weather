@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
+import { HorizontalScroll } from "./HorizontalScroll";
 import { getIcon } from "./Icons";
 export default function HourlyForecastOutlook({ data, units, timezone }) {
 	console.log("HourlyForecastOutlook rendered");
@@ -82,31 +83,31 @@ export default function HourlyForecastOutlook({ data, units, timezone }) {
 	};
 
 	return (
-		<div className="mx-2">
-			<div className=" text-left mb-4 w-full ">
-				<h1 className="text-2xl ">Hourly</h1>
-			</div>
-			{times.map((time, index) => (
-				<div key={uuidv4()} className="text-center">
-					{(time === "12 AM" || time === "0") && (
-						<div className="my-3 text-[#63c1ff] font-semibold  rounded-lg w-full py-4">
-							{dateFormatter.format(new Date(hours[index].datetimeEpoch * 1000 + `${index / 24}` * 24 * 60 * 60))}
-						</div>
-					)}
-					<div className="flex items-center flex-nowrap whitespace-nowrap w-full py-2">
-						<h1 className="flex items-center order-1 lg:text-lg sm:text-md flex-nowrap w-1/4">{time}</h1>
-						<div className="flex items-center mx-5 order-2 ">
-							{getIcon(hours[index].icon)}
+		<div className=" text-left w-full ">
+			<h1 className="text-2xl mb-2">Hourly</h1>
+			<HorizontalScroll>
+				{times.map((time, index) => (
+					<div key={uuidv4()} className="text-center bg-slate-600 rounded-lg mx-2">
+						{(time === "12 AM" || time === "0") && (
+							<div className="my-3 text-[#63c1ff] font-semibold  rounded-lg w-full py-4">
+								{dateFormatter.format(new Date(hours[index].datetimeEpoch * 1000 + `${index / 24}` * 24 * 60 * 60))}
+							</div>
+						)}
+						<div className="flex items-center flex-nowrap whitespace-nowrap w-full py-2">
+							<h1 className="flex items-center order-1 lg:text-lg sm:text-md flex-nowrap w-1/4">{time}</h1>
+							<div className="flex items-center mx-5 order-2 ">
+								{getIcon(hours[index].icon)}
 
-							<div className="flex  items-center mx-4 order-3">{hours[index].conditions}</div>
+								<div className="flex  items-center mx-4 order-3">{hours[index].conditions}</div>
+							</div>
+							<h2 className="flex items-center flex-auto order-4 text-md justify-end ">
+								{Math.round(hours[index].temp) + "°"}
+								{/* {hours[index].datetime} */}
+							</h2>
 						</div>
-						<h2 className="flex items-center flex-auto order-4 text-md justify-end ">
-							{Math.round(hours[index].temp) + "°"}
-							{/* {hours[index].datetime} */}
-						</h2>
 					</div>
-				</div>
-			))}
+				))}
+			</HorizontalScroll>
 		</div>
 	);
 }

@@ -40,14 +40,7 @@ function App() {
 		tempSign: "°C",
 	};
 	const [units, setUnits] = useState(imperialUnits);
-	const currentAQIUrl =
-		AQI_URL +
-		"latitude=" +
-		coordinates.lat +
-		"&longitude=" +
-		coordinates.lon +
-		"&distance=25&API_KEY=" +
-		AQI_KEY;
+	const currentAQIUrl = AQI_URL + "latitude=" + coordinates.lat + "&longitude=" + coordinates.lon + "&distance=25&API_KEY=" + AQI_KEY;
 	const visualForecastUrl =
 		VISUAL_API_URL +
 		coordinates.lat +
@@ -113,55 +106,31 @@ function App() {
 
 	return (
 		<div className="h-screen overflow-x-hidden selection:bg-[#9c27b0]">
-			<Header
-				onSearchChange={handleOnSearchChange}
-				onUnitsChange={handleOnUnitsChange}
-			/>
+			<Header onSearchChange={handleOnSearchChange} onUnitsChange={handleOnUnitsChange} />
 			<div className="flex text-white">
-				<div className="flex mx-auto my-10">
-					<div className="box-content w-screen max-w-screen-lg ">
-						<div className="flex x-auto m-1 mt-2 p-2 bg-[#0a1929]/30 rounded-xl">
-							<LocationCard location={location} />
-						</div>
-						<div className="lg:flex sm:inline-flex w-full ">
-							<div className="mx-1 my-1 bg-[#0a1929]/30 rounded-2xl p-7 md:w-1/2 w-full">
-								{visualForecast && (
-									<CurrentWeather
-										data={visualForecast}
-										aqi={currentAqi}
-										units={units}
-										timezone={timeZone}
-									/>
-								)}
+				<div className="flex mx-auto">
+					<div className="box-content w-screen max-w-screen-lg">
+						<div className="mx-3 my-3">
+							<div className="flex mx-auto p-2 bg-[#0a1929]/30 rounded-lg ">
+								<LocationCard location={location} />
 							</div>
-							<div className="mx-1 my-1 bg-[#0a1929]/30 rounded-2xl p-7 md:w-1/2 w-full">
-								{visualForecast && (
-									<Today
-										data={visualForecast}
-										units={units}
-										timezone={timeZone}
-									/>
-								)}
+							<div className="mt-3 lg:flex sm:inline-flex w-full ">
+								<div className="mr-0 sm:mr-1.5 bg-[#0a1929]/30 rounded-lg p-7 md:w-1/2 w-full">
+									{visualForecast && <CurrentWeather data={visualForecast} aqi={currentAqi} units={units} timezone={timeZone} />}
+								</div>
+								<div className="ml-0 sm:ml-1.5 mt-3 sm:mt-0 bg-[#0a1929]/30 rounded-lg p-7 md:w-1/2 w-full">
+									{visualForecast && <Today data={visualForecast} units={units} timezone={timeZone} />}
+								</div>
 							</div>
-						</div>
-						<div className="lg:flex sm:inline-flex w-full">
-							{/* <div className="mx-1 my-1 bg-[#0a1929]/30 rounded-2xl p-7 md:w-1/2 w-full">
-								{visualForecast && (
-									<HourlyForecastOutlook
-										data={visualForecast}
-										units={units}
-										timezone={timeZone}
-									/>
-								)}
-							</div> */}
-							<div className="mx-1 my-1 rounded-2xl  w-full">
-								{visualForecast && (
-									<DailyForecastOutlook
-										data={visualForecast}
-										units={units}
-										timezone={timeZone}
-									/>
-								)}
+							<div className="my-5 w-full">
+								<div className="bg-[#0a1929]/30 rounded-lg p-5 w-full">
+									{visualForecast && <HourlyForecastOutlook data={visualForecast} units={units} timezone={timeZone} />}
+								</div>
+							</div>
+							<div className="w-full">
+								<div className="w-full pt-5 bg-[#0a1929]/30 rounded-lg shadow-2xl pb-2.5 justify-evenly">
+									{visualForecast && <DailyForecastOutlook data={visualForecast} units={units} timezone={timeZone} />}
+								</div>
 							</div>
 						</div>
 					</div>
