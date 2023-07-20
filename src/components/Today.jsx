@@ -16,22 +16,18 @@ const Today = ({ data, units, timezone }) => {
 		<div className="mx-2 lg:text-md sm:text-md">
 			<div className="w-full items-center flex flex-row justify-between">
 				<div className="text-2xl inline-flex mr-3">Today</div>
-				<div className="text-md text-gray-300 ">
-					{dateFormatter.format(new Date())}
-				</div>
+				<div className="text-md text-gray-300 ">{dateFormatter.format(new Date())}</div>
 			</div>
 			<div className="flex flex-row justify-between py-2 border-gray-800 border-b-[1px]">
 				<label>High/Low</label>
 				<label className="whitespace-nowrap">
-					{Math.round(data.days[0].tempmax)}° /{" "}
-					{Math.round(data.days[0].tempmin)}°
+					{Math.round(data.days[0].tempmax)}° / {Math.round(data.days[0].tempmin)}°
 				</label>
 			</div>
 			<div className="flex flex-row justify-between py-2 border-gray-800 border-b-[1px]">
 				<label>Feels like</label>
 				<label>
-					{Math.round(data.days[0].feelslikemax)}° /{" "}
-					{Math.round(data.days[0].feelslikemin)}°
+					{Math.round(data.days[0].feelslikemax)}° / {Math.round(data.days[0].feelslikemin)}°
 				</label>
 			</div>
 			<div className="flex flex-row justify-between py-2 border-gray-800 border-b-[1px]">
@@ -44,13 +40,8 @@ const Today = ({ data, units, timezone }) => {
 			<div className="flex flex-row justify-between py-2 border-gray-800 border-b-[1px]">
 				<label>Sunrise/Sunset</label>
 				<label>
-					{`${hourFormatter.format(
-						new Date(data.currentConditions.sunriseEpoch * 1000)
-					)}`}{" "}
-					/{" "}
-					{`${hourFormatter.format(
-						new Date(data.currentConditions.sunsetEpoch * 1000)
-					)}`}
+					{`${hourFormatter.format(new Date(data.currentConditions.sunriseEpoch * 1000))}`} /{" "}
+					{`${hourFormatter.format(new Date(data.currentConditions.sunsetEpoch * 1000))}`}
 				</label>
 			</div>
 			<div className="flex flex-row justify-between py-2 border-gray-800 border-b-[1px]">

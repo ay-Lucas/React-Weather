@@ -79,7 +79,7 @@ export default function HourlyForecastOutlook({ data, model, units, timezone }) 
 		return `${dayLengthHours} hrs ${dayLengthMinutes} min ${nightLengthHours} hrs ${nightLengthMinutes} min`;
 	}
 	return (
-		<div className="pt-5 bg-[#0a1929]/30 rounded-2xl shadow-2xl pb-2.5 justify-evenly">
+		<div className="">
 			<div className="text-left mb-4">
 				<div className="text-2xl text-left ml-4">Daily Forecast</div>
 			</div>
