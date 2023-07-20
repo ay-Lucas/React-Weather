@@ -88,19 +88,19 @@ export default function HourlyForecastOutlook({ data, units, timezone }) {
 			<HorizontalScroll>
 				{times.map((time, index) => (
 					<div key={uuidv4()} className="flex flex-col justify-center items-center">
-						<div key={uuidv4()} className="flex flex-col py-1 justify-evenly bg-slate-950/20 rounded-lg mr-3">
+						<div key={uuidv4()} className="flex flex-col py-1 bg-slate-950/20 rounded-lg mr-3">
 							{(time === "12 AM" || time === "0") && (
 								<div className="ml-2 text-center  text-gray-100 text-sm my-2 font-semibold">
 									{dateFormatter.format(new Date(hours[index].datetimeEpoch * 1000 + `${index / 24}` * 24 * 60 * 60))}
 								</div>
 							)}
 							<div className="flex justify-center items-center text-sky-300 font-semibold">{time}</div>
-							<div className=" my-2 text-2xl inline-flex items-center justify-center">
+							<div className="inline-flex my-1 text-2xl items-center justify-center">
 								<div className="mr-2">{getIcon(hours[index].icon, 25)}</div>
 								{Math.round(hours[index].temp) + "°"}
 								{/* {hours[index].datetime} */}
 							</div>
-							<div className="flex flex-row flex-wrap justify-center w-40">{hours[index].conditions}</div>
+							<div className="flex flex-wrap mb-1 justify-center w-[8.25rem]">{hours[index].conditions}</div>
 						</div>
 					</div>
 				))}
