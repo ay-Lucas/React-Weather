@@ -2,20 +2,13 @@
 // import { ScrollButton } from "./ScrollButton";
 import { ChevronLeftRounded, ChevronRightRounded } from "@mui/icons-material";
 import { useEffect, useRef, useState } from "react";
+import { useDraggable } from "react-use-draggable-scroll";
 export const HorizontalScroll = ({ children }) => {
 	const elementRef = useRef(null);
 	const [arrowDisable, setArrowDisable] = useState(true);
-	// const [defaultView, setSetDefaultView] = useState(0);
-	// const scrollBack = () => {
-	// 	elementRef.current?.scrollIntoView({ behavior: "smooth" });
-	// 	console.log("hello");
-	// 	scrollTo(elementRef);
-	// };
-	// const scrollForward = () => {
-	// 	elementRef.current?.scrollIntoView({ behavior: "smooth" });
-	// 	console.log("hello");
-	// 	scrollTo(elementRef);
-	// };
+	const { events } = useDraggable(elementRef, {
+		applyRubberBandEffect: true, // activate rubber band effect
+	});
 	const handleHorizontalScroll = (element, speed, distance, step) => {
 		let scrollAmount = 0;
 		const slideTimer = setInterval(() => {
@@ -44,6 +37,7 @@ export const HorizontalScroll = ({ children }) => {
 				className="flex overflow-x-scroll w-full overflow-hidden scrollbar-hide"
 				style={{ msOverflowStyle: "none", WebkitSCrollBar: "none" }}
 				ref={elementRef}
+				{...events}
 			>
 				{children}
 			</div>
