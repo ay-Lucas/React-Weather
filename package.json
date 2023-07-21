@@ -7,7 +7,8 @@
 		"dev": "vite",
 		"build": "vite build",
 		"lint": "eslint src --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-		"preview": "vite preview"
+		"preview": "vite preview",
+		"host": "vite --host"
 	},
 	"dependencies": {
 		"@emotion/react": "^11.11.1",
@@ -19,6 +20,7 @@
 		"react-dom": "^18.2.0",
 		"react-icons": "^4.10.1",
 		"react-select-async-paginate": "^0.7.3",
+		"tailwind-scrollbar-hide": "^1.1.7",
 		"uuid": "^9.0.0",
 		"vite-plugin-svgr": "^3.2.0"
 	},

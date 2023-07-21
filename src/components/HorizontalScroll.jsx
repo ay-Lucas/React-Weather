@@ -1,11 +1,11 @@
 /* eslint-disable react/prop-types */
 // import { ScrollButton } from "./ScrollButton";
 import { ChevronLeftRounded, ChevronRightRounded } from "@mui/icons-material";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 export const HorizontalScroll = ({ children }) => {
 	const elementRef = useRef(null);
 	const [arrowDisable, setArrowDisable] = useState(true);
-
+	// const [defaultView, setSetDefaultView] = useState(0);
 	// const scrollBack = () => {
 	// 	elementRef.current?.scrollIntoView({ behavior: "smooth" });
 	// 	console.log("hello");
@@ -31,10 +31,23 @@ export const HorizontalScroll = ({ children }) => {
 			}
 		}, speed);
 	};
+	const toDefaultView = () => {
+		elementRef.current.scrollLeft = 0;
+	};
+	useEffect(() => {
+		toDefaultView();
+	}, []);
 
 	return (
 		<div className="w-full items-center">
-			<div className="inline-flex w-full justify-between">
+			<div
+				className="flex overflow-x-scroll w-full overflow-hidden scrollbar-hide"
+				style={{ msOverflowStyle: "none", WebkitSCrollBar: "none" }}
+				ref={elementRef}
+			>
+				{children}
+			</div>
+			<div className="inline-flex w-full justify-between my-4 px-1">
 				<button
 					onClick={() => {
 						handleHorizontalScroll(elementRef.current, 3, 1000, -10);
@@ -52,9 +65,6 @@ export const HorizontalScroll = ({ children }) => {
 				>
 					<ChevronRightRounded />
 				</button>
-			</div>
-			<div className="flex overflow-x-scroll w-full overflow-hidden" style={{ msOverflowStyle: "none", WebkitSCrollBar: "none" }} ref={elementRef}>
-				{children}
 			</div>
 		</div>
 	);

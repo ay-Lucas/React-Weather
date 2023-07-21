@@ -122,7 +122,8 @@ function App() {
 									{visualForecast && <Today data={visualForecast} units={units} timezone={timeZone} />}
 								</div>
 							</div>
-							<div className="mb-8 mt-4">{visualForecast && <HourlyForecastOutlook data={visualForecast} units={units} timezone={timeZone} />}</div>
+							<div className="mb-3 mt-4">{visualForecast && <HourlyForecastOutlook data={visualForecast} units={units} timezone={timeZone} />}</div>
+
 							<div>{visualForecast && <DailyForecastOutlook data={visualForecast} units={units} timezone={timeZone} />}</div>
 						</div>
 					</div>
