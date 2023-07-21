@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { HorizontalScroll } from "./HorizontalScroll";
 import { getIcon } from "./Icons";
+
 export default function HourlyForecastOutlook({ data, units, timezone }) {
 	console.log("HourlyForecastOutlook rendered");
 	const date = new Date();
@@ -19,6 +20,12 @@ export default function HourlyForecastOutlook({ data, units, timezone }) {
 	const dateFormatter = Intl.DateTimeFormat(timezone.options.locale, {
 		timeZone: timezone.timezone,
 		weekday: "long",
+		month: "numeric",
+		day: "numeric",
+	});
+	const shortDateFormatter = Intl.DateTimeFormat(timezone.options.locale, {
+		timeZone: timezone.timezone,
+		weekday: "short",
 		month: "numeric",
 		day: "numeric",
 	});
@@ -79,28 +86,31 @@ export default function HourlyForecastOutlook({ data, units, timezone }) {
 		// 	});
 		// });
 		// console.log(array);
+
 		return array;
 	};
 
 	return (
 		<div>
-			<div className="text-2xl mb-2 ml-4 ">Hourly</div>
+			<div className="text-2xl mb-3 ml-4 ">Hourly</div>
 			<HorizontalScroll>
 				{times.map((time, index) => (
-					<div key={uuidv4()} className="flex flex-col justify-center items-center">
-						<div key={uuidv4()} className="flex flex-col py-1 bg-slate-950/20 rounded-lg mr-3">
-							{(time === "12 AM" || time === "0") && (
-								<div className="ml-2 text-center  text-gray-100 text-sm my-2 font-semibold">
-									{dateFormatter.format(new Date(hours[index].datetimeEpoch * 1000 + `${index / 24}` * 24 * 60 * 60))}
-								</div>
-							)}
-							<div className="flex justify-center items-center text-sky-300 font-semibold">{time}</div>
-							<div className="inline-flex my-1 text-2xl items-center justify-center">
+					<div key={uuidv4()} className="flex flex-col justify-between items-center">
+						<div className="flex flex-col py-1 pt-3 bg-slate-950/20 rounded-md justify-between mr-3 shadow-sm">
+							<div className="text-center items-baseline text-sky-300 ">
+								{time}
+								{(time === "12 AM" || time === "0") && (
+									<label className="ml-1  items-baseline">
+										| {shortDateFormatter.format(new Date(hours[index].datetimeEpoch * 1000 + `${index / 24}` * 24 * 60 * 60))}
+									</label>
+								)}
+							</div>
+							<div className="inline-flex mt-3 text-2xl items-center justify-center">
 								<div className="mr-2">{getIcon(hours[index].icon, 25)}</div>
 								{Math.round(hours[index].temp) + "°"}
 								{/* {hours[index].datetime} */}
 							</div>
-							<div className="flex flex-wrap mb-1 justify-center w-[8.25rem]">{hours[index].conditions}</div>
+							<div className="flex flex-wrap items-center text-center min-h-[3rem] justify-center w-[8.25rem]">{hours[index].conditions}</div>
 						</div>
 					</div>
 				))}
