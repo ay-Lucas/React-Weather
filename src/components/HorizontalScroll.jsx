@@ -14,6 +14,7 @@ export const HorizontalScroll = ({ children, dailyDate }) => {
 	const { events } = useDraggable(elementRef, {
 		applyRubberBandEffect: false,
 	});
+
 	const handleHorizontalScroll = (element, speed, distance, step) => {
 		let scrollAmount = 0;
 		const slideTimer = setInterval(() => {
@@ -26,16 +27,15 @@ export const HorizontalScroll = ({ children, dailyDate }) => {
 				// setArrowDisable(true);
 				// drag scroll causes scrollLeft to unsync
 				// causing arrowDisable to be true prematurely
+				setArrowDisable(false);
 			} else {
 				setArrowDisable(false);
 			}
 		}, speed);
-		console.log(element.scrollLeft);
-
 		setTimeout(() => {
 			console.log(element.scrollLeft);
 			dailyDate(element.scrollLeft);
-		}, [1000]);
+		}, [500]);
 	};
 	// resets scroll position after rerender
 	const toDefaultView = () => {
@@ -43,19 +43,32 @@ export const HorizontalScroll = ({ children, dailyDate }) => {
 	};
 	useEffect(() => {
 		toDefaultView();
-	}, []);
+	}, [children]);
+
+	const updateScrollAmount = (element) => {
+		dailyDate(Math.round(element.scrollLeft));
+	};
 
 	return (
-		<div className="w-full items-center">
-			<div className="flex space-x-3 overflow-x-scroll w-full overflow-hidden scrollbar-hide" ref={elementRef} {...events}>
+		<div className="w-full mb-8 items-center justify-center">
+			<div
+				className="flex space-x-3 overflow-x-scroll w-full  overflow-hidden scrollbar-hide"
+				ref={elementRef}
+				{...events}
+				onMouseUp={() => {
+					updateScrollAmount(elementRef.current);
+				}}
+				onMouseDownCapture={() => {
+					updateScrollAmount(elementRef.current);
+				}}
+			>
 				{children}
 			</div>
-			<div className="inline-flex w-full justify-between my-4 px-1">
+			<div className="flex min-w-full mt-2 justify-between">
 				<button
 					onClick={() => {
 						handleHorizontalScroll(elementRef.current, 3, 1040.25, -10);
 					}}
-					disabled={arrowDisable}
 					className="flex items-center h-6 w-6 rounded-full  bg-slate-700 hover:bg-slate-800"
 				>
 					<ChevronLeftRounded />
