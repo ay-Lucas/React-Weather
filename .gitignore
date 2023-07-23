@@ -33,3 +33,5 @@ Api.js
 .git.bfg-report/
 DailyAccordion
 DailyAccordion.jsx
+jsonconfig.json
+jsconfig.json

@@ -139,3 +139,10 @@ export const decimalToMoonPhase = (decimal) => {
 		console.log("decimalToMoonPhase: invalid decimal");
 	}
 };
+export const getDate = (data, index) => {
+	return new Date(data.days[index].datetimeEpoch * 1000).toLocaleDateString([], {
+		day: "numeric",
+		weekday: "short",
+		month: "numeric",
+	});
+};
