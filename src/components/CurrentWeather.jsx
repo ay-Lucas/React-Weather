@@ -108,7 +108,7 @@ const CurrentWeather = ({ data, aqi, units, timezone }) => {
 
 	return (
 		<div className="flex flex-col items-center h-full justify-between">
-			<div className="flex flex-row items-baseline justify-start mb-5 w-full">
+			<div className="flex flex-row items-baseline justify-start w-full">
 				<div className="text-2xl text-left inline-flex mr-2">Current Weather</div>
 				<div className="tracking-wide inline-flex dark:text-gray-400">As of {locationHourFormatter.format(data.currentConditions.datetimeEpoch * 1000)}</div>
 			</div>
@@ -117,14 +117,19 @@ const CurrentWeather = ({ data, aqi, units, timezone }) => {
 					<div className="text-md flex-row mb-4 text-left">{alert}</div>
 				</>
 			)}
-			<div className="flex flex-col w-full justify-start">
-				<div className="flex flex-row w-full h-full items-center">
-					<div className="">{getIcon(data.currentConditions.icon, 60)}</div>
-					<div className="text-6xl font-light ml-3">{`${Math.round(data.currentConditions.temp)}`}</div>
-					<span className="text-3xl font-light pb-5">{units.tempSign}</span>
-					<div className="flex flex-col ml-3 items-baseline ">
-						<label className="mix-blend-overlay">{data.currentConditions.conditions}</label>
+			<div className="flex flex-col w-full justify-start mt-8">
+				<div className="flex flex-row w-full h-full items-center ">
+					<div className="flex flex-col">
 						<div className="inline-flex">
+							<div className="">{getIcon(data.currentConditions.icon, 60)}</div>
+							<div className="text-6xl font-light ml-3">{`${Math.round(data.currentConditions.temp)}`}</div>
+							<span className="text-3xl font-light pb-5">{units.tempSign}</span>
+						</div>
+					</div>
+
+					<div className="flex flex-col ml-3 justify-evenly h-full">
+						<label className="flex mix-blend-overlay">{data.currentConditions.conditions}</label>
+						<div className="flex">
 							<label className="mr-1.5">Feels like </label>
 							{Math.round(data.currentConditions.feelslike)}°
 						</div>
@@ -137,6 +142,9 @@ const CurrentWeather = ({ data, aqi, units, timezone }) => {
 					</div>
 				</div>
 				{data.days[0].description !== undefined && <div className="flex flex-row flex-auto w-full justify-start mt-3">{data.days[0].description}</div>}
+				<div className="flex flex-row font-light text-sky-300 whitespace-nowrap">
+					<div className="mr-1">Day {Math.round(data.days[0].tempmax)}° •</div> <div> Night {Math.round(data.days[0].tempmin)}°</div>
+				</div>
 			</div>
 
 			<div className="flex flex-row items-center justify-center">
@@ -146,7 +154,7 @@ const CurrentWeather = ({ data, aqi, units, timezone }) => {
 			<div className="flex flex-wrap text-base items-center w-full  justify-around md:justify-between mt-5 md:mt-0 ">
 				{AQI !== null && (
 					<div className="inline-flex flex-col">
-						<div className="text-md">Air Quality</div>
+						<div className="text-md text-sky-300">Air Quality</div>
 						<div className="flex items-center">
 							<div style={{ backgroundColor: color }} className={"mr-1 ml-1 h-3 w-3 inline-flex items-center rounded-full"}></div>
 
@@ -155,23 +163,23 @@ const CurrentWeather = ({ data, aqi, units, timezone }) => {
 					</div>
 				)}
 				<div className="inline-flex flex-col">
-					<div className="text-md">Humidity</div>
+					<div className="text-md text-sky-300">Humidity</div>
 					<div>{Math.round(data.currentConditions.humidity)}%</div>
 				</div>
 				<div className="inline-flex flex-col">
-					<div className="text-md">Wind</div>
+					<div className="text-md text-sky-300">Wind</div>
 					<div>
 						{Math.round(data.currentConditions.windspeed)} {units.wind}
 					</div>
 				</div>
 				<div className="inline-flex flex-col">
-					<div className="text-md">Pressure</div>
+					<div className="text-md text-sky-300">Pressure</div>
 					<div>
 						{Math.round(data.currentConditions.pressure)} {units.pressure}
 					</div>
 				</div>
 				<div className="inline-flex flex-col items-center mt-3">
-					<div className="text-white">UV Index</div>
+					<div className="text-sky-300">UV Index</div>
 					<div className="inline-flex ">
 						{data.currentConditions.uvindex}
 						{" - "}
