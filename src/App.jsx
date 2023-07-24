@@ -111,9 +111,7 @@ function App() {
 				<div className="flex mx-auto">
 					<div className="box-content w-screen max-w-screen-lg">
 						<div className="mx-3 my-3">
-							<div className="flex mx-auto p-2 bg-slate-950/20 shadow-sm rounded-lg ">
-								<LocationCard location={location} />
-							</div>
+							<div className="">{visualForecast && <LocationCard location={location} timezone={timeZone} data={visualForecast} />}</div>
 							<div className="mt-3 lg:flex sm:inline-flex w-full ">
 								<div className="mr-0 sm:mr-1.5 bg-slate-950/20 rounded-lg shadow-sm py-5 px-6 md:w-1/2 w-full">
 									{visualForecast && <CurrentWeather data={visualForecast} aqi={currentAqi} units={units} timezone={timeZone} />}

@@ -112,11 +112,11 @@ const CurrentWeather = ({ data, aqi, units, timezone }) => {
 				<div className="text-2xl text-left inline-flex mr-2">Current Weather</div>
 				<div className="tracking-wide inline-flex dark:text-gray-400">As of {locationHourFormatter.format(data.currentConditions.datetimeEpoch * 1000)}</div>
 			</div>
-			{alert.length > 0 && (
+			{/* {alert.length > 0 && (
 				<>
 					<div className="text-md flex-row mb-4 text-left">{alert}</div>
 				</>
-			)}
+			)} */}
 			<div className="flex flex-col w-full justify-start mt-8">
 				<div className="flex flex-row w-full h-full items-center ">
 					<div className="flex flex-col">
