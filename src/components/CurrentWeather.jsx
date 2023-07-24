@@ -2,7 +2,9 @@
 import { colors } from "@mui/material";
 import { green, orange, red, yellow } from "@mui/material/colors";
 import { useEffect, useState } from "react";
+import { BsFillCircleFill } from "react-icons/bs";
 import { GiWaterDrop } from "react-icons/gi";
+import { uvIndexToColor, uvIndexToPercent, uvIndexToRisk } from "../utility";
 import { getIcon } from "./Icons";
 const CurrentWeather = ({ data, aqi, units, timezone }) => {
 	// const [time, setTime] = useState(null);
@@ -141,7 +143,7 @@ const CurrentWeather = ({ data, aqi, units, timezone }) => {
 				<div className="flex flex-col"></div>
 			</div>
 			{alert.length > 0 && <div className="my-5"></div>}
-			<div className="text-base items-center w-full flex flex-wrap justify-between">
+			<div className="flex flex-wrap text-base items-center w-full  justify-around md:justify-between mt-5 md:mt-0 ">
 				{AQI !== null && (
 					<div className="inline-flex flex-col">
 						<div className="text-md">Air Quality</div>
@@ -166,6 +168,37 @@ const CurrentWeather = ({ data, aqi, units, timezone }) => {
 					<div className="text-md">Pressure</div>
 					<div>
 						{Math.round(data.currentConditions.pressure)} {units.pressure}
+					</div>
+				</div>
+				<div className="inline-flex flex-col items-center mt-3">
+					<div className="text-white">UV Index</div>
+					<div className="inline-flex ">
+						{data.currentConditions.uvindex}
+						{" - "}
+						{uvIndexToRisk(data.currentConditions.uvindex)}
+					</div>
+					<div className="text-left min-w-[5rem]">
+						<div
+							style={{
+								marginTop: "0.4rem",
+								height: "0.2rem",
+								borderRadius: "0.5rem",
+								background: "linear-gradient(to right, green, yellow, orange, red, violet )",
+							}}
+							className=""
+						>
+							{" "}
+						</div>
+						<BsFillCircleFill
+							size={8}
+							className=" border-[1.75px] rounded-full"
+							color={`${uvIndexToColor(data.currentConditions.uvindex)}`}
+							style={{
+								color: `${uvIndexToColor(data.currentConditions.uvindex)}`,
+								marginTop: "-.35rem",
+								marginLeft: `${uvIndexToPercent(data.currentConditions.uvindex)}`,
+							}}
+						/>
 					</div>
 				</div>
 			</div>

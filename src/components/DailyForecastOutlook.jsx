@@ -43,26 +43,6 @@ export default function HourlyForecastOutlook({ data, model, units, timezone }) 
 
 			return nextDays;
 		};
-		// const getNextDays = () => {
-		// 	const currentDay = new Date(data.currentConditions.datetimeEpoch * 1000);
-		// 	const nextFiveDays = [];
-		// 	for (let i = 0; i < data.days.length; i++) {
-		// 		const nextDay = new Date(
-		// 			currentDay.getTime() + i * 60 * 60 * 1000 * 24
-		// 		);
-		// 		nextFiveDays.push(
-		// 			nextDay.toLocaleDateString([], {
-		// 				weekday: "short",
-		// 			}) +
-		// 				" " +
-		// 				nextDay.toLocaleString([], {
-		// 					day: "2-digit",
-		// 				})
-		// 		);
-		// 	}
-
-		// 	return nextFiveDays;
-		// };
 		setDays(getNextDays());
 	}, [data, model, units]);
 	function getDayLength(sunriseEpoch, sunsetEpoch) {
@@ -211,7 +191,7 @@ export default function HourlyForecastOutlook({ data, model, units, timezone }) 
 								<div className="flex flex-row items-center p-2 w-full flex-wrap justify-around ">
 									<div className="flex flex-col items-center p-4 bg-slate-800/20 rounded-xl shadow-sm">
 										<div className="text-sky-300">Max UV Index</div>
-										<div className="text-left">
+										<div className="text-left min-w-[5rem]">
 											<div className="inline-flex">{data.days[index].uvindex}</div>
 											{" - "}
 											{uvIndexToRisk(data.days[index].uvindex)}

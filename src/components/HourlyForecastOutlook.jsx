@@ -94,18 +94,16 @@ export default function HourlyForecastOutlook({ data, units, timezone }) {
 							{/* {hours[index].datetime} */}
 						</div>
 						<div className="flex flex-wrap items-center text-center min-h-[3rem] justify-center w-[8.25rem]">{hours[index].conditions}</div>
-						{
-							<div className="inline-flex items-center justify-center pb-1">
-								<GiWaterDrop size={17} className="text-sky-500 -ml-1 mr-1" />
-								<div className="">{hours[index].precipprob}%</div>
-							</div>
-						}
-					</div>
-					{
-						<div className="inline-flex  text-center items-baseline cursor-default" style={{ color: colors[index + startingIndex + 1] }}>
-							{time}
+
+						<div className="inline-flex items-center justify-center pb-1">
+							<GiWaterDrop size={17} className="text-sky-500 -ml-1 mr-1" />
+							<div className="">{hours[index].precipprob}%</div>
 						</div>
-					}
+					</div>
+
+					<div className="inline-flex  text-center items-baseline cursor-default" style={{ color: colors[index + startingIndex + 1] }}>
+						{time}
+					</div>
 				</div>
 			))}
 		</HourlyInterface>

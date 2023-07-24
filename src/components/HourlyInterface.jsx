@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { HorizontalScroll } from "./HorizontalScroll";
 // eslint-disable-next-line react/prop-types
+//TODO: scroll tracking does not work on mobile / small screens
 export const HourlyInterface = ({ children, hours, data, startingIndex, timezone, colors }) => {
 	const locationHourFormatter = Intl.DateTimeFormat(timezone.options.locale, {
 		timeZone: timezone.timezone,

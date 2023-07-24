@@ -84,19 +84,19 @@ export const uvIndexToPercent = (uvIndex) => {
 		case 1:
 			return "9%";
 		case 2:
-			return "18%";
+			return "14%";
 		case 3:
-			return "27%";
+			return "23%";
 		case 4:
-			return "36%";
+			return "32%";
 		case 5:
-			return "45%";
+			return "41%";
 		case 6:
-			return "55%";
+			return "43%";
 		case 7:
-			return "63%";
+			return "47%";
 		case 8:
-			return "72%";
+			return "70%";
 		case 9:
 			return "81%";
 		case 10:
