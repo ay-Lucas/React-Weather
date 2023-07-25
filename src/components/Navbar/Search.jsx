@@ -2,10 +2,17 @@
 import { useState } from "react";
 import { BsSearch } from "react-icons/bs";
 import { AsyncPaginate } from "react-select-async-paginate";
-import { AUTOSUGGEST_URL, geoApiOptions } from "../../Api.js";
+import { AUTOSUGGEST_URL, GEO_DB_HOST, GEO_DB_KEY } from "../../Api.js";
 // eslint-disable-next-line react/prop-types
 const Search = ({ onSearchChange }) => {
 	const [search, setSearch] = useState(null);
+	const geoApiOptions = {
+		method: "GET",
+		headers: {
+			"X-RapidAPI-Key": GEO_DB_KEY,
+			"X-RapidAPI-Host": GEO_DB_HOST,
+		},
+	};
 	const loadOptions = (inputValue) => {
 		if (inputValue === "") return Promise.resolve({ options: [] });
 		if (inputValue.length < 3) return Promise.resolve({ options: [] });
