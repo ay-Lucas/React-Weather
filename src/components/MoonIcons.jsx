@@ -59,34 +59,4 @@ function MoonIcons({ decimal, size }) {
 		return <WiMoonWaningCrescent6 size={size} />;
 	}
 }
-
-// function MoonIcons({ decimal }) {
-// 	if (decimal === null || decimal === undefined) {
-// 		return null;
-// 	}
-// 	// Convert the decimal decimal value to an index representing the icon
-// 	const index = Math.floor(decimal * 10);
-
-// 	// Define an array of moon decimal icons
-// 	const moonPhaseIcons = [
-// 		WiMoonNew, // New Moon
-// 		WiMoonWaxingCrescent3, // Waxing Crescent
-// 		WiMoonWaxingCrescent3, // Waxing Crescent
-// 		WiMoonFirstQuarter, // First Quarter
-// 		WiMoonWaxingGibbous3, // Waxing Gibbous
-// 		WiMoonWaxingGibbous6, // Waxing Gibbous
-// 		WiMoonFull, // Full Moon
-// 		WiMoonWaningGibbous6, // Waning Gibbous
-// 		WiMoonWaningGibbous3, // Waning Gibbous
-// 		WiMoonThirdQuarter, // Third Quarter
-// 		WiMoonWaningCrescent3, // Waning Crescent
-// 		WiMoonWaningCrescent6, // Waning Crescent
-// 	];
-
-// 	// Get the corresponding moon decimal icon component
-// 	const MoonPhaseIconComponent = moonPhaseIcons[index];
-// 	console.log(index);
-// 	console.log(decimal);
-// 	return <MoonPhaseIconComponent size={size} />;
-// }
 export default MoonIcons;

@@ -8,7 +8,6 @@ import { HourlyInterface } from "./HourlyInterface";
 import { getIcon } from "./Icons";
 
 export default function HourlyForecastOutlook({ data, units, timezone }) {
-	console.log("HourlyForecastOutlook rendered");
 	const date = new Date();
 	const [times, setTimes] = useState([]);
 	const [startingIndex, setStartingIndex] = useState(date.getHours());
@@ -47,7 +46,6 @@ export default function HourlyForecastOutlook({ data, units, timezone }) {
 		let colors = [];
 		const currentHourStr = hoursInDay.format(date);
 		let currentHourNum = parseInt(currentHourStr.split("/")[0]);
-		console.log(currentHourNum);
 		setStartingIndex(currentHourNum);
 		const formattedTimes = [];
 		for (let i = 0; i < numOfDays * 24; i++) {
@@ -60,7 +58,6 @@ export default function HourlyForecastOutlook({ data, units, timezone }) {
 			formattedTimes.push(locationHourFormatter.format(nextTime));
 		}
 		setColor(colors);
-		console.log(colors);
 		return formattedTimes;
 	};
 
@@ -73,7 +70,6 @@ export default function HourlyForecastOutlook({ data, units, timezone }) {
 				}
 			});
 		});
-		console.log(array);
 
 		return array;
 	};
@@ -86,12 +82,10 @@ export default function HourlyForecastOutlook({ data, units, timezone }) {
 		<HourlyInterface hours={hours} data={data} startingIndex={startingIndex} timezone={timezone} colors={colors}>
 			{times.map((time, index) => (
 				<div key={uuidv4()} ref={hourRef} className="flex flex-col justify-evenly items-center">
-					{/* {index % 24 === 0  && getDay(index)} */}
 					<div className="flex flex-col py-1 pt-3 bg-slate-950/20 rounded-md justify-between shadow-sm">
 						<div className="inline-flex text-2xl items-center justify-center">
 							<div className="mr-2">{getIcon(hours[index].icon, 25)}</div>
 							{Math.round(hours[index].temp) + "°"}
-							{/* {hours[index].datetime} */}
 						</div>
 						<div className="flex flex-wrap items-center text-center min-h-[3rem] justify-center w-[8.25rem]">{hours[index].conditions}</div>
 

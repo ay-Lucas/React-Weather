@@ -54,8 +54,6 @@ export default function HourlyForecastOutlook({ data, model, units, timezone }) 
 		const nightLengthMilliseconds = 24 * 60 * 60 * 1000 - dayLengthMilliseconds;
 		const nightLengthHours = Math.floor(nightLengthMilliseconds / (1000 * 60 * 60));
 		const nightLengthMinutes = Math.floor((nightLengthMilliseconds % (1000 * 60 * 60)) / (1000 * 60));
-
-		// console.log(dayLengthHours, dayLengthMinutes);
 		return `${dayLengthHours} hrs ${dayLengthMinutes} min ${nightLengthHours} hrs ${nightLengthMinutes} min`;
 	}
 	return (

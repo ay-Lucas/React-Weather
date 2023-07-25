@@ -33,7 +33,6 @@ export const HorizontalScroll = ({ children, dailyDate }) => {
 			}
 		}, speed);
 		setTimeout(() => {
-			console.log(element.scrollLeft);
 			dailyDate(element.scrollLeft);
 		}, [500]);
 	};

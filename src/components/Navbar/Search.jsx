@@ -5,7 +5,6 @@ import { AsyncPaginate } from "react-select-async-paginate";
 import { AUTOSUGGEST_URL, geoApiOptions } from "../../Api.js";
 // eslint-disable-next-line react/prop-types
 const Search = ({ onSearchChange }) => {
-	console.log("Search rendered");
 	const [search, setSearch] = useState(null);
 	const loadOptions = (inputValue) => {
 		if (inputValue === "") return Promise.resolve({ options: [] });
@@ -13,7 +12,6 @@ const Search = ({ onSearchChange }) => {
 		return fetch(`${AUTOSUGGEST_URL}/cities?minPopulation=10000&namePrefix=${inputValue}`, geoApiOptions)
 			.then((response) => response.json())
 			.then((response) => {
-				console.log(response);
 				return {
 					options: response.data.map((city) => {
 						return {

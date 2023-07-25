@@ -1,8 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
 import { HorizontalScroll } from "./HorizontalScroll";
-// eslint-disable-next-line react/prop-types
-//TODO: scroll tracking does not work on mobile / small screens
 export const HourlyInterface = ({ children, hours, data, startingIndex, timezone, colors }) => {
 	const locationHourFormatter = Intl.DateTimeFormat(timezone.options.locale, {
 		timeZone: timezone.timezone,
@@ -13,7 +11,6 @@ export const HourlyInterface = ({ children, hours, data, startingIndex, timezone
 	const getDateString = (dt) => {
 		const date = new Date(dt * 1000);
 		const time = locationHourFormatter.format(date);
-		console.log(time);
 		return time;
 	};
 	const [date, setDate] = useState(getDateString(data.days[0].datetimeEpoch));

@@ -44,7 +44,6 @@ const CurrentWeather = ({ data, aqi, units, timezone }) => {
 	// 	day: "numeric",
 	// });
 
-	console.log("current weather rendered");
 	useEffect(() => {
 		if (data.alerts !== undefined) {
 			const alertList = data.alerts.map((alert) => {
@@ -77,27 +76,21 @@ const CurrentWeather = ({ data, aqi, units, timezone }) => {
 			} else {
 				setColor("gray");
 			}
-			console.log(aqi);
-			console.log(color);
 		};
 		try {
 			if (aqi !== undefined && aqi.length > 0) {
 				let num = 0;
 				for (let i = 0; i < aqi.length; i++) {
 					if (aqi[i].AQI > num) {
-						console.log(aqi[i].AQI);
 						num = aqi[i].AQI;
 					}
 				}
 				setAQI(num);
 				whatColor(num);
 			} else {
-				// console.log(data.days[0].aqius);
 				const aqius = data.days[0].hours[getStartingIndex()].aqius;
 				setAQI(aqius);
 				whatColor(aqius);
-				console.log(getStartingIndex());
-				console.log("visual API aqi: " + data.days[0].hours[getStartingIndex()].aqius);
 			}
 		} catch (e) {
 			console.log("AirNow API aqi error" + e);
@@ -112,11 +105,6 @@ const CurrentWeather = ({ data, aqi, units, timezone }) => {
 				<div className="text-2xl text-left inline-flex mr-2">Current Weather</div>
 				<div className="tracking-wide inline-flex dark:text-gray-400">As of {locationHourFormatter.format(data.currentConditions.datetimeEpoch * 1000)}</div>
 			</div>
-			{/* {alert.length > 0 && (
-				<>
-					<div className="text-md flex-row mb-4 text-left">{alert}</div>
-				</>
-			)} */}
 			<div className="flex flex-col w-full justify-start mt-8">
 				<div className="flex flex-row w-full h-full items-center ">
 					<div className="flex flex-col">

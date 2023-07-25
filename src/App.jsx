@@ -8,8 +8,6 @@ import LocationCard from "./components/LocationCard";
 import Header from "./components/Navbar/Header.jsx";
 import Today from "./components/Today";
 import "./index.css";
-//TODO: Visualize Air Quality
-//TODO: Horizontal Scroll for Hourly Forecast
 function App() {
 	console.log("app.jsx rendered");
 	const defaultLocation = {
@@ -46,7 +44,6 @@ function App() {
 		coordinates.lat +
 		"," +
 		coordinates.lon +
-		// "/next7days?" +
 		"?unitGroup=" +
 		units.name +
 		"&key=" +
@@ -55,27 +52,19 @@ function App() {
 		"&iconSet=icons2" +
 		"&elements=%2Bpm1,%2Bpm2p5,%2Bpm10,%2Bo3,%2Bno2,%2Bso2,%2Bco,%2Baqius,%2Baqieur";
 	const fetchData = () => {
-		console.log("fetchData function called");
 		const visualForecastFetch = fetch(visualForecastUrl);
 		const currentAQIFetch = fetch(currentAQIUrl);
-		// const OpenWeatherAQIFetch = fetch(OpenWeatherAQIUrl);
-		Promise.all([
-			visualForecastFetch,
-			currentAQIFetch,
-			// OpenWeatherAQIFetch,
-		])
+		Promise.all([visualForecastFetch, currentAQIFetch])
 			.then(async (response) => {
 				const visualForecastResponse = await response[0].json();
 				const currentAQIResponse = await response[1].json();
-				// const OpenWeatherAQI = await response[2].json();
 				setVisualForecast(visualForecastResponse);
 				setAqi(currentAQIResponse);
 				const timezone = visualForecastResponse.timezone;
 				const options = Intl.DateTimeFormat().resolvedOptions();
 				setTimeZone({ timezone, options });
-				console.log(visualForecastResponse);
-				console.log(currentAQIResponse);
-				// console.log(OpenWeatherAQI);
+				// console.log(visualForecastResponse);
+				// console.log(currentAQIResponse);
 			})
 			.catch((error) => {
 				console.log(error);
@@ -100,7 +89,6 @@ function App() {
 	};
 	useEffect(() => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-		console.log("useEffect called");
 		fetchData();
 	}, [coordinates, units, location]);
 
