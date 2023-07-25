@@ -10,10 +10,7 @@ const Search = ({ onSearchChange }) => {
 	const loadOptions = (inputValue) => {
 		if (inputValue === "") return Promise.resolve({ options: [] });
 		if (inputValue.length < 3) return Promise.resolve({ options: [] });
-		return fetch(
-			`${AUTOSUGGEST_URL}/cities?minPopulation=10000&namePrefix=${inputValue}`,
-			geoApiOptions
-		)
+		return fetch(`${AUTOSUGGEST_URL}/cities?minPopulation=10000&namePrefix=${inputValue}`, geoApiOptions)
 			.then((response) => response.json())
 			.then((response) => {
 				console.log(response);
@@ -42,7 +39,7 @@ const Search = ({ onSearchChange }) => {
 		}),
 		option: (provided, state) => ({
 			...provided,
-			backgroundColor: state.isFocused ? "#9c27b0" : "#0a1929",
+			backgroundColor: state.isFocused ? "#555555" : "#242424",
 			color: "white",
 		}),
 		menu: (provided, state) => ({
@@ -51,7 +48,7 @@ const Search = ({ onSearchChange }) => {
 			width: "110%",
 			right: "0px",
 			justifyContent: "center",
-			backgroundColor: "#0a1929",
+			backgroundColor: "#242424",
 			color: "white",
 		}),
 		input: (provided, state) => ({
@@ -65,22 +62,23 @@ const Search = ({ onSearchChange }) => {
 		}),
 		indicatorSeparator: (provided, state) => ({
 			...provided,
-			backgroundColor: "#57a4d1",
+			backgroundColor: "#d1d5db",
 		}),
 		placeholder: (provided, state) => ({
 			...provided,
-			color: "#57a4d1",
+			color: "#d1d5db",
 			fontWeight: "normal",
 		}),
 		dropdownIndicator: (provided, state) => ({
 			...provided,
-			color: "#57a4d1",
+			color: "#d1d5db",
 		}),
 	};
+	//bg color bg-[#1b3c5f]
 	return (
-		<div className="flex items-center  bg-[#1b3c5f] rounded-md pl-4 border-x-[1px] border-solid border-[#3253a2]">
+		<div className="flex items-center rounded-md pl-4 bg-[#555555] border-0 hover:border-[1px] border-solid border-[#d0e2ee] hover:border-[#66c2ff]">
 			<div className="">
-				<BsSearch size={17} color={"#57a4d1"} className="" />
+				<BsSearch size={17} color={"#d1d5db"} />
 				{/* color={"#e5e7eb"} */}
 			</div>
 			<AsyncPaginate
