@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { AQI_KEY, AQI_URL, VISUAL_API_URL, VISUAL_KEY } from "./Api";
+// import { AQI_KEY, AQI_URL, VISUAL_API_URL, VISUAL_KEY } from "./Api";
 import "./App.css";
 import CurrentWeather from "./components/CurrentWeather.jsx";
 import DailyForecastOutlook from "./components/DailyForecastOutlook";
@@ -10,6 +10,8 @@ import Today from "./components/Today";
 import "./index.css";
 function App() {
 	console.log("app.jsx rendered");
+	const VISUAL_API_URL = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/";
+	const AQI_URL = "https://www.airnowapi.org/aq/observation/latLong/current/?format=application/json&";
 	const defaultLocation = {
 		lat: 34.0007,
 		lon: -81.0348,
@@ -38,7 +40,7 @@ function App() {
 		tempSign: "°C",
 	};
 	const [units, setUnits] = useState(imperialUnits);
-	const currentAQIUrl = AQI_URL + "latitude=" + coordinates.lat + "&longitude=" + coordinates.lon + "&distance=25&API_KEY=" + AQI_KEY;
+	const currentAQIUrl = AQI_URL + "latitude=" + coordinates.lat + "&longitude=" + coordinates.lon + "&distance=25&API_KEY=" + import.meta.env.VITE_AQI_API_KEY;
 	const visualForecastUrl =
 		VISUAL_API_URL +
 		coordinates.lat +
@@ -47,7 +49,7 @@ function App() {
 		"?unitGroup=" +
 		units.name +
 		"&key=" +
-		VISUAL_KEY +
+		import.meta.env.VITE_VISUAL_WEATHER_API_KEY +
 		"&contentType=json" +
 		"&iconSet=icons2" +
 		"&elements=%2Bpm1,%2Bpm2p5,%2Bpm10,%2Bo3,%2Bno2,%2Bso2,%2Bco,%2Baqius,%2Baqieur";
@@ -88,8 +90,8 @@ function App() {
 		console.log(currentAQIUrl);
 	};
 	useEffect(() => {
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 		fetchData();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [coordinates, units, location]);
 
 	return (
