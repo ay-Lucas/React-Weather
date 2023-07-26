@@ -37,9 +37,10 @@ const Units = ({ onUnitsChange }) => {
 						"mx": 3,
 						"width": 90,
 						"maxWidth": 150,
-						"maxHeight": 40,
+						"maxHeight": 30,
 						"p": 0,
-						":before": { borderColor: "#d1d5db" },
+						"m": 0,
+						":before": { border: "none" },
 						":after": { borderColor: "#7cd1fa" },
 					}}
 				>

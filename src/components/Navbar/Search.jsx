@@ -80,7 +80,7 @@ const Search = ({ onSearchChange }) => {
 	};
 	//bg color bg-[#1b3c5f]
 	return (
-		<div className="flex items-center rounded-md pl-4 bg-[#555555] border-0 hover:border-[1px] border-solid border-[#d0e2ee] hover:border-[#66c2ff]">
+		<div className="flex items-center rounded-md pl-4 bg-[#555555] border-[1px] border-solid border-[#484848] hover:border-[#66c2ff] md:h-8 h-7 md:text-base text-sm justify-center md:w-[25rem] w-80 mx-3 md:mx-0">
 			<div className="">
 				<BsSearch size={17} color={"#d1d5db"} />
 				{/* color={"#e5e7eb"} */}
@@ -93,7 +93,7 @@ const Search = ({ onSearchChange }) => {
 				value={"search"}
 				onChange={handleOnChange}
 				loadOptions={loadOptions}
-				className="md:w-80 w-fit"
+				className="w-full"
 				// theme={{
 				// 	colors: {
 				// 		// primary: "#1976d2",
