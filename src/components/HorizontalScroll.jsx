@@ -48,10 +48,31 @@ export const HorizontalScroll = ({ children, dailyDate }) => {
 		dailyDate(Math.round(element.scrollLeft));
 	};
 
+	const buttons = (
+		<div className="flex min-w-full mt-2 justify-between">
+			<button
+				onClick={() => {
+					handleHorizontalScroll(elementRef.current, 3, 1040.25, -10);
+				}}
+				className="flex items-center h-6 w-6 rounded-full  bg-slate-700 hover:bg-slate-800"
+			>
+				<ChevronLeftRounded />
+			</button>
+			<button
+				onClick={() => {
+					handleHorizontalScroll(elementRef.current, 3, 1040.001, 10);
+				}}
+				className="flex items-center h-6 w-6 rounded-full text-right bg-slate-600 hover:bg-slate-800"
+			>
+				<ChevronRightRounded />
+			</button>
+		</div>
+	);
+
 	return (
-		<div className="w-full mb-8 items-center justify-center">
+		<div className="w-full md:mb-8 mb-4 items-center justify-center md:text-base text-sm">
 			<div
-				className="flex space-x-3 overflow-x-scroll w-full  overflow-hidden scrollbar-hide"
+				className="flex space-x-3 overflow-x-scroll w-full overflow-hidden scrollbar-hide"
 				ref={elementRef}
 				{...events}
 				onMouseUp={() => {
@@ -63,24 +84,7 @@ export const HorizontalScroll = ({ children, dailyDate }) => {
 			>
 				{children}
 			</div>
-			<div className="flex min-w-full mt-2 justify-between">
-				<button
-					onClick={() => {
-						handleHorizontalScroll(elementRef.current, 3, 1040.25, -10);
-					}}
-					className="flex items-center h-6 w-6 rounded-full  bg-slate-700 hover:bg-slate-800"
-				>
-					<ChevronLeftRounded />
-				</button>
-				<button
-					onClick={() => {
-						handleHorizontalScroll(elementRef.current, 3, 1040.001, 10);
-					}}
-					className="flex items-center h-6 w-6 rounded-full text-right bg-slate-600 hover:bg-slate-800"
-				>
-					<ChevronRightRounded />
-				</button>
-			</div>
+			{window.innerWidth > 820 && buttons}
 		</div>
 	);
 };

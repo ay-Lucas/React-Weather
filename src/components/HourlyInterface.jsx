@@ -1,4 +1,5 @@
 /* eslint-disable react/prop-types */
+import { cyan } from "@mui/material/colors";
 import { useEffect, useState } from "react";
 import { HorizontalScroll } from "./HorizontalScroll";
 export const HourlyInterface = ({ children, hours, data, startingIndex, timezone, colors }) => {
@@ -13,6 +14,7 @@ export const HourlyInterface = ({ children, hours, data, startingIndex, timezone
 		const time = locationHourFormatter.format(date);
 		return time;
 	};
+	const [color, setColor] = useState(cyan[200]);
 	const [date, setDate] = useState(getDateString(data.days[0].datetimeEpoch));
 	const pixelsInOneScroll = 1000;
 	const scrollsInDay = 3.43;
@@ -30,6 +32,7 @@ export const HourlyInterface = ({ children, hours, data, startingIndex, timezone
 		const index = Math.round((scrollAmount + pixelDayOffset) / pixelsInDay);
 		day = getDateString(data.days[index].datetimeEpoch);
 		setDate(day);
+		setColor(colors[index * 24]);
 	};
 	function hoursToPixels(hours) {
 		return (hours * 1000) / tilesInView;
@@ -38,9 +41,11 @@ export const HourlyInterface = ({ children, hours, data, startingIndex, timezone
 	return (
 		<>
 			<div className="select-none">
-				<div className="inline-flex items-baseline">
-					<div className="text-2xl mb-3 ml-3 ">Hourly</div>
-					<div className="text-center ml-2 text-slate-200">{date}</div>
+				<div className="flex items-baseline">
+					<div className="text-2xl ml-3 mb-3">Hourly</div>
+				</div>
+				<div className="text-center justify-center font-medium text-base hidden lg:flex mb-3 -mt-8" style={{ color: color }}>
+					{date}
 				</div>
 				<HorizontalScroll dailyDate={getDay}>{children}</HorizontalScroll>
 			</div>

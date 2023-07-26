@@ -130,7 +130,7 @@ const CurrentWeather = ({ data, aqi, units, timezone }) => {
 					</div>
 				</div>
 				{data.days[0].description !== undefined && <div className="flex flex-row flex-auto w-full justify-start mt-3">{data.days[0].description}</div>}
-				<div className="flex flex-row font-light text-sky-300 whitespace-nowrap">
+				<div className="flex flex-row font-light text-cyan-200 whitespace-nowrap">
 					<div className="mr-1">Day {Math.round(data.days[0].tempmax)}° •</div> <div> Night {Math.round(data.days[0].tempmin)}°</div>
 				</div>
 			</div>
@@ -142,7 +142,7 @@ const CurrentWeather = ({ data, aqi, units, timezone }) => {
 			<div className="flex flex-wrap text-base items-center w-full  justify-around md:justify-between mt-5 md:mt-0 ">
 				{AQI !== null && (
 					<div className="inline-flex flex-col">
-						<div className="text-md text-sky-300">Air Quality</div>
+						<div className="text-md text-cyan-200">Air Quality</div>
 						<div className="flex items-center">
 							<div style={{ backgroundColor: color }} className={"mr-1 ml-1 h-3 w-3 inline-flex items-center rounded-full"}></div>
 
@@ -151,23 +151,23 @@ const CurrentWeather = ({ data, aqi, units, timezone }) => {
 					</div>
 				)}
 				<div className="inline-flex flex-col">
-					<div className="text-md text-sky-300">Humidity</div>
+					<div className="text-md text-cyan-200">Humidity</div>
 					<div>{Math.round(data.currentConditions.humidity)}%</div>
 				</div>
 				<div className="inline-flex flex-col">
-					<div className="text-md text-sky-300">Wind</div>
+					<div className="text-md text-cyan-200">Wind</div>
 					<div>
 						{Math.round(data.currentConditions.windspeed)} {units.wind}
 					</div>
 				</div>
 				<div className="inline-flex flex-col">
-					<div className="text-md text-sky-300">Pressure</div>
+					<div className="text-md text-cyan-200">Pressure</div>
 					<div>
 						{Math.round(data.currentConditions.pressure)} {units.pressure}
 					</div>
 				</div>
 				<div className="inline-flex flex-col items-center mt-3">
-					<div className="text-sky-300">UV Index</div>
+					<div className="text-cyan-200">UV Index</div>
 					<div className="inline-flex ">
 						{data.currentConditions.uvindex}
 						{" - "}
