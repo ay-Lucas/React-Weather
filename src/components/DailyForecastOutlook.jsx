@@ -66,29 +66,33 @@ export default function HourlyForecastOutlook({ data, model, units, timezone }) 
 						variant="outlined"
 						disableGutters
 						// expanded={index === 0}
-						className="bg-[#3d759a] text-white opacity-100 bg-clip-text hover:opacity-100  hover:bg-[#3d759a] hover:bg-opacity-100 hover:shadow-md hover:text-white "
+						className="bg-[#3d759a] text-white opacity-100 bg-clip-text hover:opacity-100  hover:bg-[#3d759a] hover:bg-opacity-100 hover:shadow-md hover:text-white"
 					>
-						<AccordionSummary expandIcon={<ExpandMoreIcon style={{ color: "white" }} />} aria-controls="panel1a-content" id="panel1a-header">
-							<div className="flex items-center w-full py-2">
-								<div className="flex items-center order-1 lg:text-lg sm:text-md basis-44 flex-wrap">{days}</div>
-								<div className="flex items-center basis-44 order-2 text-md">
-									<span className="font-semibold">{Math.round(data.days[index].tempmax)}° / </span>
-									{Math.round(data.days[index].tempmin)}°
+						<AccordionSummary
+							expandIcon={<ExpandMoreIcon style={{ color: "white" }} />}
+							aria-controls="panel1a-content"
+							id="panel1a-header"
+							className="text-sm md:text-base bg-[#3d759a] text-white opacity-100 bg-clip-text hover:opacity-100  hover:bg-[#3d759a] hover:bg-opacity-100 hover:shadow-md hover:text-white"
+						>
+							<div className="flex items-center w-full py-2 justify-between md:justify-start">
+								<div className="flex items-center order-1 md:text-lg text-sm  text-gray-200 basis-16 md:basis-44 flex-wrap">{days}</div>
+								<div className="flex items-center basis-16 md:basis-44 order-2 text-md text-sky-200">
+									<span className="font-semibold text-white mr-1">{Math.round(data.days[index].tempmax)}° /</span> {Math.round(data.days[index].tempmin)}°
 								</div>
-								<div className="flex items-center basis-0 md:basis-80 order-3 justify-start">
-									{getIcon(data.days[index].icon, 30)}
-									<div className="flex  items-center ml-1 md:ml-4 ">{data.days[index].conditions}</div>
+								<div className="flex md:justify-start justify-center basis-12 md:basis-80 order-3 items-center">
+									{getIcon(data.days[index].icon, 30, "md:p-0 p-1")}
+									<div className="hidden md:flex items-center ml-1 md:ml-4">{data.days[index].conditions}</div>
 								</div>
-								<div className="flex order-4 md:basis-36 basis-auto items-center">
-									<GiWaterDrop size={17} className="text-sky-500" />
+								<div className="flex order-4 md:basis-36 basis-8 items-center">
+									<GiWaterDrop size={17} className="text-sky-500 md:p-0 p-0.5" />
 									<div className="">{Math.round(data.days[index].precipprob)}%</div>
 								</div>
 
-								<div className="flex order-5 md:basis-36 basis-auto justify-start items-center">
-									<span>
-										<PiWindFill size={20} className="text-gray-400" />
+								<div className="flex order-5 md:basis-36 basis-20 md:justify-start justify-end items-center">
+									<span className="mr-1">
+										<PiWindFill size={20} className="text-gray-400 md:p-0 p-0.6" />
 									</span>
-									<div className="text-gray-300 mx-1 text-sm">{degreesToWindDirection(data.days[index].winddir)} </div>
+									<div className="text-gray-300 mx-1 text-sm md:flex hidden">{degreesToWindDirection(data.days[index].winddir)} </div>
 									<div>
 										{Math.round(data.days[index].windspeed)} {units.wind}
 									</div>
@@ -186,7 +190,7 @@ export default function HourlyForecastOutlook({ data, model, units, timezone }) 
 										</div>
 									</div>
 								</div>
-								<div className="flex flex-row items-center p-2 w-full flex-wrap justify-around ">
+								<div className="flex flex-row items-center p-2 w-full flex-wrap justify-evenly ">
 									<div className="flex flex-col items-center p-4 bg-slate-800/20 rounded-xl shadow-sm">
 										<div className="text-sky-300">Max UV Index</div>
 										<div className="text-left min-w-[5rem]">
@@ -224,7 +228,7 @@ export default function HourlyForecastOutlook({ data, model, units, timezone }) 
 											<div className="text-left text-lg"></div>
 										</div>
 									</div>
-									<div className="flex flex-col items-start p-4 py-5 bg-slate-800/20 rounded-xl shadow-sm">
+									<div className="flex flex-col items-start md:mt-0 mt-3 px-4 py-5 bg-slate-800/20 rounded-xl shadow-sm">
 										<div className="flex flex-row items-center mb-2">
 											<BsSunrise size={16} className="mx-1" color="orange" />
 											<div className="text-sky-300 flex items-center mr-2">Sunrise</div>
