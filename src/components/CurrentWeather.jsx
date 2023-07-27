@@ -100,7 +100,7 @@ const CurrentWeather = ({ data, aqi, units, timezone }) => {
 	}, [data, color, aqi, AQI, timezone]);
 
 	return (
-		<div className="flex flex-col items-center h-full w-full justify-between pl-3">
+		<div className="flex flex-col items-center h-full w-full justify-between sm:pl-4">
 			<div className="flex md:flex-row flex-col w-full sm:items-baseline justify-between">
 				<div className="text-2xl mr-0 md:mr-2">Current Weather</div>
 				<div className="tracking-wide dark:text-gray-400">As of {locationHourFormatter.format(data.currentConditions.datetimeEpoch * 1000)}</div>

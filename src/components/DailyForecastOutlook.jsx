@@ -65,30 +65,29 @@ export default function HourlyForecastOutlook({ data, model, units, timezone }) 
 						key={uuidv4()}
 						variant="outlined"
 						disableGutters
-						// expanded={index === 0}
 						className="bg-[#3d759a] text-white opacity-100 bg-clip-text hover:opacity-100  hover:bg-[#3d759a] hover:bg-opacity-100 hover:shadow-md hover:text-white"
 					>
 						<AccordionSummary
 							expandIcon={<ExpandMoreIcon style={{ color: "white" }} />}
 							aria-controls="panel1a-content"
 							id="panel1a-header"
-							className="text-sm md:text-base bg-[#3d759a] text-white opacity-100 bg-clip-text hover:opacity-100  hover:bg-[#3d759a] hover:bg-opacity-100 hover:shadow-md hover:text-white"
+							className="text-sm md:text-base bg-[#3d759a] text-white opacity-100 bg-clip-text hover:opacity-100  hover:bg-[#3d759a] hover:bg-opacity-100 hover:shadow-md hover:text-white sm:px-4 px-2"
 						>
-							<div className="flex items-center w-full py-2 justify-between md:justify-start">
-								<div className="flex items-center order-1 md:text-lg text-sm  text-gray-200 basis-16 md:basis-44 flex-wrap">{days}</div>
-								<div className="flex items-center basis-16 md:basis-44 order-2 text-md text-sky-200">
+							<div className="grid sm:grid-cols-5 grid-cols-4 w-full place-items-center items-center justify-start text-left">
+								<div className="w-full order-1 md:text-lg text-sm  text-gray-200 basis-16 md:basis-44 ">{days}</div>
+								<div className="sm:w-full w-10 justify-start order-2 text-md text-sky-200 whitespace-nowrap">
 									<span className="font-semibold text-white mr-1">{Math.round(data.days[index].tempmax)}° /</span> {Math.round(data.days[index].tempmin)}°
 								</div>
-								<div className="flex md:justify-start justify-center basis-12 md:basis-80 order-3 items-center">
-									{getIcon(data.days[index].icon, 30, "md:p-0 p-1")}
-									<div className="hidden md:flex items-center ml-1 md:ml-4">{data.days[index].conditions}</div>
+								<div className=" w-full inline-flex order-3 sm:justify-start justify-end sm:m-0 mr-2 ">
+									{getIcon(data.days[index].icon, 30, "sm:p-0 p-1 mr-1")}
+									<span className="hidden items-center ml-1 md:inline-block">{data.days[index].conditions}</span>
 								</div>
-								<div className="flex order-4 md:basis-36 basis-8 items-center">
+								<div className=" w-full inline-flex order-4 sm:justify-center justify-end sm:m-0 mr-2">
 									<GiWaterDrop size={17} className="text-sky-500 md:p-0 p-0.5" />
 									<div className="">{Math.round(data.days[index].precipprob)}%</div>
 								</div>
 
-								<div className="flex order-5 md:basis-36 basis-20 md:justify-start justify-end items-center">
+								<div className="w-full  order-5 items-center md:flex hidden">
 									<span className="mr-1">
 										<PiWindFill size={20} className="text-gray-400 md:p-0 p-0.6" />
 									</span>
@@ -102,7 +101,7 @@ export default function HourlyForecastOutlook({ data, model, units, timezone }) 
 						<AccordionDetails color="primary" className="border-t-[1.5px]  bg-gray-100/10 border-slate-950/30 pt-5">
 							<div className="flex flex-row justify-start mb-2 ml-4 text-gray-100 ">{data.days[index].description}</div>
 							<div className="flex flex-row flex-wrap items-center border-slate-950/30 rounded-lg">
-								<div className="flex sm:flex-row flex-col w-full flex-wrap justify-around p-2 mb-0  border-slate-950/30">
+								<div className="flex sm:flex-row flex-col w-full flex-wrap justify-evenly p-2 mb-0  border-slate-950/30">
 									<div className="flex flex-col sm:mr-3 mr-0 justify-evenly flex-1  ">
 										<div className="flex flex-row justify-between py-2 border-gray-800/50 border-b-[1px] ">
 											<div className="flex flex-auto items-center justify-start">
@@ -190,7 +189,7 @@ export default function HourlyForecastOutlook({ data, model, units, timezone }) 
 										</div>
 									</div>
 								</div>
-								<div className="flex flex-row items-center p-2 w-full flex-wrap justify-evenly ">
+								<div className="flex flex-row items-center p-2 w-full justify-evenly flex-wrap">
 									<div className="flex flex-col items-center p-4 bg-slate-800/20 rounded-xl shadow-sm">
 										<div className="text-sky-300">Max UV Index</div>
 										<div className="text-left min-w-[5rem]">
@@ -220,7 +219,7 @@ export default function HourlyForecastOutlook({ data, model, units, timezone }) 
 											/>
 										</div>
 									</div>
-									<div className="flex flex-col items-center p-3.5 px-4 bg-slate-800/20 rounded-xl shadow-sm">
+									<div className="flex flex-col items-center sm:mt-0 mt-2 p-3.5 px-4 bg-slate-800/20 rounded-xl shadow-sm">
 										<div className="text-sky-300 mb-2">Moon</div>
 										<div className="inline-flex items-center mb-2">
 											<MoonIcons decimal={data.days[index].moonphase} size={23} />
@@ -228,7 +227,7 @@ export default function HourlyForecastOutlook({ data, model, units, timezone }) 
 											<div className="text-left text-lg"></div>
 										</div>
 									</div>
-									<div className="flex flex-col items-start md:mt-0 mt-3 px-4 py-5 bg-slate-800/20 rounded-xl shadow-sm">
+									<div className="flex flex-col items-start sm:mt-0 mt-2 px-4 py-5 bg-slate-800/20 rounded-xl shadow-sm">
 										<div className="flex flex-row items-center mb-2">
 											<BsSunrise size={16} className="mx-1" color="orange" />
 											<div className="text-sky-300 flex items-center mr-2">Sunrise</div>
