@@ -5,10 +5,10 @@ import SelectUnits from "./SelectUnits";
 // eslint-disable-next-line react/prop-types
 function Header({ onSearchChange, onUnitsChange }) {
 	return (
-		<div className="flex bg-[#242424] drop-shadow-2xl w-full py-0.5 items-center text-center md:justify-evenly justify-center flex-wrap">
-			<div className="flex m-0 p-0 order-1 items-center md:w-1/3 justify-center">
+		<div className="flex bg-[#242424] drop-shadow-2xl w-full sm:py-0.5 pb-1 items-center text-center sm:justify-evenly justify-center flex-wrap">
+			<div className="flex m-0 p-0 order-1 items-center sm:w-1/3 justify-center">
 				<Button
-					className="md:text-lg text-base justify-center m-0 p-0 text-gray-300"
+					className="sm:text-lg text-base justify-center m-0 p-0 text-gray-300"
 					id="logo-button"
 					sx={{ textTransform: "none", fontFamily: "Oxygen" }}
 					onClick={() => {
@@ -21,10 +21,10 @@ function Header({ onSearchChange, onUnitsChange }) {
 					</div>
 				</Button>
 			</div>
-			<div className="flex md:w-1/3 md:order-2 order-5 justify-center w-full">
+			<div className="flex sm:w-1/3 sm:order-2 order-5 justify-center w-full">
 				<Search onSearchChange={onSearchChange} />
 			</div>
-			<div className="md:w-1/3 md:flex order-4 items-center justify-center">
+			<div className="sm:w-1/3 sm:flex order-4 items-center justify-center">
 				<Button
 					className="text-gray-300 transition-colors duration-200 hover:text-sky-400
 					bg-transparent"
@@ -32,7 +32,7 @@ function Header({ onSearchChange, onUnitsChange }) {
 						window.open("https://github.com/ay-Lucas");
 					}}
 				>
-					<BsGithub size={22} className="group md:p-0  p-0.5" />
+					<BsGithub size={22} className="group sm:p-0  p-0.5" />
 				</Button>
 				<SelectUnits onUnitsChange={onUnitsChange} />
 			</div>
