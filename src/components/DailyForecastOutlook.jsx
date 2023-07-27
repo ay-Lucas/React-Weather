@@ -73,28 +73,26 @@ export default function HourlyForecastOutlook({ data, model, units, timezone }) 
 							id="panel1a-header"
 							className="text-sm md:text-base bg-[#3d759a] text-white opacity-100 bg-clip-text hover:opacity-100  hover:bg-[#3d759a] hover:bg-opacity-100 hover:shadow-md hover:text-white sm:px-4 px-2"
 						>
-							<div className="grid sm:grid-cols-5 grid-cols-4 w-full place-items-center items-center justify-start text-left">
-								<div className="w-full order-1 md:text-lg text-sm  text-gray-200 basis-16 md:basis-44 ">{days}</div>
-								<div className="sm:w-full w-10 justify-start order-2 text-md text-sky-200 whitespace-nowrap">
+							<div className="grid sm:grid-cols-6 grid-cols-4 w-full items-center text-left">
+								<div className="order-1 sm:text-lg text-sm text-gray-200">{days}</div>
+								<div className="order-2 text-md text-sky-200 whitespace-nowrap sm:m-0">
 									<span className="font-semibold text-white mr-1">{Math.round(data.days[index].tempmax)}° /</span> {Math.round(data.days[index].tempmin)}°
 								</div>
-								<div className=" w-full inline-flex order-3 sm:justify-start justify-end sm:m-0 mr-2 ">
-									{getIcon(data.days[index].icon, 30, "sm:p-0 p-1 mr-1")}
-									<span className="hidden items-center ml-1 md:inline-block">{data.days[index].conditions}</span>
+								<div className="inline order-3 sm:col-span-2 col-span-1  sm:justify-self-start ml-7 m-auto sm:m-0 sm:w-auto">
+									{getIcon(data.days[index].icon, 30, "sm:p-0 sm:mr-2 p-1 inline items-center  ")}
+									<span className="hidden items-center ml-1 sm:inline-block">{data.days[index].conditions}</span>
 								</div>
-								<div className=" w-full inline-flex order-4 sm:justify-center justify-end sm:m-0 mr-2">
-									<GiWaterDrop size={17} className="text-sky-500 md:p-0 p-0.5" />
-									<div className="">{Math.round(data.days[index].precipprob)}%</div>
+								<div className="inline order-4 sm:m-0 m-auto justify-self-start sm:justify-self-start">
+									<GiWaterDrop size={17} className="text-sky-500 md:p-0 p-0.5 inline" />
+									{Math.round(data.days[index].precipprob)}%
 								</div>
 
-								<div className="w-full  order-5 items-center md:flex hidden">
-									<span className="mr-1">
-										<PiWindFill size={20} className="text-gray-400 md:p-0 p-0.6" />
+								<div className="order-5 sm:inline hidden">
+									<span className="mr-1 inline">
+										<PiWindFill size={20} className="text-gray-400 md:p-0 p-0.6 inline" />
 									</span>
-									<div className="text-gray-300 mx-1 text-sm md:flex hidden">{degreesToWindDirection(data.days[index].winddir)} </div>
-									<div>
-										{Math.round(data.days[index].windspeed)} {units.wind}
-									</div>
+									<div className="text-gray-300 mx-1 text-sm sm:inline hidden">{degreesToWindDirection(data.days[index].winddir)} </div>
+									{Math.round(data.days[index].windspeed)} {units.wind}
 								</div>
 							</div>
 						</AccordionSummary>
