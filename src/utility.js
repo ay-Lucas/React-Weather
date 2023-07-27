@@ -1,3 +1,5 @@
+import { green, orange, red, yellow } from "@mui/material/colors";
+
 export const degreesToWindDirection = (degrees) => {
 	if (degrees === null || degrees === undefined) {
 		return null;
@@ -145,4 +147,21 @@ export const getDate = (data, index) => {
 		weekday: "short",
 		month: "numeric",
 	});
+};
+export const usAqiToColor = (aqi) => {
+	if (aqi <= 50) {
+		return green[500];
+	} else if (aqi <= 100) {
+		return yellow[500];
+	} else if (aqi <= 150) {
+		return orange[600];
+	} else if (aqi <= 200) {
+		return orange[900];
+	} else if (aqi <= 300) {
+		return red[500];
+	} else if (aqi > 300) {
+		return red[900];
+	} else {
+		return "gray";
+	}
 };

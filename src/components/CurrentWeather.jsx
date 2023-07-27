@@ -4,7 +4,7 @@ import { green, orange, red, yellow } from "@mui/material/colors";
 import { useEffect, useState } from "react";
 import { BsFillCircleFill } from "react-icons/bs";
 import { GiWaterDrop } from "react-icons/gi";
-import { uvIndexToColor, uvIndexToPercent, uvIndexToRisk } from "../utility";
+import { usAqiToColor, uvIndexToColor, uvIndexToPercent, uvIndexToRisk } from "../utility";
 import { getIcon } from "./Icons";
 const CurrentWeather = ({ data, aqi, units, timezone }) => {
 	// const [time, setTime] = useState(null);
@@ -60,23 +60,7 @@ const CurrentWeather = ({ data, aqi, units, timezone }) => {
 			});
 			setAlert(alertList);
 		}
-		const whatColor = (aqi) => {
-			if (aqi <= 50) {
-				setColor(green[500]);
-			} else if (aqi <= 100) {
-				setColor(yellow[500]);
-			} else if (aqi <= 150) {
-				setColor(orange[600]);
-			} else if (aqi <= 200) {
-				setColor(orange[900]);
-			} else if (aqi <= 300) {
-				setColor(red[500]);
-			} else if (aqi > 300) {
-				setColor(red[900]);
-			} else {
-				setColor("gray");
-			}
-		};
+		// setColor(usAqiToColor(aqi));
 		try {
 			if (aqi !== undefined && aqi.length > 0) {
 				let num = 0;
@@ -86,16 +70,16 @@ const CurrentWeather = ({ data, aqi, units, timezone }) => {
 					}
 				}
 				setAQI(num);
-				whatColor(num);
+				setColor(usAqiToColor(num));
 			} else {
 				const aqius = data.days[0].hours[getStartingIndex()].aqius;
 				setAQI(aqius);
-				whatColor(aqius);
+				setColor(usAqiToColor(aqius));
 			}
 		} catch (e) {
 			console.log("AirNow API aqi error" + e);
 			setAQI(null);
-			whatColor(null);
+			setColor(null);
 		}
 	}, [data, color, aqi, AQI, timezone]);
 
