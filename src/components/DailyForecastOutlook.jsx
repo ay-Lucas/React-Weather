@@ -224,7 +224,7 @@ export default function HourlyForecastOutlook({ data, model, units, timezone }) 
 													style={{
 														background: "linear-gradient(to right, green, yellow, orange, red, violet )",
 													}}
-													className="mt-[0.3rem] h-[0.2rem] rounded-sm w-[5rem]"
+													className="mt-[0.3rem] h-[0.2rem] rounded-sm w-[6rem]"
 												>
 													{" "}
 												</div>

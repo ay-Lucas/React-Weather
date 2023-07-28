@@ -1,4 +1,4 @@
-import { green, orange, red, yellow } from "@mui/material/colors";
+import { deepPurple, green, orange, red, yellow } from "@mui/material/colors";
 
 export const degreesToWindDirection = (degrees) => {
 	if (degrees === null || degrees === undefined) {
@@ -61,21 +61,41 @@ export const uvIndexToRisk = (uvIndex) => {
 	}
 };
 export const uvIndexToColor = (uvIndex) => {
-	if (uvIndex === null || uvIndex === undefined) {
-		return null;
-	}
-	if (uvIndex <= 2) {
-		return "green";
-	} else if (uvIndex <= 5) {
-		return "yellow";
-	} else if (uvIndex <= 7) {
-		return "orange";
-	} else if (uvIndex <= 10) {
-		return "red";
-	} else if (uvIndex > 10) {
-		return "purple";
-	} else {
-		console.log("uvIndexToColor: invalid uvIndex");
+	if (typeof uvIndex !== "number") return;
+	switch (uvIndex) {
+		case 0:
+			return green[400];
+		case 1:
+			return green[500];
+		case 2:
+			return green[600];
+		case 3:
+			return yellow[500];
+		case 4:
+			return yellow[700];
+		case 5:
+			return yellow[800];
+		case 6:
+			return orange[600];
+		case 7:
+			return orange[800];
+		case 8:
+			return red[700];
+		case 9:
+			return red[800];
+		case 10:
+			return red[900];
+		case 11:
+			return deepPurple[600];
+		case 12:
+			return deepPurple[700];
+		case 13:
+			return deepPurple[800];
+		case 14:
+			return deepPurple[900];
+		default:
+			console.log("uvIndexToColor: invalid uvIndex");
+			return null;
 	}
 };
 export const uvIndexToPercent = (uvIndex) => {
