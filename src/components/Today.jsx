@@ -2,6 +2,7 @@ import { blue, lightBlue, orange, yellow } from "@mui/material/colors";
 import { BsEye, BsMoonStars, BsSun, BsSunrise, BsSunset, BsThermometerHalf, BsThermometerHigh, BsUmbrella } from "react-icons/bs";
 import { GiWaterDrop } from "react-icons/gi";
 import { PiWindFill } from "react-icons/pi";
+import { WiHumidity } from "react-icons/wi";
 import { decimalToMoonPhase } from "../utility";
 import MoonIcons from "./MoonIcons";
 
@@ -69,15 +70,13 @@ const Today = ({ data, units, timezone }) => {
 				</label>
 			</div>
 			<div className="flex flex-row justify-between py-2 border-gray-800/50 border-b-[1px] ">
-				<div className="flex flex-auto items-start justify-start">
-					<div className="basis-7 mt-1">
-						<BsEye size={17} />
+				<div className="flex flex-auto items-center justify-start">
+					<div className="basis-7 mt-1 justify-start h-[20px]">
+						<WiHumidity size={24} className="w-fit" />
 					</div>
-					<div className=" text-cyan-200">Visibility</div>
+					<div className="text-sky-300">Humidity</div>
 				</div>
-				<label>
-					{data.days[0].visibility} {units.visibility}
-				</label>
+				<div>{Math.round(data.days[0].humidity)}%</div>
 			</div>
 			<div className="flex flex-row justify-between py-2 border-gray-800/50 border-b-[1px]">
 				<div className="flex flex-auto items-center justify-start">
