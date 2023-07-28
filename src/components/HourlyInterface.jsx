@@ -16,21 +16,24 @@ export const HourlyInterface = ({ children, hours, data, startingIndex, timezone
 	};
 	const [color, setColor] = useState(colors[0]);
 	const [date, setDate] = useState(getDateString(data.days[0].datetimeEpoch));
-	const pixelsInOneScroll = 1000;
-	const scrollsInDay = 3;
-	const pixelsInDay = pixelsInOneScroll * scrollsInDay;
+	const scrollDistance = 864;
+	const scrollsInDay = 4;
+	const pixelsInDay = scrollDistance * scrollsInDay;
 	const tilesInView = 7;
-
+	const pixelsPerHour = 144;
+	const offset = 4;
+	const hourMargin = 12;
 	useEffect(() => {
 		setDate(getDateString(data.days[0].datetimeEpoch));
 	}, [timezone, startingIndex, data, hours]);
 
 	const getDay = (scrollAmount) => {
-		let day;
 		const firstDayRemainingHours = 24 - startingIndex;
-		const pixelDayOffset = hoursToPixels(firstDayRemainingHours);
-		const index = Math.round((scrollAmount + pixelDayOffset) / pixelsInDay);
-		day = getDateString(data.days[index].datetimeEpoch);
+		const firstDayPixels = hoursToPixels(firstDayRemainingHours);
+		//correct for first day
+		//add 500 to scroll amount to center the day
+		const index = firstDayPixels > 1000 ? Math.round((scrollAmount + firstDayPixels - 500) / pixelsInDay) : 0;
+		const day = getDateString(data.days[index].datetimeEpoch);
 		setDate(day);
 		setColor(colors[index * 24]);
 	};

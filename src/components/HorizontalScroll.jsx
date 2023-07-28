@@ -31,7 +31,7 @@ export const HorizontalScroll = ({ children, dailyDate }) => {
 			} else {
 				setArrowDisable(false);
 			}
-		}, speed);
+		}, 1);
 		setTimeout(() => {
 			dailyDate(element.scrollLeft);
 		}, [500]);
@@ -45,22 +45,25 @@ export const HorizontalScroll = ({ children, dailyDate }) => {
 	}, [children]);
 
 	const updateScrollAmount = (element) => {
-		dailyDate(Math.round(element.scrollLeft));
+		dailyDate(element.scrollLeft);
 	};
 
 	const buttons = (
 		<div className="flex min-w-full mt-2 justify-between">
 			<button
 				onClick={() => {
-					handleHorizontalScroll(elementRef.current, 3, 1040.25, -10);
+					handleHorizontalScroll(elementRef.current, 3, 864, -8);
 				}}
 				className="flex items-center h-6 w-6 rounded-full  bg-slate-700 hover:bg-slate-800"
 			>
 				<ChevronLeftRounded />
 			</button>
 			<button
+				// onClick={() => {
+				// 	handleHorizontalScroll(elementRef.current, 3, 857.1429, 9.34);
+				// }}
 				onClick={() => {
-					handleHorizontalScroll(elementRef.current, 3, 1040.001, 10);
+					handleHorizontalScroll(elementRef.current, 3, 864, 8);
 				}}
 				className="flex items-center h-6 w-6 rounded-full text-right bg-slate-600 hover:bg-slate-800"
 			>
