@@ -117,227 +117,225 @@ export default function HourlyForecastOutlook({ data, model, units, timezone }) 
 						</AccordionSummary>
 						<AccordionDetails color="primary" className="border-t-[1.5px]  bg-gray-100/10 border-slate-950/30 pt-5">
 							<div className="flex flex-row justify-start mb-2 ml-4 text-gray-100 ">{data.days[index].description}</div>
-							<div className="flex flex-row flex-wrap items-center border-slate-950/30 rounded-lg">
-								<div className="flex sm:flex-row flex-col w-full flex-wrap p-2 mb-0  border-slate-950/30">
-									<div className="flex flex-col sm:mr-3 mr-0 sm:justify-start justify-end flex-1  ">
-										<div className="flex flex-row justify-between py-2 border-gray-800/50 border-b-[1px] ">
-											<div className="flex flex-auto items-center justify-start">
-												<div className="basis-7 mt-1">
-													<BsThermometerHalf size={20} className="" />
-												</div>
-												<div className="text-sky-300">Temperature</div>
+							<div className="flex sm:flex-row flex-col w-full p-2 mb-0  border-slate-950/30">
+								<div className="flex flex-col sm:mr-3 mr-0 sm:justify-start justify-end flex-auto">
+									<div className="flex flex-row justify-between py-2 border-gray-800/50 border-b-[1px] ">
+										<div className="flex flex-auto items-center justify-start">
+											<div className="basis-7 mt-1">
+												<BsThermometerHalf size={20} className="" />
 											</div>
-											<div>
-												{Math.round(data.days[index].tempmax)}° / {Math.round(data.days[index].tempmin)}°
-											</div>
+											<div className="text-sky-300">Temperature</div>
 										</div>
-										<div className="flex flex-row justify-between py-2 border-gray-800/50 border-b-[1px] ">
-											<div className="flex flex-auto items-center justify-start">
-												<div className="basis-7 mt-1">
-													<BsThermometerHigh size={20} className="" />
-												</div>
-												<div className="text-sky-300">Feels Like</div>
-											</div>
-											<div>
-												{Math.round(data.days[index].feelslikemax)}° / {Math.round(data.days[index].feelslikemin)}°
-											</div>
+										<div>
+											{Math.round(data.days[index].tempmax)}° / {Math.round(data.days[index].tempmin)}°
 										</div>
-										<div className="flex flex-row justify-between py-2 border-gray-800/50 border-b-[1px] ">
-											<div className="flex flex-auto items-center justify-start">
-												<div className="basis-7 mt-1">
-													<BsUmbrella size={20} className="" />
-												</div>
-												<div className="text-sky-300">Precipitation</div>
+									</div>
+									<div className="flex flex-row justify-between py-2 border-gray-800/50 border-b-[1px] ">
+										<div className="flex flex-auto items-center justify-start">
+											<div className="basis-7 mt-1">
+												<BsThermometerHigh size={20} className="" />
 											</div>
-											<div>
-												{data.days[index].precip} {units.precipitation}
-											</div>
+											<div className="text-sky-300">Feels Like</div>
 										</div>
-										<div className="flex flex-row justify-between py-2 border-gray-800/50 border-b-[1px] ">
-											<div className="flex flex-auto items-center justify-start">
-												<div className="basis-7 mt-1">
-													<GiWaterDrop size={17} className="text-sky-500" />
-												</div>
-												<div className="text-sky-300">Precipitation Probability</div>
-											</div>
-											<div>{data.days[index].precipprob}%</div>
+										<div>
+											{Math.round(data.days[index].feelslikemax)}° / {Math.round(data.days[index].feelslikemin)}°
 										</div>
-										<div className="flex flex-row justify-between py-2 border-gray-800/50 border-b-[1px] ">
-											<div className="flex flex-auto items-center justify-start">
-												<div className="basis-7 mt-1">
-													<IoThunderstormOutline size={20} className="" />
-												</div>
-												<div className="text-sky-300">Severe Risk</div>
+									</div>
+									<div className="flex flex-row justify-between py-2 border-gray-800/50 border-b-[1px] ">
+										<div className="flex flex-auto items-center justify-start">
+											<div className="basis-7 mt-1">
+												<BsUmbrella size={20} className="" />
 											</div>
-											<div>{data.days[index].severerisk}</div>
+											<div className="text-sky-300">Precipitation</div>
 										</div>
+										<div>
+											{data.days[index].precip} {units.precipitation}
+										</div>
+									</div>
+									<div className="flex flex-row justify-between py-2 border-gray-800/50 border-b-[1px] ">
+										<div className="flex flex-auto items-center justify-start">
+											<div className="basis-7 mt-1">
+												<GiWaterDrop size={17} className="text-sky-500" />
+											</div>
+											<div className="text-sky-300">Precipitation Probability</div>
+										</div>
+										<div>{data.days[index].precipprob}%</div>
+									</div>
+									<div className="flex flex-row justify-between py-2 border-gray-800/50 border-b-[1px] ">
+										<div className="flex flex-auto items-center justify-start">
+											<div className="basis-7 mt-1">
+												<IoThunderstormOutline size={20} className="" />
+											</div>
+											<div className="text-sky-300">Severe Risk</div>
+										</div>
+										<div>{data.days[index].severerisk}</div>
+									</div>
 
-										<div className="flex flex-row justify-between py-2 border-gray-800/50 border-b-[1px] ">
-											<div className="flex flex-auto items-center justify-start">
-												<div className="basis-7 mt-1">
-													<PiWindFill size={20} />
-												</div>
-												<div className="text-sky-300">Wind Speed</div>
+									<div className="flex flex-row justify-between py-2 border-gray-800/50 border-b-[1px] ">
+										<div className="flex flex-auto items-center justify-start">
+											<div className="basis-7 mt-1">
+												<PiWindFill size={20} />
 											</div>
-											<div>
-												{Math.round(data.days[index].windspeed)} {units.wind} {degreesToWindDirection(data.days[index].winddir)}
-											</div>
+											<div className="text-sky-300">Wind Speed</div>
 										</div>
-										<div className="flex flex-row justify-between py-2 border-gray-800/50 border-b-[1px] ">
-											<div className="flex flex-auto items-center justify-start">
-												<div className="basis-7 mt-1">
-													<PiWindFill size={20} />
-												</div>
-												<div className="text-sky-300">Wind Gusts</div>
-											</div>
-											<div>
-												{Math.round(data.days[index].windgust)} {units.wind}
-											</div>
+										<div>
+											{Math.round(data.days[index].windspeed)} {units.wind} {degreesToWindDirection(data.days[index].winddir)}
 										</div>
-										{data.days[index].aqius !== null && (
-											<div className="flex flex-row justify-between items-center py-2 border-gray-800/50 border-b-[1px]">
-												<div className="flex flex-auto items-center justify-start">
-													<div className="basis-7 mt-0">
-														<div
-															style={{ backgroundColor: usAqiToColor(data.days[index].aqius) }}
-															className={"mr-1 ml-1 h-3 w-3 inline-flex items-center rounded-full"}
-														></div>{" "}
-													</div>
-													<div className=" text-cyan-200">Air Quality Index</div>
+									</div>
+									<div className="flex flex-row justify-between py-2 border-gray-800/50 border-b-[1px] ">
+										<div className="flex flex-auto items-center justify-start">
+											<div className="basis-7 mt-1">
+												<PiWindFill size={20} />
+											</div>
+											<div className="text-sky-300">Wind Gusts</div>
+										</div>
+										<div>
+											{Math.round(data.days[index].windgust)} {units.wind}
+										</div>
+									</div>
+									{data.days[index].aqius !== null && (
+										<div className="flex flex-row justify-between items-center py-2 border-gray-800/50 border-b-[1px]">
+											<div className="flex flex-auto items-center justify-start">
+												<div className="basis-7 mt-0">
+													<div
+														style={{ backgroundColor: usAqiToColor(data.days[index].aqius) }}
+														className={"mr-1 ml-1 h-3 w-3 inline-flex items-center rounded-full"}
+													></div>{" "}
 												</div>
+												<div className=" text-cyan-200">Air Quality Index</div>
+											</div>
 
-												<div className="">{data.days[index].aqius}</div>
+											<div className="">{data.days[index].aqius}</div>
+										</div>
+									)}
+									<div className="flex flex-row justify-between py-1 border-gray-800/50 sm:border-0 border-b-[1px] ">
+										<div className="flex flex-auto items-center justify-start">
+											<div className="basis-7 mt-1">
+												<BsSunFill size={19} />
 											</div>
-										)}
-										<div className="flex flex-row justify-between py-1 border-gray-800/50 sm:border-0 border-b-[1px] ">
-											<div className="flex flex-auto items-center justify-start">
-												<div className="basis-7 mt-1">
-													<BsSunFill size={19} />
-												</div>
-												<div className="text-sky-300">Max UV Index</div>
+											<div className="text-sky-300">Max UV Index</div>
+										</div>
+										<div className="text-left min-w-[5rem]">
+											<div className="inline-flex">{data.days[index].uvindex}</div>
+											{" - "}
+											{uvIndexToRisk(data.days[index].uvindex)}
+											<div
+												style={{
+													background: "linear-gradient(to right, green, yellow, orange, red, violet )",
+												}}
+												className="mt-[0.3rem] h-[0.2rem] rounded-sm w-[6rem]"
+											>
+												{" "}
 											</div>
-											<div className="text-left min-w-[5rem]">
-												<div className="inline-flex">{data.days[index].uvindex}</div>
-												{" - "}
-												{uvIndexToRisk(data.days[index].uvindex)}
-												<div
-													style={{
-														background: "linear-gradient(to right, green, yellow, orange, red, violet )",
-													}}
-													className="mt-[0.3rem] h-[0.2rem] rounded-sm w-[6rem]"
-												>
-													{" "}
-												</div>
-												<BsFillCircleFill
-													size={8}
-													className=" border-[1.75px] rounded-full"
-													color={`${uvIndexToColor(data.days[index].uvindex)}`}
-													style={{
-														color: `${uvIndexToColor(data.days[index].uvindex)}`,
-														marginTop: "-.35rem",
-														marginLeft: `${uvIndexToPercent(data.days[index].uvindex)}`,
-													}}
-												/>
+											<BsFillCircleFill
+												size={8}
+												className=" border-[1.75px] rounded-full"
+												color={`${uvIndexToColor(data.days[index].uvindex)}`}
+												style={{
+													color: `${uvIndexToColor(data.days[index].uvindex)}`,
+													marginTop: "-.35rem",
+													marginLeft: `${uvIndexToPercent(data.days[index].uvindex)}`,
+												}}
+											/>
+										</div>
+									</div>
+								</div>
+
+								<div className="flex flex-col sm:ml-3 ml-0 justify-start flex-auto">
+									<div className="flex flex-row justify-between py-2 border-gray-800/50 border-b-[1px] ">
+										<div className="flex flex-auto items-center justify-start">
+											<div className="basis-7 mt-1 justify-start">
+												<WiHumidity size={20} className="w-fit" />
 											</div>
+											<div className="text-sky-300">Humidity</div>
+										</div>
+										<div>{Math.round(data.days[index].humidity)}%</div>
+									</div>
+									<div className="flex flex-row justify-between py-2 border-gray-800/50 border-b-[1px] ">
+										<div className="flex flex-auto items-center justify-start">
+											<div className="basis-7 mt-1">
+												<GiDew size={17} className="" />
+											</div>
+											<div className=" text-sky-300">Dew Point</div>
+										</div>
+										<div>{Math.round(data.days[index].dew)}°</div>
+									</div>
+									<div className="flex flex-row justify-between py-2 border-gray-800/50 border-b-[1px] ">
+										<div className="flex flex-auto items-center justify-start">
+											<div className="basis-7 mt-1">
+												<BsCloudFill size={17} className="" />
+											</div>
+											<div className=" text-sky-300">Cloud Cover</div>
+										</div>
+										<div>{Math.round(data.days[index].cloudcover)}%</div>
+									</div>
+									<div className="flex flex-row justify-between py-2 border-gray-800/50 border-b-[1px] ">
+										<div className="flex flex-auto items-center justify-start">
+											<div className="basis-7 mt-1">
+												<TbGauge size={17} className="" />
+											</div>
+											<div className=" text-sky-300">Pressure</div>
+										</div>
+										<div>
+											{Math.round(data.days[index].pressure)} {units.pressure}
+										</div>
+									</div>
+									<div className="flex flex-row justify-between py-2 border-gray-800/50 border-b-[1px] ">
+										<div className="flex flex-auto items-center justify-start">
+											<div className="basis-7 mt-1">
+												<BsEye size={17} className="" />
+											</div>
+											<div className=" text-sky-300">Visibility</div>
+										</div>
+										<div>
+											{Math.round(data.days[index].visibility)} {units.visibility}
 										</div>
 									</div>
 
-									<div className="flex flex-col sm:ml-3 ml-0 justify-start flex-1">
-										<div className="flex flex-row justify-between py-2 border-gray-800/50 border-b-[1px] ">
-											<div className="flex flex-auto items-center justify-start">
-												<div className="basis-7 mt-1 justify-start">
-													<WiHumidity size={20} className="w-fit" />
-												</div>
-												<div className="text-sky-300">Humidity</div>
+									<div className="flex flex-row justify-between py-2 border-gray-800/50 border-b-[1px]">
+										<div className="flex flex-auto items-center justify-start">
+											<div className="basis-7 mt-1">
+												<BsSunrise size={20} color={yellow[500]} />
 											</div>
-											<div>{Math.round(data.days[index].humidity)}%</div>
+											<div className="text-cyan-200">Sunrise</div>
 										</div>
-										<div className="flex flex-row justify-between py-2 border-gray-800/50 border-b-[1px] ">
-											<div className="flex flex-auto items-center justify-start">
-												<div className="basis-7 mt-1">
-													<GiDew size={17} className="" />
-												</div>
-												<div className=" text-sky-300">Dew Point</div>
+										<div>{`${hourFormatter.format(new Date(data.days[0].sunriseEpoch * 1000))}`} </div>
+									</div>
+									<div className="flex flex-row justify-between py-2 border-gray-800/50 border-b-[1px]">
+										<div className="flex flex-auto items-center justify-start">
+											<div className="basis-7 mt-1">
+												<BsSunset size={20} color={orange[300]} />
 											</div>
-											<div>{Math.round(data.days[index].dew)}°</div>
+											<div className="text-cyan-200">Sunset</div>
 										</div>
-										<div className="flex flex-row justify-between py-2 border-gray-800/50 border-b-[1px] ">
-											<div className="flex flex-auto items-center justify-start">
-												<div className="basis-7 mt-1">
-													<BsCloudFill size={17} className="" />
-												</div>
-												<div className=" text-sky-300">Cloud Cover</div>
+										<div>{`${hourFormatter.format(new Date(data.days[0].sunsetEpoch * 1000))}`} </div>
+									</div>
+									<div className="flex flex-row justify-between py-2 border-gray-800/50 border-b-[1px]">
+										<div className="flex flex-auto items-center justify-start">
+											<div className="basis-7 mt-1">
+												<BsSun size={20} />
 											</div>
-											<div>{Math.round(data.days[index].cloudcover)}%</div>
+											<div className="text-cyan-200">Day Length</div>
 										</div>
-										<div className="flex flex-row justify-between py-2 border-gray-800/50 border-b-[1px] ">
-											<div className="flex flex-auto items-center justify-start">
-												<div className="basis-7 mt-1">
-													<TbGauge size={17} className="" />
-												</div>
-												<div className=" text-sky-300">Pressure</div>
+										<div>{getDayLength(data.days[index].sunriseEpoch, data.days[index].sunsetEpoch)[0]}</div>
+									</div>
+									<div className="flex flex-row justify-between py-2 border-gray-800/50 border-b-[1px]">
+										<div className="flex flex-auto items-center justify-start">
+											<div className="basis-7 mt-1">
+												<BsMoonStars size={17} />
 											</div>
-											<div>
-												{Math.round(data.days[index].pressure)} {units.pressure}
-											</div>
+											<div className="text-cyan-200">Night Length</div>
 										</div>
-										<div className="flex flex-row justify-between py-2 border-gray-800/50 border-b-[1px] ">
-											<div className="flex flex-auto items-center justify-start">
-												<div className="basis-7 mt-1">
-													<BsEye size={17} className="" />
-												</div>
-												<div className=" text-sky-300">Visibility</div>
+										<div>{getDayLength(data.days[index].sunriseEpoch, data.days[index].sunsetEpoch)[1]}</div>
+									</div>
+									<div className="flex flex-row justify-between py-2">
+										<div className="flex flex-auto items-center justify-start">
+											<div className="basis-7 mt-1">
+												<MoonIcons decimal={data.days[index].moonphase} size={23} className={"-ml-0.5"} />
 											</div>
-											<div>
-												{Math.round(data.days[index].visibility)} {units.visibility}
-											</div>
+											<div className="text-sky-300">Moon Phase</div>
 										</div>
-
-										<div className="flex flex-row justify-between py-2 border-gray-800/50 border-b-[1px]">
-											<div className="flex flex-auto items-center justify-start">
-												<div className="basis-7 mt-1">
-													<BsSunrise size={20} color={yellow[500]} />
-												</div>
-												<div className="text-cyan-200">Sunrise</div>
-											</div>
-											<div>{`${hourFormatter.format(new Date(data.days[0].sunriseEpoch * 1000))}`} </div>
-										</div>
-										<div className="flex flex-row justify-between py-2 border-gray-800/50 border-b-[1px]">
-											<div className="flex flex-auto items-center justify-start">
-												<div className="basis-7 mt-1">
-													<BsSunset size={20} color={orange[300]} />
-												</div>
-												<div className="text-cyan-200">Sunset</div>
-											</div>
-											<div>{`${hourFormatter.format(new Date(data.days[0].sunsetEpoch * 1000))}`} </div>
-										</div>
-										<div className="flex flex-row justify-between py-2 border-gray-800/50 border-b-[1px]">
-											<div className="flex flex-auto items-center justify-start">
-												<div className="basis-7 mt-1">
-													<BsSun size={20} />
-												</div>
-												<div className="text-cyan-200">Day Length</div>
-											</div>
-											<div>{getDayLength(data.days[index].sunriseEpoch, data.days[index].sunsetEpoch)[0]}</div>
-										</div>
-										<div className="flex flex-row justify-between py-2 border-gray-800/50 border-b-[1px]">
-											<div className="flex flex-auto items-center justify-start">
-												<div className="basis-7 mt-1">
-													<BsMoonStars size={17} />
-												</div>
-												<div className="text-cyan-200">Night Length</div>
-											</div>
-											<div>{getDayLength(data.days[index].sunriseEpoch, data.days[index].sunsetEpoch)[1]}</div>
-										</div>
-										<div className="flex flex-row justify-between py-2">
-											<div className="flex flex-auto items-center justify-start">
-												<div className="basis-7 mt-1">
-													<MoonIcons decimal={data.days[index].moonphase} size={23} className={"-ml-0.5"} />
-												</div>
-												<div className="text-sky-300">Moon Phase</div>
-											</div>
-											<div className="inline-flex items-center">{decimalToMoonPhase(data.days[index].moonphase)}</div>
-										</div>
+										<div className="inline-flex items-center">{decimalToMoonPhase(data.days[index].moonphase)}</div>
 									</div>
 								</div>
 							</div>
