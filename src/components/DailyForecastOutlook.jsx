@@ -244,8 +244,8 @@ export default function HourlyForecastOutlook({ data, model, units, timezone }) 
 								<div className="flex flex-col sm:ml-3 ml-0 justify-start flex-auto">
 									<div className="flex flex-row justify-between py-2 border-gray-800/50 border-b-[1px] ">
 										<div className="flex flex-auto items-center justify-start">
-											<div className="basis-7 mt-1 justify-start">
-												<WiHumidity size={20} className="w-fit" />
+											<div className="basis-7 mt-1">
+												<WiHumidity size={20} />
 											</div>
 											<div className="text-sky-300">Humidity</div>
 										</div>

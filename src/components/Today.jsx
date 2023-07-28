@@ -71,8 +71,8 @@ const Today = ({ data, units, timezone }) => {
 			</div>
 			<div className="flex flex-row justify-between py-2 border-gray-800/50 border-b-[1px] ">
 				<div className="flex flex-auto items-center justify-start">
-					<div className="basis-7 mt-1 justify-start h-[20px]">
-						<WiHumidity size={24} className="w-fit" />
+					<div className="basis-7 mt-1 h-[20px]">
+						<WiHumidity size={24} />
 					</div>
 					<div className="text-sky-300">Humidity</div>
 				</div>
