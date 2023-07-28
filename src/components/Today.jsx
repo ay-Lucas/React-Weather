@@ -3,7 +3,7 @@ import { BsEye, BsMoonStars, BsSun, BsSunrise, BsSunset, BsThermometerHalf, BsTh
 import { GiWaterDrop } from "react-icons/gi";
 import { PiWindFill } from "react-icons/pi";
 import { WiHumidity } from "react-icons/wi";
-import { decimalToMoonPhase } from "../utility";
+import { decimalToMoonPhase, degreesToWindDirection } from "../utility";
 import MoonIcons from "./MoonIcons";
 
 /* eslint-disable react/prop-types */
@@ -67,6 +67,7 @@ const Today = ({ data, units, timezone }) => {
 				</div>
 				<label>
 					{Math.round(data.days[0].windspeed)} {units.wind}
+					<div className="text-gray-300 ml-1 inline items-center">{degreesToWindDirection(data.days[0].winddir)} </div>
 				</label>
 			</div>
 			<div className="flex flex-row justify-between py-2 border-gray-800/50 border-b-[1px] ">

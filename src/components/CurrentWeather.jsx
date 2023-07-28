@@ -4,7 +4,7 @@ import { green, orange, red, yellow } from "@mui/material/colors";
 import { useEffect, useState } from "react";
 import { BsFillCircleFill } from "react-icons/bs";
 import { GiWaterDrop } from "react-icons/gi";
-import { usAqiToColor, uvIndexToColor, uvIndexToPercent, uvIndexToRisk } from "../utility";
+import { degreesToWindDirection, usAqiToColor, uvIndexToColor, uvIndexToPercent, uvIndexToRisk } from "../utility";
 import { getIcon } from "./Icons";
 const CurrentWeather = ({ data, aqi, units, timezone }) => {
 	// const [time, setTime] = useState(null);
@@ -142,6 +142,7 @@ const CurrentWeather = ({ data, aqi, units, timezone }) => {
 					<div className="text-cyan-200">Wind</div>
 					<div>
 						{Math.round(data.currentConditions.windspeed)} {units.wind}
+						<div className="text-gray-300 ml-1 inline items-center">{degreesToWindDirection(data.days[0].winddir)} </div>
 					</div>
 				</div>
 				<div>
