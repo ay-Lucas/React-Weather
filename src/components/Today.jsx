@@ -28,7 +28,7 @@ const Today = ({ data, units, timezone }) => {
 			</div>
 			<div className="flex flex-row justify-between py-2 border-gray-800/50 border-b-[1px] ">
 				<div className="flex flex-auto items-center justify-start">
-					<div className="basis-7 mt-1">
+					<div className="basis-7 mt-0">
 						<BsThermometerHalf size={20} />
 					</div>
 					<div className="text-cyan-200">Temperature</div>
@@ -39,7 +39,7 @@ const Today = ({ data, units, timezone }) => {
 			</div>
 			<div className="flex flex-row justify-between py-2 border-gray-800/50 border-b-[1px] ">
 				<div className="flex flex-auto items-center justify-start">
-					<div className="basis-7 mt-1">
+					<div className="basis-7 mt-0">
 						<BsThermometerHigh size={20} />
 					</div>
 					<div className="text-cyan-200">Feels Like</div>
@@ -50,8 +50,8 @@ const Today = ({ data, units, timezone }) => {
 			</div>
 			<div className="flex flex-row justify-between py-2 border-gray-800/50 border-b-[1px] ">
 				<div className="flex flex-auto items-center justify-start">
-					<div className="basis-7 mt-1">
-						<GiWaterDrop size={17} className="text-sky-500" />
+					<div className="basis-7 mt-0">
+						<GiWaterDrop size={17} className="text-sky-500 ml-0.5" />
 					</div>
 					<div className="text-cyan-200">Precipitation Probability</div>
 				</div>
@@ -60,7 +60,16 @@ const Today = ({ data, units, timezone }) => {
 			</div>
 			<div className="flex flex-row justify-between py-2 border-gray-800/50 border-b-[1px] ">
 				<div className="flex flex-auto items-center justify-start">
-					<div className="basis-7 mt-1">
+					<div className="basis-7 h-[20px]">
+						<WiHumidity size={23} className="text-sky-400" />
+					</div>
+					<div className="text-cyan-200">Humidity</div>
+				</div>
+				<div>{Math.round(data.days[0].humidity)}%</div>
+			</div>
+			<div className="flex flex-row justify-between py-2 border-gray-800/50 border-b-[1px] ">
+				<div className="flex flex-auto items-center justify-start">
+					<div className="basis-7 mt-0">
 						<PiWindFill size={20} />
 					</div>
 					<div className="text-cyan-200">Wind</div>
@@ -69,15 +78,6 @@ const Today = ({ data, units, timezone }) => {
 					{Math.round(data.days[0].windspeed)} {units.wind}
 					<div className="text-gray-300 ml-1 inline items-center">{degreesToWindDirection(data.days[0].winddir)} </div>
 				</label>
-			</div>
-			<div className="flex flex-row justify-between py-2 border-gray-800/50 border-b-[1px] ">
-				<div className="flex flex-auto items-center justify-start">
-					<div className="basis-7 mt-1 h-[20px]">
-						<WiHumidity size={24} />
-					</div>
-					<div className="text-sky-300">Humidity</div>
-				</div>
-				<div>{Math.round(data.days[0].humidity)}%</div>
 			</div>
 			<div className="flex flex-row justify-between py-2 border-gray-800/50 border-b-[1px]">
 				<div className="flex flex-auto items-center justify-start">
@@ -90,12 +90,21 @@ const Today = ({ data, units, timezone }) => {
 			</div>
 			<div className="flex flex-row justify-between py-2 border-gray-800/50 border-b-[1px]">
 				<div className="flex flex-auto items-center justify-start">
-					<div className="basis-7 mt-1">
+					<div className="basis-7 mt-0">
 						<BsSunset size={20} color={orange[300]} />
 					</div>
 					<div className="text-cyan-200">Sunset</div>
 				</div>
 				<div>{`${hourFormatter.format(new Date(data.days[0].sunsetEpoch * 1000))}`} </div>
+			</div>
+			<div className="flex flex-row justify-between py-2">
+				<div className="flex flex-auto items-center justify-start">
+					<div className="basis-7 mt-0">
+						<MoonIcons decimal={data.days[0].moonphase} size={23} className={"-ml-0.5"} />
+					</div>
+					<div className="text-sky-300">Moon Phase</div>
+				</div>
+				<div className="inline-flex items-center">{decimalToMoonPhase(data.days[0].moonphase)}</div>
 			</div>
 			{/* <div className="flex flex-row justify-between py-2 border-gray-800/50 border-b-[1px]">
 				<div className="flex flex-auto items-center justify-start">
@@ -115,15 +124,6 @@ const Today = ({ data, units, timezone }) => {
 				</div>
 				<div>{getDayLength(data.days[index].sunriseEpoch, data.days[index].sunsetEpoch)[1]}</div>
 			</div> */}
-			<div className="flex flex-row justify-between py-2">
-				<div className="flex flex-auto items-center justify-start">
-					<div className="basis-7 mt-1">
-						<MoonIcons decimal={data.days[0].moonphase} size={23} className={"-ml-0.5"} />
-					</div>
-					<div className="text-sky-300">Moon Phase</div>
-				</div>
-				<div className="inline-flex items-center">{decimalToMoonPhase(data.days[0].moonphase)}</div>
-			</div>
 		</div>
 	);
 };

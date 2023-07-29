@@ -7,6 +7,7 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import { orange, purple, yellow } from "@mui/material/colors";
 import { useEffect, useState } from "react";
 import {
+	BsClockHistory,
 	BsCloudFill,
 	BsDropletHalf,
 	BsEye,
@@ -26,7 +27,7 @@ import { PiWindFill } from "react-icons/pi";
 import { TbGauge } from "react-icons/tb";
 import { WiHumidity } from "react-icons/wi";
 import { v4 as uuidv4 } from "uuid";
-import { decimalToMoonPhase, degreesToWindDirection, usAqiToColor, uvIndexToColor, uvIndexToPercent, uvIndexToRisk } from "../utility";
+import { decimalToMoonPhase, degreesToWindDirection, eurAqiToColor, usAqiToColor, uvIndexToColor, uvIndexToPercent, uvIndexToRisk } from "../utility";
 import { getIcon } from "./Icons";
 import MoonIcons from "./MoonIcons";
 export default function HourlyForecastOutlook({ data, model, units, timezone }) {
@@ -121,7 +122,7 @@ export default function HourlyForecastOutlook({ data, model, units, timezone }) 
 								<div className="flex flex-col sm:mr-3 mr-0 sm:justify-start justify-end flex-auto">
 									<div className="flex flex-row justify-between py-2 border-gray-800/50 border-b-[1px] ">
 										<div className="flex flex-auto items-center justify-start">
-											<div className="basis-7 mt-1">
+											<div className="basis-7 mt-0">
 												<BsThermometerHalf size={20} className="" />
 											</div>
 											<div className="text-sky-300">Temperature</div>
@@ -132,7 +133,7 @@ export default function HourlyForecastOutlook({ data, model, units, timezone }) 
 									</div>
 									<div className="flex flex-row justify-between py-2 border-gray-800/50 border-b-[1px] ">
 										<div className="flex flex-auto items-center justify-start">
-											<div className="basis-7 mt-1">
+											<div className="basis-7 mt-0">
 												<BsThermometerHigh size={20} className="" />
 											</div>
 											<div className="text-sky-300">Feels Like</div>
@@ -143,7 +144,7 @@ export default function HourlyForecastOutlook({ data, model, units, timezone }) 
 									</div>
 									<div className="flex flex-row justify-between py-2 border-gray-800/50 border-b-[1px] ">
 										<div className="flex flex-auto items-center justify-start">
-											<div className="basis-7 mt-1">
+											<div className="basis-7 mt-0">
 												<BsUmbrella size={20} className="" />
 											</div>
 											<div className="text-sky-300">Precipitation</div>
@@ -154,8 +155,8 @@ export default function HourlyForecastOutlook({ data, model, units, timezone }) 
 									</div>
 									<div className="flex flex-row justify-between py-2 border-gray-800/50 border-b-[1px] ">
 										<div className="flex flex-auto items-center justify-start">
-											<div className="basis-7 mt-1">
-												<GiWaterDrop size={17} className="text-sky-500" />
+											<div className="basis-7 mt-0">
+												<GiWaterDrop size={17} className="text-sky-500 ml-0.5" />
 											</div>
 											<div className="text-sky-300">Precipitation Probability</div>
 										</div>
@@ -163,59 +164,57 @@ export default function HourlyForecastOutlook({ data, model, units, timezone }) 
 									</div>
 									<div className="flex flex-row justify-between py-2 border-gray-800/50 border-b-[1px] ">
 										<div className="flex flex-auto items-center justify-start">
-											<div className="basis-7 mt-1">
+											<div className="basis-7 mt-0">
+												<BsClockHistory size={17} className="" />
+											</div>
+											<div className=" text-sky-300">Precipitation Coverage</div>
+										</div>
+										<div>{Math.round(data.days[index].precipcover)}%</div>
+									</div>
+									<div className="flex flex-row justify-between py-2 border-gray-800/50 border-b-[1px] ">
+										<div className="flex flex-auto items-center justify-start">
+											<div className="basis-7 mt-0">
+												<WiHumidity size={23} className="text-sky-400" />
+											</div>
+											<div className="text-sky-300">Humidity</div>
+										</div>
+										<div>{Math.round(data.days[index].humidity)}%</div>
+									</div>
+									<div className="flex flex-row justify-between py-2 border-gray-800/50 border-b-[1px] ">
+										<div className="flex flex-auto items-center justify-start">
+											<div className="basis-7 mt-0">
+												<BsCloudFill size={17} className="ml-0.5" />
+											</div>
+											<div className=" text-sky-300">Cloud Cover</div>
+										</div>
+										<div>{Math.round(data.days[index].cloudcover)}%</div>
+									</div>
+									<div className="flex flex-row justify-between py-2 border-gray-800/50 border-b-[1px] ">
+										<div className="flex flex-auto items-center justify-start">
+											<div className="basis-7 mt-0">
 												<IoThunderstormOutline size={20} className="" />
 											</div>
 											<div className="text-sky-300">Severe Risk</div>
 										</div>
 										<div>{data.days[index].severerisk}</div>
 									</div>
-
 									<div className="flex flex-row justify-between py-2 border-gray-800/50 border-b-[1px] ">
 										<div className="flex flex-auto items-center justify-start">
-											<div className="basis-7 mt-1">
-												<PiWindFill size={20} />
+											<div className="basis-7 mt-0">
+												<GiDew size={17} className="" />
 											</div>
-											<div className="text-sky-300">Wind Speed</div>
+											<div className=" text-sky-300">Dew Point</div>
 										</div>
-										<div>
-											{Math.round(data.days[index].windspeed)} {units.wind} {degreesToWindDirection(data.days[index].winddir)}
-										</div>
+										<div>{Math.round(data.days[index].dew)}°</div>
 									</div>
-									<div className="flex flex-row justify-between py-2 border-gray-800/50 border-b-[1px] ">
-										<div className="flex flex-auto items-center justify-start">
-											<div className="basis-7 mt-1">
-												<PiWindFill size={20} />
-											</div>
-											<div className="text-sky-300">Wind Gusts</div>
-										</div>
-										<div>
-											{Math.round(data.days[index].windgust)} {units.wind}
-										</div>
-									</div>
-									{data.days[index].aqius !== null && (
-										<div className="flex flex-row justify-between items-center py-2 border-gray-800/50 border-b-[1px]">
-											<div className="flex flex-auto items-center justify-start">
-												<div className="basis-7 mt-0">
-													<div
-														style={{ backgroundColor: usAqiToColor(data.days[index].aqius) }}
-														className={"mr-1 ml-1 h-3 w-3 inline-flex items-center rounded-full"}
-													></div>{" "}
-												</div>
-												<div className=" text-cyan-200">Air Quality Index</div>
-											</div>
-
-											<div className="">{data.days[index].aqius}</div>
-										</div>
-									)}
 									<div className="flex flex-row justify-between py-1 border-gray-800/50 sm:border-0 border-b-[1px] ">
 										<div className="flex flex-auto items-center justify-start">
-											<div className="basis-7 mt-1">
+											<div className="basis-7 mt-0">
 												<BsSunFill size={19} />
 											</div>
 											<div className="text-sky-300">Max UV Index</div>
 										</div>
-										<div className="text-left min-w-[5rem]">
+										<div className="min-w-[5rem] text-center">
 											<div className="inline-flex">{data.days[index].uvindex}</div>
 											{" - "}
 											{uvIndexToRisk(data.days[index].uvindex)}
@@ -239,39 +238,64 @@ export default function HourlyForecastOutlook({ data, model, units, timezone }) 
 											/>
 										</div>
 									</div>
+									{/* {data.days[index].aqieur !== null && (
+										<div className="flex flex-row justify-between items-center py-2 border-gray-800/50 sm:border-0 border-b-[1px] ">
+											<div className="flex flex-auto items-center justify-start">
+												<div className="basis-7 mt-0">
+													<div
+														style={{ backgroundColor: eurAqiToColor(data.days[index].aqieur) }}
+														className={"mr-1 ml-1 h-3 w-3 inline-flex items-center rounded-full"}
+													></div>{" "}
+												</div>
+												<div className=" text-cyan-200">Air Quality Index (EU)</div>
+											</div>
+
+											<div className="">{data.days[index].aqieur}</div>
+										</div>
+									)} */}
 								</div>
 
 								<div className="flex flex-col sm:ml-3 ml-0 justify-start flex-auto">
+									{data.days[index].aqius !== null && (
+										<div className="flex flex-row justify-between items-center py-2 border-gray-800/50  border-b-[1px] ">
+											<div className="flex flex-auto items-center justify-start">
+												<div className="basis-7 mt-0">
+													<div
+														style={{ backgroundColor: usAqiToColor(data.days[index].aqius) }}
+														className={"mr-1 ml-1 h-3 w-3 inline-flex items-center rounded-full"}
+													></div>{" "}
+												</div>
+												<div className=" text-cyan-200">Air Quality Index (US)</div>
+											</div>
+
+											<div className="">{data.days[index].aqius}</div>
+										</div>
+									)}
 									<div className="flex flex-row justify-between py-2 border-gray-800/50 border-b-[1px] ">
 										<div className="flex flex-auto items-center justify-start">
-											<div className="basis-7 mt-1">
-												<WiHumidity size={20} />
+											<div className="basis-7 mt-0">
+												<PiWindFill size={20} />
 											</div>
-											<div className="text-sky-300">Humidity</div>
+											<div className="text-sky-300">Wind Speed</div>
 										</div>
-										<div>{Math.round(data.days[index].humidity)}%</div>
+										<div>
+											{Math.round(data.days[index].windspeed)} {units.wind} {degreesToWindDirection(data.days[index].winddir)}
+										</div>
 									</div>
 									<div className="flex flex-row justify-between py-2 border-gray-800/50 border-b-[1px] ">
 										<div className="flex flex-auto items-center justify-start">
-											<div className="basis-7 mt-1">
-												<GiDew size={17} className="" />
+											<div className="basis-7 mt-0">
+												<PiWindFill size={20} />
 											</div>
-											<div className=" text-sky-300">Dew Point</div>
+											<div className="text-sky-300">Wind Gusts</div>
 										</div>
-										<div>{Math.round(data.days[index].dew)}°</div>
+										<div>
+											{Math.round(data.days[index].windgust)} {units.wind}
+										</div>
 									</div>
 									<div className="flex flex-row justify-between py-2 border-gray-800/50 border-b-[1px] ">
 										<div className="flex flex-auto items-center justify-start">
-											<div className="basis-7 mt-1">
-												<BsCloudFill size={17} className="" />
-											</div>
-											<div className=" text-sky-300">Cloud Cover</div>
-										</div>
-										<div>{Math.round(data.days[index].cloudcover)}%</div>
-									</div>
-									<div className="flex flex-row justify-between py-2 border-gray-800/50 border-b-[1px] ">
-										<div className="flex flex-auto items-center justify-start">
-											<div className="basis-7 mt-1">
+											<div className="basis-7 mt-0">
 												<TbGauge size={17} className="" />
 											</div>
 											<div className=" text-sky-300">Pressure</div>
@@ -282,7 +306,7 @@ export default function HourlyForecastOutlook({ data, model, units, timezone }) 
 									</div>
 									<div className="flex flex-row justify-between py-2 border-gray-800/50 border-b-[1px] ">
 										<div className="flex flex-auto items-center justify-start">
-											<div className="basis-7 mt-1">
+											<div className="basis-7 mt-0">
 												<BsEye size={17} className="" />
 											</div>
 											<div className=" text-sky-300">Visibility</div>
@@ -294,7 +318,7 @@ export default function HourlyForecastOutlook({ data, model, units, timezone }) 
 
 									<div className="flex flex-row justify-between py-2 border-gray-800/50 border-b-[1px]">
 										<div className="flex flex-auto items-center justify-start">
-											<div className="basis-7 mt-1">
+											<div className="basis-7 mt-0">
 												<BsSunrise size={20} color={yellow[500]} />
 											</div>
 											<div className="text-cyan-200">Sunrise</div>
@@ -303,7 +327,7 @@ export default function HourlyForecastOutlook({ data, model, units, timezone }) 
 									</div>
 									<div className="flex flex-row justify-between py-2 border-gray-800/50 border-b-[1px]">
 										<div className="flex flex-auto items-center justify-start">
-											<div className="basis-7 mt-1">
+											<div className="basis-7 mt-0">
 												<BsSunset size={20} color={orange[300]} />
 											</div>
 											<div className="text-cyan-200">Sunset</div>
@@ -312,7 +336,7 @@ export default function HourlyForecastOutlook({ data, model, units, timezone }) 
 									</div>
 									<div className="flex flex-row justify-between py-2 border-gray-800/50 border-b-[1px]">
 										<div className="flex flex-auto items-center justify-start">
-											<div className="basis-7 mt-1">
+											<div className="basis-7 mt-0">
 												<BsSun size={20} />
 											</div>
 											<div className="text-cyan-200">Day Length</div>
@@ -321,7 +345,7 @@ export default function HourlyForecastOutlook({ data, model, units, timezone }) 
 									</div>
 									<div className="flex flex-row justify-between py-2 border-gray-800/50 border-b-[1px]">
 										<div className="flex flex-auto items-center justify-start">
-											<div className="basis-7 mt-1">
+											<div className="basis-7 mt-0">
 												<BsMoonStars size={17} />
 											</div>
 											<div className="text-cyan-200">Night Length</div>
@@ -330,7 +354,7 @@ export default function HourlyForecastOutlook({ data, model, units, timezone }) 
 									</div>
 									<div className="flex flex-row justify-between py-2">
 										<div className="flex flex-auto items-center justify-start">
-											<div className="basis-7 mt-1">
+											<div className="basis-7 mt-0">
 												<MoonIcons decimal={data.days[index].moonphase} size={23} className={"-ml-0.5"} />
 											</div>
 											<div className="text-sky-300">Moon Phase</div>

@@ -185,3 +185,20 @@ export const usAqiToColor = (aqi) => {
 		return "gray";
 	}
 };
+export const eurAqiToColor = (aqi) => {
+	if (aqi === 1) {
+		return green[500];
+	} else if (aqi === 2) {
+		return yellow[500];
+	} else if (aqi === 3) {
+		return orange[600];
+	} else if (aqi === 4) {
+		return orange[900];
+	} else if (aqi === 5) {
+		return red[500];
+	} else if (aqi === 6) {
+		return red[900];
+	} else {
+		return "gray";
+	}
+};

@@ -65,8 +65,8 @@ function App() {
 				const timezone = visualForecastResponse.timezone;
 				const options = Intl.DateTimeFormat().resolvedOptions();
 				setTimeZone({ timezone, options });
-				// console.log(visualForecastResponse);
-				// console.log(currentAQIResponse);
+				console.log(visualForecastResponse);
+				console.log(currentAQIResponse);
 			})
 			.catch((error) => {
 				console.log(error);

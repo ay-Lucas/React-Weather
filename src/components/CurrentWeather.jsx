@@ -152,9 +152,13 @@ const CurrentWeather = ({ data, aqi, units, timezone }) => {
 					</div>
 				</div>
 				<div>
+					<div className="text-cyan-200">Cloud Cover</div>
+					<div>{Math.round(data.currentConditions.cloudcover)}%</div>
+				</div>
+				{/* <div>
 					<div className="text-cyan-200">Dew Point</div>
 					<div>{Math.round(data.currentConditions.dew)}°</div>
-				</div>
+				</div> */}
 				<div>
 					<div className="text-cyan-200">UV Index</div>
 					<div className="inline-flex ">
