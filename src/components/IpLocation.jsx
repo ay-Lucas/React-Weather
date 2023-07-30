@@ -4,11 +4,10 @@ const url = "https://api.ipgeolocation.io/ipgeo?apiKey=" + ipGeolocationKey;
 
 //no longer using
 
-export default function Location() {
+// eslint-disable-next-line react/prop-types
+export default function Location({ handleAutoGeolocation }) {
 	const [data, setData] = useState(null);
-	// eslint-disable-next-line no-unused-vars
 	const [loading, setLoading] = useState(true);
-	// eslint-disable-next-line no-unused-vars
 	const [error, setError] = useState(null);
 
 	useEffect(() => {
@@ -27,6 +26,10 @@ export default function Location() {
 				setLoading(false);
 			});
 	}, []);
+	// navigator.geolocation.getCurrentPosition(function (position) {
+	// 	console.log("latitude:", position.coords.latitude);
+	// 	console.log("longitude:", position.coords.longitude);
+	// });
 	return (
 		// <div className="Location text-lg">
 		<>{data && <h1 className="">{data.city + ", " + data.state_prov}</h1>}</>

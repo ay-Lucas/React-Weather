@@ -8,37 +8,42 @@ import LocationCard from "./components/LocationCard";
 import Header from "./components/Navbar/Header.jsx";
 import Today from "./components/Today";
 import "./index.css";
+const VISUAL_API_URL = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/";
+const AQI_URL = "https://www.airnowapi.org/aq/observation/latLong/current/?format=application/json&";
+const REVERSE_GEOCODE_API_URL = "https://api.mapbox.com/geocoding/v5/mapbox.places/";
+const defaultLocation = {
+	lat: 34.0007,
+	lon: -81.0348,
+};
+// const defaultLocation = {
+// 	lat: 48.8566,
+// 	lon: -2.3522,
+// };
+const imperialUnits = {
+	name: "us",
+	temperature: "fahrenheit",
+	wind: "mph",
+	precipitation: "in",
+	pressure: "hPa",
+	visibility: "mi",
+	tempSign: "°F",
+};
+const metricUnits = {
+	name: "metric",
+	temperature: "celsius",
+	wind: "km/h",
+	precipitation: "mm",
+	pressure: "hPa",
+	visibility: "km",
+	tempSign: "°C",
+};
 function App() {
-	console.log("app.jsx rendered");
-	const VISUAL_API_URL = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/";
-	const AQI_URL = "https://www.airnowapi.org/aq/observation/latLong/current/?format=application/json&";
-	const defaultLocation = {
-		lat: 34.0007,
-		lon: -81.0348,
-	};
+	// console.log("app.jsx rendered");
 	const [visualForecast, setVisualForecast] = useState(null);
 	const [location, setLocation] = useState("Columbia, SC");
 	const [coordinates, setCoordinates] = useState(defaultLocation);
 	const [currentAqi, setAqi] = useState(null);
 	const [timeZone, setTimeZone] = useState([null]);
-	const imperialUnits = {
-		name: "us",
-		temperature: "fahrenheit",
-		wind: "mph",
-		precipitation: "in",
-		pressure: "hPa",
-		visibility: "mi",
-		tempSign: "°F",
-	};
-	const metricUnits = {
-		name: "metric",
-		temperature: "celsius",
-		wind: "km/h",
-		precipitation: "mm",
-		pressure: "hPa",
-		visibility: "km",
-		tempSign: "°C",
-	};
 	const [units, setUnits] = useState(imperialUnits);
 	const currentAQIUrl = AQI_URL + "latitude=" + coordinates.lat + "&longitude=" + coordinates.lon + "&distance=25&API_KEY=" + import.meta.env.VITE_AQI_API_KEY;
 	const visualForecastUrl =
@@ -65,8 +70,8 @@ function App() {
 				const timezone = visualForecastResponse.timezone;
 				const options = Intl.DateTimeFormat().resolvedOptions();
 				setTimeZone({ timezone, options });
-				console.log(visualForecastResponse);
-				console.log(currentAQIResponse);
+				// console.log(visualForecastResponse);
+				// console.log(currentAQIResponse);
 			})
 			.catch((error) => {
 				console.log(error);
@@ -80,19 +85,64 @@ function App() {
 			setUnits(imperialUnits);
 			console.log("app is now in imperial units");
 		}
-		// fetchData();
 	};
-
 	const handleOnSearchChange = (searchData) => {
 		setLocation(searchData.label);
 		const [lat, lon] = searchData.value.split(" ");
 		setCoordinates({ lat, lon });
-		console.log(currentAQIUrl);
+		// console.log(currentAQIUrl);
 	};
+	const options = {
+		enableHighAccuracy: true,
+		timeout: 5000,
+		maximumAge: 0,
+	};
+	function success(pos) {
+		//mapbox geocoding api longitude and latitude positions are reversed
+		const lat = pos.coords.latitude;
+		const lon = pos.coords.longitude;
+		setCoordinates({ lat, lon });
+		reverseGeolocationFetch(lon, lat);
+	}
+
+	function errors(err) {
+		console.warn(`ERROR(${err.code}): ${err.message}`);
+	}
+	const reverseGeolocationFetch = (lon, lat) => {
+		let geoLocationUrl = REVERSE_GEOCODE_API_URL + lon + "," + lat + ".json?types=place&access_token=" + import.meta.env.VITE_MAPBOX_GEOCODE_KEY;
+		fetch(geoLocationUrl)
+			.then(async (response) => {
+				const data = await response.json();
+				// console.log(data);
+				// console.log(data.features[0].text);
+				setLocation(data.features[0].place_name);
+			})
+			.catch((error) => {
+				console.log("reverse geocoding", error);
+			});
+	};
+	//get user location on load
+	useEffect(() => {
+		if (navigator.geolocation) {
+			navigator.permissions.query({ name: "geolocation" }).then(function (result) {
+				// console.log(result);
+				if (result.state === "granted") {
+					console.log("location permission granted");
+					navigator.geolocation.getCurrentPosition(success, errors, options);
+				} else if (result.state === "prompt") {
+					navigator.geolocation.getCurrentPosition(success, errors, options);
+					console.log("location permission prompted");
+				} else if (result.state === "denied") {
+					console.log("location permission denied");
+				}
+			});
+		} else {
+			console.log("Geolocation is not supported by this browser.");
+		}
+	}, []);
 	useEffect(() => {
 		fetchData();
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [coordinates, units, location]);
+	}, [units, location]);
 
 	return (
 		<div className="h-screen overflow-x-hidden selection:bg-[#9c27b0]">

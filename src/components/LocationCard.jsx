@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
+
 export default function LocationCard({ location, timezone, data }) {
 	const [alert, setAlert] = useState([]);
 	const dateFormatter = Intl.DateTimeFormat(timezone.options.locale, {

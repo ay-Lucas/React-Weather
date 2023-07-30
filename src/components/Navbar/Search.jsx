@@ -18,6 +18,7 @@ const Search = ({ onSearchChange }) => {
 		return fetch(`${import.meta.env.VITE_AUTOSUGGEST_URL}/cities?minPopulation=10000&namePrefix=${inputValue}`, geoApiOptions)
 			.then((response) => response.json())
 			.then((response) => {
+				console.log(response);
 				return {
 					options: response.data.map((city) => {
 						return {
@@ -34,7 +35,6 @@ const Search = ({ onSearchChange }) => {
 		onSearchChange(searchData);
 	};
 	const customStyles = {
-		//purple mui secondary: #9c27b0
 		control: (baseStyles, state) => ({
 			backgroundColor: "",
 			color: "#1976d2",
@@ -81,12 +81,10 @@ const Search = ({ onSearchChange }) => {
 	//bg color bg-[#1b3c5f]
 	return (
 		<div className="flex items-center rounded-md pl-4 bg-[#555555] border-[1px] border-solid border-[#484848] hover:border-[#66c2ff] md:h-8 h-7 md:text-base text-sm justify-center md:w-[25rem] w-80 mx-3 md:mx-0">
-			<div className="">
+			<div>
 				<BsSearch size={17} color={"#d1d5db"} />
-				{/* color={"#e5e7eb"} */}
 			</div>
 			<AsyncPaginate
-				// styles={customStyles}
 				styles={customStyles}
 				placeholder="Search for a city"
 				debounceTimeout={600}
@@ -94,30 +92,6 @@ const Search = ({ onSearchChange }) => {
 				onChange={handleOnChange}
 				loadOptions={loadOptions}
 				className="w-full"
-				// theme={{
-				// 	colors: {
-				// 		// primary: "#1976d2",
-				// 		primary25: "#0a1929",
-				// 		// primary50: "#0a1929",
-				// 		// primary75: "#0a1929",
-				// 		// danger: "#1976d2",
-				// 		// dangerLight: "#1976d2",
-				// 		// neutral0: "#0a1929",
-				// 		neutral5: "#1976d2",
-				// 		neutral10: "#1976d2",
-				// 		// neutral20: "#1976d2",
-				// 		// neutral30: "#1976d2",
-				// 		neutral40: "#1976d2",
-				// 		// neutral50: "#1976d2",
-				// 		// neutral60: "#1976d2",
-				// 		neutral70: "#1976d2",
-				// 		neutral80: "#1976d2",
-				// 		// neutral90: "#1976d2",
-				// 	},
-				// 	spacing: { baseUnit: 4, controlHeight: 38, menuGutter: 8 },
-				// 	borderRadius: 4,
-				// 	fontFamily: "Oxygen, sans-serif",
-				// }}
 			/>
 		</div>
 	);
