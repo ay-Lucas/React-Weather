@@ -97,14 +97,23 @@ function App() {
 		timeout: 5000,
 		maximumAge: 0,
 	};
+	//checks if default location is the same
+	function isSameLocation(lat, lon) {
+		return Math.abs(lon - defaultLocation.lon) < 1 || Math.abs(lat - defaultLocation.lat) < 1;
+	}
 	function success(pos) {
 		//mapbox geocoding api longitude and latitude positions are reversed
 		const lat = pos.coords.latitude;
 		const lon = pos.coords.longitude;
-		setCoordinates({ lat, lon });
-		reverseGeolocationFetch(lon, lat);
+		if (isSameLocation(lat, lon)) {
+			console.log("same location");
+			return;
+		} else {
+			console.log("not same location");
+			setCoordinates({ lat, lon });
+			reverseGeolocationFetch(lon, lat);
+		}
 	}
-
 	function errors(err) {
 		console.warn(`ERROR(${err.code}): ${err.message}`);
 	}
