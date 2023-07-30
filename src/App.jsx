@@ -87,6 +87,7 @@ function App() {
 		}
 	};
 	const handleOnSearchChange = (searchData) => {
+		// console.log(searchData);
 		setLocation(searchData.label);
 		const [lat, lon] = searchData.value.split(" ");
 		setCoordinates({ lat, lon });
@@ -106,7 +107,7 @@ function App() {
 		const lat = pos.coords.latitude;
 		const lon = pos.coords.longitude;
 		if (isSameLocation(lat, lon)) {
-			console.log("same location");
+			// console.log("same location");
 			return;
 		} else {
 			console.log("not same location");

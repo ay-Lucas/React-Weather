@@ -5,6 +5,20 @@ import { AsyncPaginate } from "react-select-async-paginate";
 // eslint-disable-next-line react/prop-types
 const Search = ({ onSearchChange }) => {
 	const [search, setSearch] = useState(null);
+	let lastInputVal;
+	// function checkState(inputValue) {
+	// 	try {
+	// 		let state = inputValue.split(",").length > 1 ? inputValue.split(",")[1] : null;
+	// 		if (state) {
+	// 			state = state.trim();
+	// 			console.log(state);
+	// 		}
+	// 		console.log(state);
+	// 		return state;
+	// 	} catch (e) {
+	// 		console.log(e);
+	// 	}
+	// }
 	const geoApiOptions = {
 		method: "GET",
 		headers: {
@@ -13,17 +27,32 @@ const Search = ({ onSearchChange }) => {
 		},
 	};
 	const loadOptions = (inputValue) => {
-		if (inputValue === "") return Promise.resolve({ options: [] });
-		if (inputValue.length < 3) return Promise.resolve({ options: [] });
-		return fetch(`${import.meta.env.VITE_AUTOSUGGEST_URL}/cities?minPopulation=10000&namePrefix=${inputValue}`, geoApiOptions)
-			.then((response) => response.json())
+		console.log(inputValue);
+		if (inputValue === lastInputVal) {
+			console.log("input repeat");
+			return Promise.resolve({ options: [] });
+		} else if (inputValue === "") return Promise.resolve({ options: [] });
+		// let state = checkState(inputValue);
+		lastInputVal = inputValue;
+
+		return fetch(`${import.meta.env.VITE_AUTOSUGGEST_URL}/cities?&namePrefix=${inputValue}&limit=10&sort=-population`, geoApiOptions)
 			.then((response) => {
-				console.log(response);
+				// console.log(response);
+				if (!response.ok) {
+					console.log("geodb response error!");
+					throw new Error("geodb response error");
+				} else {
+					return response.json();
+				}
+			})
+			.then((response) => {
+				// console.log(response);
 				return {
 					options: response.data.map((city) => {
 						return {
 							value: `${city.latitude} ${city.longitude}`,
 							label: `${city.name}, ${city.regionCode}, ${city.country}`,
+
 							// region: `${city.regionCode}`,
 						};
 					}),
@@ -62,7 +91,8 @@ const Search = ({ onSearchChange }) => {
 		}),
 		singleValue: (provided, state) => ({
 			...provided,
-			color: "#1976d2",
+			// color: "#1976d2",
+			color: "white",
 		}),
 		indicatorSeparator: (provided, state) => ({
 			...provided,
@@ -87,11 +117,11 @@ const Search = ({ onSearchChange }) => {
 			<AsyncPaginate
 				styles={customStyles}
 				placeholder="Search for a city"
-				debounceTimeout={600}
-				value={"search"}
+				debounceTimeout={700}
+				value={search}
 				onChange={handleOnChange}
 				loadOptions={loadOptions}
-				className="w-full"
+				className="w-full overflow"
 			/>
 		</div>
 	);
