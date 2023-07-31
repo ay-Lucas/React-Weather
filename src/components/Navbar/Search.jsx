@@ -2,62 +2,195 @@
 import { useState } from "react";
 import { BsSearch } from "react-icons/bs";
 import { AsyncPaginate } from "react-select-async-paginate";
+import countries from "./../../assets/countryobjects.json";
+import states from "./../../assets/statesobjects.json";
+const GEODB_AUTOSUGGEST_URL = "https://wft-geo-db.p.rapidapi.com/v1/geo";
+let countryCode, stateCode, city;
+// const cityStateCountry = `countries/${countryCode}/regions/${stateCode}/cities?namePrefix=${city}&limit=10"`;
+let lastInputVal;
+const geoApiOptions = {
+	method: "GET",
+	headers: {
+		"X-RapidAPI-Key": import.meta.env.VITE_GEO_DB_KEY,
+		"X-RapidAPI-Host": import.meta.env.VITE_GEO_DB_HOST,
+	},
+};
 // eslint-disable-next-line react/prop-types
 const Search = ({ onSearchChange }) => {
 	const [search, setSearch] = useState(null);
-	let lastInputVal;
-	// function checkState(inputValue) {
-	// 	try {
-	// 		let state = inputValue.split(",").length > 1 ? inputValue.split(",")[1] : null;
-	// 		if (state) {
-	// 			state = state.trim();
-	// 			console.log(state);
-	// 		}
-	// 		console.log(state);
-	// 		return state;
-	// 	} catch (e) {
-	// 		console.log(e);
-	// 	}
-	// }
-	const geoApiOptions = {
-		method: "GET",
-		headers: {
-			"X-RapidAPI-Key": import.meta.env.VITE_GEO_DB_KEY,
-			"X-RapidAPI-Host": import.meta.env.VITE_GEO_DB_HOST,
-		},
-	};
-	const loadOptions = (inputValue) => {
+	//check for US state code and name
+	function searchState(element) {
+		console.log(element);
+		let code = null;
+		// element = element.length === 2 ? element.toUpperCase() : element.toLowerCase().split();
+		if (element.length === 2) {
+			element = element.toUpperCase();
+			console.log(element);
+		} else if (element.length > 2) {
+			element = element.toLowerCase();
+			//check for spaces
+			if (element.indexOf(" ") !== -1) {
+				let stateWithSpaces = "";
+				let arr = [];
+				element = element.split(" ");
+				console.log(element);
+				for (let i = 0; i < element.length; i++) {
+					arr.push(element[i].charAt(0).toUpperCase().concat(element[i].substring(1)));
+					console.log(arr);
+				}
+				console.log(arr);
+				stateWithSpaces = arr.toString();
+				element = stateWithSpaces.replace(",", " ");
+				console.log(element);
+			} else {
+				element = element.charAt(0).toUpperCase().concat(element.substring(1));
+			}
+			// element = element.slice(0).concat(element.substring(1));
+			// console.log(element);
+			console.log(element);
+		}
+		console.log(element);
+		states.forEach((state) => {
+			if (element === state.name || element === state.code) {
+				console.log(state.name);
+				console.log(state.code);
+				code = state.code;
+			}
+		});
+		console.log(code);
+		return code;
+	}
+	function searchCountry(element) {
+		let code = null;
+		if (element.length === 2) {
+			element = element.toUpperCase();
+			console.log(element);
+		} else if (element.length > 2) {
+			element = element.toLowerCase();
+			//check for spaces
+			if (element.indexOf(" ") !== -1) {
+				let stateWithSpaces;
+				element = element.split(" ");
+				for (let i = 0; i < element.length; i++) {
+					element[i] = element.slice(0).toUpperCase().concat(element.substring(1));
+					stateWithSpaces = element[i].concat(stateWithSpaces);
+				}
+				let element = stateWithSpaces;
+			}
+			console.log(element);
+			element = element.slice(0).concat(element.substring(1));
+			console.log(element);
+		}
+		countries.map((country) => {
+			if (element === country.name || element === country.code) {
+				console.log(country.name);
+				console.log(countryCode);
+				code = country.code;
+			}
+		});
+		return code;
+	}
+	function parseInput(inputValue) {
+		let isUSLocation = false;
+		let arr;
+		//check if input has commas
 		console.log(inputValue);
+		if (inputValue.indexOf(",") !== -1) {
+			arr = inputValue.split(",");
+			for (let i = 0; i < arr.length; i++) {
+				arr[i] = arr[i].trim();
+				if (arr[i] === "") arr[i].splice(i, 1);
+			}
+			console.log(arr);
+			inputValue = arr;
+		}
+		//check for city, state code, country code
+		if (inputValue.length === 3) {
+			city = inputValue[0];
+			stateCode = searchState(inputValue[1]);
+			countryCode = searchCountry(inputValue[2]);
+			console.log(city, stateCode, countryCode);
+			const cityStateCountry = `${GEODB_AUTOSUGGEST_URL}/countries/${countryCode}/regions/${stateCode}/cities?namePrefix=${city}&limit=10`;
+			console.log(cityStateCountry);
+			return cityStateCountry;
+		} else if (inputValue.length === 2) {
+			city = inputValue[0];
+			let state = searchState(inputValue[1]);
+			if (state !== null) {
+				stateCode = state;
+				countryCode = "US";
+				const cityStateCountry = `${GEODB_AUTOSUGGEST_URL}/countries/${countryCode}/regions/${stateCode}/cities?namePrefix=${city}&limit=10`;
+				console.log(cityStateCountry);
+				return cityStateCountry;
+			} else if (state === null) {
+				let country = searchCountry(inputValue[1]);
+				if (country !== null) {
+					countryCode = country;
+					const cityCountry = `${GEODB_AUTOSUGGEST_URL}/cities?countryIds=${countryCode}&namePrefix=${city}&limit=10&sort=-population`;
+					return cityCountry;
+				} else if (country === null) {
+					const cityState = `${GEODB_AUTOSUGGEST_URL}/cities?&namePrefix=${city}&limit=10&sort=-population`;
+					console.log(cityState);
+					return cityState;
+				}
+			}
+		} else {
+			const cityState = `${GEODB_AUTOSUGGEST_URL}/cities?&namePrefix=${city}&limit=10&sort=-population`;
+			return cityState;
+		}
+		console.log(city, stateCode, countryCode);
+	}
+	function getUrl(inputValue) {
+		let geoFetch = parseInput(inputValue);
+		console.log(geoFetch);
+		return geoFetch;
+	}
+
+	const loadOptions = (inputValue) => {
 		if (inputValue === lastInputVal) {
 			console.log("input repeat");
 			return Promise.resolve({ options: [] });
 		} else if (inputValue === "") return Promise.resolve({ options: [] });
-		// let state = checkState(inputValue);
 		lastInputVal = inputValue;
-
-		return fetch(`${import.meta.env.VITE_AUTOSUGGEST_URL}/cities?&namePrefix=${inputValue}&limit=10&sort=-population`, geoApiOptions)
-			.then((response) => {
-				// console.log(response);
-				if (!response.ok) {
-					console.log("geodb response error!");
-					throw new Error("geodb response error");
-				} else {
-					return response.json();
-				}
-			})
-			.then((response) => {
-				// console.log(response);
-				return {
-					options: response.data.map((city) => {
-						return {
-							value: `${city.latitude} ${city.longitude}`,
-							label: `${city.name}, ${city.regionCode}, ${city.country}`,
-
-							// region: `${city.regionCode}`,
-						};
-					}),
-				};
-			});
+		console.log(inputValue);
+		console.log(lastInputVal);
+		try {
+			let url = getUrl(inputValue);
+			console.log(url);
+			return fetch(url, geoApiOptions)
+				.then((response) => {
+					console.log(response);
+					if (!response.ok) {
+						console.log("geodb response error!");
+						throw new Error("geodb response error");
+					} else {
+						return response.json();
+					}
+				})
+				.then((response) => {
+					console.log(response);
+					return {
+						options: response.data.map((city) => {
+							return {
+								value: `${city.latitude} ${city.longitude}`,
+								label: `${city.name}, ${city.regionCode || stateCode}, ${city.country || countryCode}`,
+								// region: `${city.regionCode}`,
+							};
+						}),
+					};
+				});
+		} catch (error) {
+			console.log(error);
+		}
+		console.log(inputValue);
+		// .then((response) => {
+		// 	console.log(response);
+		// 	if (!response.ok) {
+		// 		console.log("geodb response error!");
+		// 		throw new Error("geodb response error");
+		// 	}
+		// 	return response.json();
+		// })
 	};
 	const handleOnChange = (searchData) => {
 		setSearch(searchData);
@@ -118,7 +251,7 @@ const Search = ({ onSearchChange }) => {
 				styles={customStyles}
 				placeholder="Search for a city"
 				debounceTimeout={700}
-				value={search}
+				value={"search"}
 				onChange={handleOnChange}
 				loadOptions={loadOptions}
 				className="w-full overflow"
