@@ -1,4 +1,5 @@
 /* eslint-disable no-unused-vars */
+import { Code } from "@mui/icons-material";
 import { useState } from "react";
 import { BsSearch } from "react-icons/bs";
 import { AsyncPaginate } from "react-select-async-paginate";
@@ -6,7 +7,6 @@ import countries from "./../../assets/countryobjects.json";
 import states from "./../../assets/statesobjects.json";
 const GEODB_AUTOSUGGEST_URL = "https://wft-geo-db.p.rapidapi.com/v1/geo";
 let countryCode, stateCode, city;
-// const cityStateCountry = `countries/${countryCode}/regions/${stateCode}/cities?namePrefix=${city}&limit=10"`;
 let lastInputVal;
 const geoApiOptions = {
 	method: "GET",
@@ -22,7 +22,6 @@ const Search = ({ onSearchChange }) => {
 	function searchState(element) {
 		console.log(element);
 		let code = null;
-		// element = element.length === 2 ? element.toUpperCase() : element.toLowerCase().split();
 		if (element.length === 2) {
 			element = element.toUpperCase();
 			console.log(element);
@@ -45,8 +44,6 @@ const Search = ({ onSearchChange }) => {
 			} else {
 				element = element.charAt(0).toUpperCase().concat(element.substring(1));
 			}
-			// element = element.slice(0).concat(element.substring(1));
-			// console.log(element);
 			console.log(element);
 		}
 		console.log(element);
@@ -62,59 +59,77 @@ const Search = ({ onSearchChange }) => {
 	}
 	function searchCountry(element) {
 		let code = null;
+		//check for country abbreviation
 		if (element.length === 2) {
 			element = element.toUpperCase();
 			console.log(element);
-		} else if (element.length > 2) {
+		}
+		//check for full country name
+		else if (element.length > 2) {
 			element = element.toLowerCase();
 			//check for spaces
 			if (element.indexOf(" ") !== -1) {
 				let stateWithSpaces;
 				element = element.split(" ");
 				for (let i = 0; i < element.length; i++) {
-					element[i] = element.slice(0).toUpperCase().concat(element.substring(1));
+					element[i] = element.charAt(0).toUpperCase().concat(element.substring(1));
 					stateWithSpaces = element[i].concat(stateWithSpaces);
 				}
 				let element = stateWithSpaces;
 			}
 			console.log(element);
-			element = element.slice(0).concat(element.substring(1));
+			element = element.charAt(0).toUpperCase().concat(element.substring(1));
+
 			console.log(element);
 		}
 		countries.map((country) => {
 			if (element === country.name || element === country.code) {
 				console.log(country.name);
 				console.log(countryCode);
+				countryName = country.name;
 				code = country.code;
 			}
 		});
+		console.log(code);
 		return code;
 	}
 	function parseInput(inputValue) {
-		let isUSLocation = false;
-		let arr;
-		//check if input has commas
+		let arr = null;
 		console.log(inputValue);
+		//check if input has commas
 		if (inputValue.indexOf(",") !== -1) {
 			arr = inputValue.split(",");
 			for (let i = 0; i < arr.length; i++) {
 				arr[i] = arr[i].trim();
-				if (arr[i] === "") arr[i].splice(i, 1);
 			}
 			console.log(arr);
 			inputValue = arr;
+			city = inputValue[0];
 		}
-		//check for city, state code, country code
-		if (inputValue.length === 3) {
-			city = inputValue[0];
-			stateCode = searchState(inputValue[1]);
+		//now check if input is only a city
+		console.log(typeof inputValue);
+		if (arr === null) {
+			city = inputValue.trim();
+			console.log(city);
+			const cityState = `${GEODB_AUTOSUGGEST_URL}/cities?&namePrefix=${city}&limit=10&sort=-population`;
+			// console.log(cityState);
+			return cityState;
+			//check for city, state, and country
+		} else if (arr.length === 3) {
 			countryCode = searchCountry(inputValue[2]);
+			//
+			stateCode = countryCode === "US" ? searchState(inputValue[1]) : arr[2];
+			// check for null
 			console.log(city, stateCode, countryCode);
-			const cityStateCountry = `${GEODB_AUTOSUGGEST_URL}/countries/${countryCode}/regions/${stateCode}/cities?namePrefix=${city}&limit=10`;
-			console.log(cityStateCountry);
-			return cityStateCountry;
-		} else if (inputValue.length === 2) {
-			city = inputValue[0];
+			if (stateCode && countryCode) {
+				console.log(city, stateCode, countryCode);
+				const cityStateCountry = `${GEODB_AUTOSUGGEST_URL}/countries/${countryCode}/regions/${stateCode}/cities?namePrefix=${city}&limit=10`;
+				console.log(cityStateCountry);
+				return cityStateCountry;
+			}
+			//check for city and state OR
+			//city and country
+		} else if (arr.length === 2) {
 			let state = searchState(inputValue[1]);
 			if (state !== null) {
 				stateCode = state;
@@ -122,44 +137,38 @@ const Search = ({ onSearchChange }) => {
 				const cityStateCountry = `${GEODB_AUTOSUGGEST_URL}/countries/${countryCode}/regions/${stateCode}/cities?namePrefix=${city}&limit=10`;
 				console.log(cityStateCountry);
 				return cityStateCountry;
-			} else if (state === null) {
-				let country = searchCountry(inputValue[1]);
-				if (country !== null) {
-					countryCode = country;
-					const cityCountry = `${GEODB_AUTOSUGGEST_URL}/cities?countryIds=${countryCode}&namePrefix=${city}&limit=10&sort=-population`;
-					return cityCountry;
-				} else if (country === null) {
-					const cityState = `${GEODB_AUTOSUGGEST_URL}/cities?&namePrefix=${city}&limit=10&sort=-population`;
-					console.log(cityState);
-					return cityState;
-				}
 			}
-		} else {
-			const cityState = `${GEODB_AUTOSUGGEST_URL}/cities?&namePrefix=${city}&limit=10&sort=-population`;
-			return cityState;
+			let country = searchCountry(inputValue[1]);
+			console.log(country);
+			if (country !== null) {
+				countryCode = country;
+				const cityCountry = `${GEODB_AUTOSUGGEST_URL}/cities?countryIds=${countryCode}&namePrefix=${city}&limit=10&sort=-population`;
+				return cityCountry;
+			}
 		}
-		console.log(city, stateCode, countryCode);
+		console.log(`No input match! No url returned! \n ${city}, ${stateCode}, ${countryCode}`);
 	}
 	function getUrl(inputValue) {
 		let geoFetch = parseInput(inputValue);
-		console.log(geoFetch);
-		return geoFetch;
+		// console.log(geoFetch);
+		if (geoFetch !== null || geoFetch !== undefined) {
+			return geoFetch;
+		}
 	}
 
 	const loadOptions = (inputValue) => {
+		console.log(inputValue);
 		if (inputValue === lastInputVal) {
 			console.log("input repeat");
 			return Promise.resolve({ options: [] });
 		} else if (inputValue === "") return Promise.resolve({ options: [] });
 		lastInputVal = inputValue;
-		console.log(inputValue);
-		console.log(lastInputVal);
+		let url = getUrl(inputValue);
 		try {
-			let url = getUrl(inputValue);
-			console.log(url);
+			// console.log(url);
 			return fetch(url, geoApiOptions)
 				.then((response) => {
-					console.log(response);
+					// console.log(response);
 					if (!response.ok) {
 						console.log("geodb response error!");
 						throw new Error("geodb response error");
@@ -168,31 +177,25 @@ const Search = ({ onSearchChange }) => {
 					}
 				})
 				.then((response) => {
-					console.log(response);
+					// console.log(response);
+					let countryName;
 					return {
 						options: response.data.map((city) => {
 							return {
 								value: `${city.latitude} ${city.longitude}`,
-								label: `${city.name}, ${city.regionCode || stateCode}, ${city.country || countryCode}`,
-								// region: `${city.regionCode}`,
+								label: `${city.name}, ${city.regionCode || stateCode}, ${(countryName =
+									city.country === "United States of America" ? city.countryCode : city.country)}`,
 							};
 						}),
 					};
 				});
 		} catch (error) {
-			console.log(error);
+			console.log("GeoDB Search API ERROR" + error);
 		}
 		console.log(inputValue);
-		// .then((response) => {
-		// 	console.log(response);
-		// 	if (!response.ok) {
-		// 		console.log("geodb response error!");
-		// 		throw new Error("geodb response error");
-		// 	}
-		// 	return response.json();
-		// })
 	};
 	const handleOnChange = (searchData) => {
+		// console.log(searchData);
 		setSearch(searchData);
 		onSearchChange(searchData);
 	};
@@ -250,8 +253,8 @@ const Search = ({ onSearchChange }) => {
 			<AsyncPaginate
 				styles={customStyles}
 				placeholder="Search for a city"
-				debounceTimeout={700}
-				value={"search"}
+				debounceTimeout={800}
+				value={search}
 				onChange={handleOnChange}
 				loadOptions={loadOptions}
 				className="w-full overflow"

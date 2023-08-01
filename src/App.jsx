@@ -88,6 +88,10 @@ function App() {
 	};
 	const handleOnSearchChange = (searchData) => {
 		// console.log(searchData);
+		// if (searchData.label.endsWith("United States of America")) {
+		// 	searchData.label = searchData.label.replace("United States of America", "US");
+		// 	console.log(searchData.label);
+		// }
 		setLocation(searchData.label);
 		const [lat, lon] = searchData.value.split(" ");
 		setCoordinates({ lat, lon });
