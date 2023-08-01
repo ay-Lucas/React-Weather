@@ -6,8 +6,7 @@ import { AsyncPaginate } from "react-select-async-paginate";
 import countries from "./../../assets/countryobjects.json";
 import states from "./../../assets/statesobjects.json";
 const GEODB_AUTOSUGGEST_URL = "https://wft-geo-db.p.rapidapi.com/v1/geo";
-let countryCode, stateCode, city;
-let lastInputVal;
+let lastInputVal, countryName, regionCode;
 const geoApiOptions = {
 	method: "GET",
 	headers: {
@@ -20,11 +19,11 @@ const Search = ({ onSearchChange }) => {
 	const [search, setSearch] = useState(null);
 	//check for US state code and name
 	function searchState(element) {
-		console.log(element);
+		// console.log(element);
 		let code = null;
 		if (element.length === 2) {
 			element = element.toUpperCase();
-			console.log(element);
+			// console.log(element);
 		} else if (element.length > 2) {
 			element = element.toLowerCase();
 			//check for spaces
@@ -46,15 +45,15 @@ const Search = ({ onSearchChange }) => {
 			}
 			console.log(element);
 		}
-		console.log(element);
 		states.forEach((state) => {
 			if (element === state.name || element === state.code) {
 				console.log(state.name);
 				console.log(state.code);
+				regionCode = state.code;
 				code = state.code;
 			}
 		});
-		console.log(code);
+		// console.log(code);
 		return code;
 	}
 	function searchCountry(element) {
@@ -84,34 +83,29 @@ const Search = ({ onSearchChange }) => {
 		}
 		countries.map((country) => {
 			if (element === country.name || element === country.code) {
-				console.log(country.name);
-				console.log(countryCode);
-				countryName = country.name;
 				code = country.code;
 			}
 		});
-		console.log(code);
 		return code;
 	}
 	function parseInput(inputValue) {
+		let countryCode, stateCode, city;
 		let arr = null;
-		console.log(inputValue);
 		//check if input has commas
 		if (inputValue.indexOf(",") !== -1) {
 			arr = inputValue.split(",");
 			for (let i = 0; i < arr.length; i++) {
 				arr[i] = arr[i].trim();
 			}
-			console.log(arr);
+			// console.log(arr);
 			inputValue = arr;
 			city = inputValue[0];
 		}
 		//now check if input is only a city
-		console.log(typeof inputValue);
 		if (arr === null) {
 			city = inputValue.trim();
 			console.log(city);
-			const cityState = `${GEODB_AUTOSUGGEST_URL}/cities?&namePrefix=${city}&limit=10&sort=-population`;
+			const cityState = `${GEODB_AUTOSUGGEST_URL}/cities?&namePrefix=${city}&sort=-population`;
 			// console.log(cityState);
 			return cityState;
 			//check for city, state, and country
@@ -130,17 +124,18 @@ const Search = ({ onSearchChange }) => {
 			//check for city and state OR
 			//city and country
 		} else if (arr.length === 2) {
+			// console.log(inputValue);
 			let state = searchState(inputValue[1]);
 			if (state !== null) {
 				stateCode = state;
 				countryCode = "US";
 				const cityStateCountry = `${GEODB_AUTOSUGGEST_URL}/countries/${countryCode}/regions/${stateCode}/cities?namePrefix=${city}&limit=10`;
-				console.log(cityStateCountry);
+				// console.log(cityStateCountry);
 				return cityStateCountry;
 			}
 			let country = searchCountry(inputValue[1]);
-			console.log(country);
 			if (country !== null) {
+				console.log(country);
 				countryCode = country;
 				const cityCountry = `${GEODB_AUTOSUGGEST_URL}/cities?countryIds=${countryCode}&namePrefix=${city}&limit=10&sort=-population`;
 				return cityCountry;
@@ -150,14 +145,14 @@ const Search = ({ onSearchChange }) => {
 	}
 	function getUrl(inputValue) {
 		let geoFetch = parseInput(inputValue);
-		// console.log(geoFetch);
+		console.log(geoFetch);
 		if (geoFetch !== null || geoFetch !== undefined) {
 			return geoFetch;
 		}
 	}
 
 	const loadOptions = (inputValue) => {
-		console.log(inputValue);
+		// console.log(inputValue);
 		if (inputValue === lastInputVal) {
 			console.log("input repeat");
 			return Promise.resolve({ options: [] });
@@ -178,13 +173,14 @@ const Search = ({ onSearchChange }) => {
 				})
 				.then((response) => {
 					// console.log(response);
-					let countryName;
+					let regionName;
 					return {
 						options: response.data.map((city) => {
 							return {
 								value: `${city.latitude} ${city.longitude}`,
-								label: `${city.name}, ${city.regionCode || stateCode}, ${(countryName =
-									city.country === "United States of America" ? city.countryCode : city.country)}`,
+								label: `${city.name}, ${(regionName = city.country === "United States of America" ? city.regionCode || regionCode : " ")} ${
+									city.country === "United States of America" ? "" : city.country || regionCode
+								}`,
 							};
 						}),
 					};
