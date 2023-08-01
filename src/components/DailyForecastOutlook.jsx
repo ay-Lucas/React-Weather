@@ -81,6 +81,7 @@ export default function HourlyForecastOutlook({ data, model, units, timezone }) 
 				<div className="text-2xl pt-3 mb-2 ml-4">14 Day</div>
 				{days.map((days, index) => (
 					<Accordion
+						TransitionProps={{ unmountOnExit: true }}
 						key={uuidv4()}
 						variant="outlined"
 						// expanded={index === 0}
