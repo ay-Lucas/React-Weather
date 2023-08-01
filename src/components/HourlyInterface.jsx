@@ -27,13 +27,15 @@ export const HourlyInterface = ({ children, hours, data, startingIndex, timezone
 		setDate(getDateString(data.days[0].datetimeEpoch));
 	}, [timezone, startingIndex, data, hours]);
 
-	const getDay = (scrollAmount) => {
-		const firstDayRemainingHours = 24 - startingIndex;
-		const firstDayPixels = hoursToPixels(firstDayRemainingHours);
+	const updateDate = (scrollAmount) => {
+		const firstDayPixels = hoursToPixels(startingIndex + 1);
 		//correct for first day
 		//add 500 to scroll amount to center the day
-		const index = firstDayPixels > 1000 ? Math.round((scrollAmount + firstDayPixels - 500) / pixelsInDay) : 0;
+		const index = Math.floor((scrollAmount + firstDayPixels + 500) / pixelsInDay);
 		const day = getDateString(data.days[index].datetimeEpoch);
+		// console.log(Math.floor((scrollAmount + firstDayPixels) / pixelsInDay));
+		// console.log((scrollAmount + firstDayPixels + 500) / pixelsInDay);
+		// console.log(scrollAmount);
 		setDate(day);
 		setColor(colors[index * 24]);
 	};
@@ -50,7 +52,7 @@ export const HourlyInterface = ({ children, hours, data, startingIndex, timezone
 				<div className="text-center justify-center font-medium text-base hidden lg:flex mb-3 -mt-8" style={{ color: color }}>
 					{date}
 				</div>
-				<HorizontalScroll dailyDate={getDay}>{children}</HorizontalScroll>
+				<HorizontalScroll updateDate={updateDate}>{children}</HorizontalScroll>
 			</div>
 		</>
 	);
