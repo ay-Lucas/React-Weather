@@ -6,6 +6,7 @@ import DailyForecastOutlook from "./components/DailyForecastOutlook";
 import HourlyForecastOutlook from "./components/HourlyForecastOutlook";
 import LocationCard from "./components/LocationCard";
 import Header from "./components/Navbar/Header.jsx";
+import Radar from "./components/Radar";
 import Today from "./components/Today";
 import "./index.css";
 const VISUAL_API_URL = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/";
@@ -173,8 +174,8 @@ function App() {
 								<div className="mr-0 sm:mr-1.5 mt-3 sm:mt-0 bg-slate-950/20 rounded-lg shadow-sm py-5 px-6 md:w-1/2 w-full">
 									{visualForecast && <Today data={visualForecast} units={units} timezone={timeZone} />}
 								</div>
-								<div className="ml-0 sm:ml-1.5 mt-3 sm:mt-0 bg-slate-950/20 rounded-lg shadow-sm py-5 px-6 md:w-1/2 w-full">
-									{/* {visualForecast && <Today data={visualForecast} units={units} timezone={timeZone} />} */}
+								<div className="ml-0 sm:ml-1.5 mt-3 sm:mt-0 bg-slate-950/20 rounded-lg shadow-sm md:w-1/2 w-full ">
+									{coordinates && <Radar coordinates={coordinates} />}
 								</div>
 							</div>
 							<div className="mb-3 mt-4">{visualForecast && <HourlyForecastOutlook data={visualForecast} units={units} timezone={timeZone} />}</div>
