@@ -85,23 +85,23 @@ const CurrentWeather = ({ data, aqi, units, timezone }) => {
 
 	return (
 		<div className="mt-3 lg:flex sm:inline-flex w-full ">
-			<div className="grid grid-cols-4 items-center h-full justify-evenly flex-wrap w-full">
-				<div className="grid col-span-2 items-center justify-start mr-0 sm:mr-1.5 bg-slate-950/20 rounded-lg shadow-sm py-4 px-3 pl-6">
-					<div className="flex md:flex-row flex-col sm:items-baseline justify-start">
-						<div className="text-2xl mr-0 md:mr-2">Current Weather</div>
+			<div className="grid sm:grid-cols-4 grid-cols-2 items-center h-full w-full justify-evenly flex-wrap ">
+				<div className="grid col-span-2 items-center justify-start mr-0 sm:mr-1.5 mb-3 sm:mb-0 bg-slate-950/20 rounded-lg shadow-sm py-4 px-3 pl-6 ">
+					<div className="flex sm:flex-row flex-col sm:items-baseline justify-start">
+						<div className="text-2xl mr-0 sm:mr-2">Current Weather</div>
 						<div className="tracking-wide dark:text-gray-400">As of {locationHourFormatter.format(data.currentConditions.datetimeEpoch * 1000)}</div>
 					</div>
-					<div className="flex flex-col w-full justify-start md:mt-8 mt-5">
+					<div className="flex flex-col w-full justify-start sm:mt-8 mt-5">
 						<div className="flex flex-row w-full h-full items-start justify-start">
-							<div className="flex md:flex-col flex-row items-baseline">
+							<div className="flex sm:flex-col flex-row items-baseline">
 								<div className="flex justify-center">
-									<div>{getIcon(data.currentConditions.icon, 60, "md:p-0 md:h-fit h-12")}</div>
-									<div className="md:text-6xl text-5xl font-light md:ml-3 ml-0 ">{`${Math.round(data.currentConditions.temp)}`}</div>
+									<div>{getIcon(data.currentConditions.icon, 60, "sm:p-0 sm:h-fit h-12")}</div>
+									<div className="sm:text-6xl text-5xl font-light sm:ml-3 ml-0 ">{`${Math.round(data.currentConditions.temp)}`}</div>
 									<span className="text-3xl font-light pb-5">{units.tempSign}</span>
 								</div>
 							</div>
 
-							<div className="flex flex-col sm:w-full ml-3 md:justify-evenly h-full">
+							<div className="flex flex-col sm:w-full ml-3 sm:justify-evenly h-full">
 								<label className="mix-blend-overlay">{data.currentConditions.conditions}</label>
 								<label className="mr-1.5">Feels like {Math.round(data.currentConditions.feelslike)}°</label>
 								{data.currentConditions.precipprob > 0 && (
@@ -126,8 +126,9 @@ const CurrentWeather = ({ data, aqi, units, timezone }) => {
 						</div>
 					</div>
 				</div>
-				<div className="grid h-full ml-0 sm:ml-1.5 bg-slate-950/20 rounded-lg shadow-sm py-2 pl-6">
-					<div className="grid grid-cols-2 md:text-base items-center justify-center md:justify-between text-sm sm:justify-items-start justify-items-start">
+				<div className="grid h-full ml-0 sm:ml-1.5 sm:mr-0 mr-1 bg-slate-950/20 rounded-lg shadow-sm py-2 pl-3 overflow-hidden">
+					<div className="grid-rows-1 h-4">Observations</div>
+					<div className="grid grid-cols-2 sm:text-base items-center justify-center sm:justify-between text-sm sm:justify-items-start justify-items-start">
 						{AQI !== null && (
 							<div>
 								<div className=" text-cyan-200">Air Quality</div>
@@ -170,7 +171,7 @@ const CurrentWeather = ({ data, aqi, units, timezone }) => {
 								{" - "}
 								{uvIndexToRisk(data.currentConditions.uvindex)}
 							</div>
-							<div className="text-left max-w-[4.25rem] max-md:w-[5rem] md:min-w-[5rem]">
+							<div className="text-left max-w-[4.25rem] max-sm:w-[5rem] sm:min-w-[5rem]">
 								<div
 									style={{
 										marginTop: "0.4rem",
@@ -195,6 +196,9 @@ const CurrentWeather = ({ data, aqi, units, timezone }) => {
 							</div>
 						</div>
 					</div>
+				</div>
+				<div className="grid h-full ml-1 sm:ml-1.5 bg-slate-950/20 rounded-lg shadow-sm py-2 pl-3 text-left">
+					<div className="h-4">Average Weather</div>
 				</div>
 			</div>
 		</div>
