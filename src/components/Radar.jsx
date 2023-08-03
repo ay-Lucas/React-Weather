@@ -1,7 +1,7 @@
-import { ArrowLeft, ArrowRight, Pause, PlayArrow } from "@mui/icons-material";
+import { Pause, PlayArrow } from "@mui/icons-material";
 import { Slider } from "@mui/material";
 import { useCallback, useEffect, useState } from "react";
-import { Circle, FeatureGroup, LayerGroup, LayersControl, MapContainer, Marker, Popup, Rectangle, TileLayer, useMap } from "react-leaflet";
+import { MapContainer, TileLayer } from "react-leaflet";
 import RadarFrame from "./RadarFrame";
 // eslint-disable-next-line react/prop-types
 const Radar = ({ coordinates }) => {
@@ -14,11 +14,11 @@ const Radar = ({ coordinates }) => {
 		} else {
 			setPlay(false);
 		}
-		console.log(frame);
 	};
 	const incrementFrame = useCallback(() => {
 		setFrame((prevFrame) => prevFrame + 1);
 	}, []);
+	// plays 1 second interval over 15 precipitation frames
 	useEffect(() => {
 		if (play) {
 			if (frame > 15) {
@@ -33,6 +33,7 @@ const Radar = ({ coordinates }) => {
 	const handleSlider = (e) => {
 		setFrame(e.target.value);
 	};
+	// creates value/label objects for Slider
 	const getTimes = (times) => {
 		let arr = [];
 		const labels = () => {
@@ -49,8 +50,13 @@ const Radar = ({ coordinates }) => {
 		setTimes(labels);
 		console.log(labels);
 	};
-	const func = () => {
-		return times[frame].label;
+	const getSliderLabels = () => {
+		if (frame !== undefined && frame < 15) {
+			return times[frame].label;
+		}
+	};
+	const isEvenNumber = (n, index) => {
+		return index % 2 === 0;
 	};
 	return (
 		<div>
@@ -59,18 +65,24 @@ const Radar = ({ coordinates }) => {
 					<button onClick={handleButton}>{(play && <Pause />) || (!play && <PlayArrow />)}</button>
 				</div>
 				<div className="w-full px-4 text-xs">
+					<label className="flex justify-end mr-11">Now</label>
 					{times && (
 						<Slider
 							aria-label="Temperature"
 							value={frame}
-							valueLabelFormat={func}
+							valueLabelFormat={getSliderLabels}
 							valueLabelDisplay="auto"
 							step={1}
-							marks={times.filter((times, index) => index % 2 === 0)}
+							marks={times.filter(isEvenNumber)}
 							min={0}
 							max={15}
 							onChange={handleSlider}
-							sx={{ span: { fontSize: ".65rem" } }}
+							sx={{
+								"span": { fontSize: ".65rem" },
+								"&& .MuiSlider-rail": {
+									color: "white",
+								},
+							}}
 						/>
 					)}
 				</div>

@@ -13,53 +13,34 @@ const getRadar = async () => {
 };
 // eslint-disable-next-line react/prop-types
 const RadarFrame = ({ index, getTimes }) => {
-	// const [frame, setFrame] = useState(null);
 	const [radar, setRadar] = useState(null);
-	// const [times, setTimes] = useState(null);
-	const [frame, setFrame] = useState(0);
-
 	const getFrames = (radar) => {
 		if (radar === null) {
 			return;
 		}
 		let pathArray = [];
 		let timeArray = [];
-		// let past = Object.keys(radar.past).
 		radar.past.map((element) => {
-			console.log(
-				new Date(element.time * 1000).toLocaleTimeString([], {
-					hour: "numeric",
-					minute: "numeric",
-				})
-				// .split(" ")[0]
-			);
 			pathArray.push(element.path);
 			timeArray.push(
 				new Date(element.time * 1000).toLocaleTimeString([], {
 					hour: "numeric",
 					minute: "numeric",
 				})
-				// .split(" ")[0]
 			);
-			console.log(element.time);
-			console.log(element.path);
 		});
-
 		radar.nowcast.map((element) => {
-			console.log(new Date(element.time * 1000).toLocaleTimeString());
 			pathArray.push(element.path);
 			timeArray.push(
 				new Date(element.time * 1000).toLocaleTimeString([], {
 					hour: "numeric",
 					minute: "numeric",
 				})
-				// .split(" ")[0]
 			);
-			console.log(element.time);
-			console.log(element.path);
 		});
 		console.log(pathArray);
-		// setTimes(timeArray);
+		console.log(timeArray);
+		// return formatted times to label Radar slider
 		getTimes(timeArray);
 		setRadar(pathArray);
 	};
@@ -74,7 +55,6 @@ const RadarFrame = ({ index, getTimes }) => {
 	if (!radar) {
 		return <div>Loading...</div>;
 	}
-
 	return <TileLayer attribution="RainViewer.com" url={`https://tilecache.rainviewer.com${radar[index]}/256/{z}/{x}/{y}/4/1_1.png`} opacity={0.6} zIndex={2} />;
 };
 export default RadarFrame;
