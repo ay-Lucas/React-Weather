@@ -7,6 +7,7 @@ import RadarFrame from "./RadarFrame";
 const Radar = ({ coordinates }) => {
 	const [frame, setFrame] = useState(13);
 	const [play, setPlay] = useState(false);
+	const [times, setTimes] = useState(null);
 	const handleButton = () => {
 		if (play === false) {
 			setPlay(true);
@@ -30,23 +31,53 @@ const Radar = ({ coordinates }) => {
 		}
 	}, [incrementFrame, frame, play]);
 	const handleSlider = (e) => {
-		console.log(e.target.value);
 		setFrame(e.target.value);
 	};
-	// const getTimes = () => {};
+	const getTimes = (times) => {
+		let arr = [];
+		const labels = () => {
+			for (let i = 0; i < times.length; i++) {
+				const timeLabels = {
+					value: i,
+					label: times[i],
+				};
+				arr.push(timeLabels);
+				console.log(timeLabels);
+			}
+			return arr;
+		};
+		setTimes(labels);
+		console.log(labels);
+	};
+	const func = () => {
+		return times[frame].label;
+	};
 	return (
-		<div className="">
+		<div>
 			<nav className="flex mt-2">
 				<div className="ml-2">
 					<button onClick={handleButton}>{(play && <Pause />) || (!play && <PlayArrow />)}</button>
 				</div>
-				<div className="w-full px-4">
-					<Slider aria-label="Temperature" value={frame} valueLabelDisplay="auto" step={1} marks min={0} max={15} onChange={handleSlider} />
+				<div className="w-full px-4 text-xs">
+					{times && (
+						<Slider
+							aria-label="Temperature"
+							value={frame}
+							valueLabelFormat={func}
+							valueLabelDisplay="auto"
+							step={1}
+							marks={times.filter((times, index) => index % 2 === 0)}
+							min={0}
+							max={15}
+							onChange={handleSlider}
+							sx={{ span: { fontSize: ".65rem" } }}
+						/>
+					)}
 				</div>
 			</nav>
 			<MapContainer center={coordinates} zoom={8} scrollWheelZoom={true} className="flex rounded-lg w-full h-[400px]">
 				<TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-				<RadarFrame index={frame} />
+				<RadarFrame index={frame} getTimes={getTimes} />
 			</MapContainer>
 		</div>
 	);
