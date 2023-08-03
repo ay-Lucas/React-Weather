@@ -29,17 +29,7 @@ const Radar = ({ coordinates }) => {
 		setFrame((prevFrame) => prevFrame + 1);
 	}, []);
 	// plays 1 second interval over 15 precipitation frames
-	useEffect(() => {
-		if (play) {
-			if (frame > 15) {
-				setFrame(0);
-				return;
-			}
-			const timeoutFunction = setInterval(incrementFrame, 1000);
-			console.log(frame);
-			return () => clearInterval(timeoutFunction);
-		}
-	}, [incrementFrame, frame, play]);
+
 	const handleSlider = (e) => {
 		setFrame(e.target.value);
 	};
@@ -61,13 +51,24 @@ const Radar = ({ coordinates }) => {
 		// if (times.length >= frame) {
 		// 	return;
 		// }
-		if ((times[frame] !== undefined && times !== null) || times.length <= frame) {
+		if ((times[frame] !== undefined && times[frame] !== null) || times.length + 1 <= frame) {
 			return times[frame].label;
 		}
 	};
 	const isEvenNumber = (n, index) => {
 		return index % 2 === 0;
 	};
+	useEffect(() => {
+		if (play) {
+			if (frame > 15) {
+				setFrame(0);
+				return;
+			}
+			const timeoutFunction = setInterval(incrementFrame, 1000);
+			console.log(frame);
+			return () => clearInterval(timeoutFunction);
+		}
+	}, [incrementFrame, frame, play]);
 	// const handleLabels = (n) => {
 	// 	let arr = [];
 	// 	for (let i = 0; i < n.length; i++) {
