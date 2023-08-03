@@ -1,13 +1,23 @@
-import { Pause, PlayArrow } from "@mui/icons-material";
+/* eslint-disable react/prop-types */
+import { LocationCitySharp, Pause, PlayArrow } from "@mui/icons-material";
 import { Slider } from "@mui/material";
+import L, { Map, map } from "leaflet";
 import { useCallback, useEffect, useState } from "react";
-import { MapContainer, TileLayer } from "react-leaflet";
+import { Circle, FeatureGroup, LayerGroup, LayersControl, MapContainer, Marker, Popup, TileLayer, useMap, useMapEvents } from "react-leaflet";
 import RadarFrame from "./RadarFrame";
-// eslint-disable-next-line react/prop-types
+function getIcon() {
+	return L.icon({
+		iconUrl: "public/place_black_48dp.svg",
+		iconSize: [30, 60],
+	});
+}
+
 const Radar = ({ coordinates }) => {
 	const [frame, setFrame] = useState(13);
 	const [play, setPlay] = useState(false);
 	const [times, setTimes] = useState(null);
+	const [coordinatesChanged, setCoordinatesChanged] = useState(false);
+
 	const handleButton = () => {
 		if (play === false) {
 			setPlay(true);
@@ -33,7 +43,6 @@ const Radar = ({ coordinates }) => {
 	const handleSlider = (e) => {
 		setFrame(e.target.value);
 	};
-	// creates value/label objects for Slider
 	const getTimes = (times) => {
 		let arr = [];
 		const labels = () => {
@@ -43,31 +52,57 @@ const Radar = ({ coordinates }) => {
 					label: times[i],
 				};
 				arr.push(timeLabels);
-				console.log(timeLabels);
 			}
 			return arr;
 		};
 		setTimes(labels);
-		console.log(labels);
 	};
 	const getSliderLabels = () => {
-		if (frame !== undefined && frame < 15) {
+		// if (times.length >= frame) {
+		// 	return;
+		// }
+		if ((times[frame] !== undefined && times !== null) || times.length <= frame) {
 			return times[frame].label;
 		}
 	};
 	const isEvenNumber = (n, index) => {
 		return index % 2 === 0;
 	};
+	// const handleLabels = (n) => {
+	// 	let arr = [];
+	// 	for (let i = 0; i < n.length; i++) {
+	// 		if (i % 2 === 0) {
+	// 			arr.push(n[i]);
+	// 		} else {
+	// 			arr.push(n[i]);
+	// 		}
+	// 	}
+	// 	return arr;
+	// };
+	useEffect(() => {
+		setCoordinatesChanged(true);
+	}, [coordinates]);
+	useEffect(() => {
+		setCoordinatesChanged(false);
+	}, [coordinatesChanged]);
+	function ChangeMapView({ coords, coordinatesChanged }) {
+		const map = useMap();
+		if (coordinatesChanged) {
+			map.setView(coords, map.getZoom());
+		}
+		return null;
+	}
 	return (
-		<div>
-			<nav className="flex mt-2">
-				<div className="ml-2">
-					<button onClick={handleButton}>{(play && <Pause />) || (!play && <PlayArrow />)}</button>
+		<div className=" shadow-md">
+			<nav className="flex mt-1 justify-center">
+				<div className="ml-2 mt-4">
+					<button onClick={handleButton}>{(play && <Pause color="primary" />) || (!play && <PlayArrow color="primary" />)}</button>
 				</div>
 				<div className="w-full px-4 text-xs">
-					<label className="flex justify-end mr-11">Now</label>
+					<label className="flex justify-end mr-11 mt-1 text-zinc-900">Now</label>
 					{times && (
 						<Slider
+							className="pt-3 mb-6 pb-2"
 							aria-label="Temperature"
 							value={frame}
 							valueLabelFormat={getSliderLabels}
@@ -87,36 +122,42 @@ const Radar = ({ coordinates }) => {
 					)}
 				</div>
 			</nav>
-			<MapContainer center={coordinates} zoom={8} scrollWheelZoom={true} className="flex rounded-lg w-full h-[400px]">
-				<TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-				<RadarFrame index={frame} getTimes={getTimes} />
-			</MapContainer>
+			{coordinates && (
+				<MapContainer
+					center={coordinates}
+					zoom={8}
+					scrollWheelZoom={true}
+					className="flex rounded-b-lg w-full h-[325px]"
+					zoomControl={false}
+					attributionControl={false}
+				>
+					<TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+					<Marker position={coordinates} icon={getIcon()}>
+						<Popup>
+							{"latitude: " + coordinates.lat}
+							<br />
+							{"longitude: " + coordinates.lon}
+						</Popup>
+					</Marker>
+					<RadarFrame index={frame} getTimes={getTimes} />
+					<ChangeMapView coords={coordinates} coordinatesChanged={coordinatesChanged} />
+				</MapContainer>
+			)}
 		</div>
 	);
 };
 export default Radar;
-// <LayersControl position="topright">
-// 	<LayersControl.Overlay name="Marker with popup">
-// 		<Marker position={coordinates}>
-// 			<Popup>
-// 				A pretty CSS3 popup. <br /> Easily customizable.
-// 			</Popup>
-// 		</Marker>
-// 	</LayersControl.Overlay>
-// 	<LayersControl.Overlay checked name="Layer group with circles">
-// 		<LayerGroup>
-// 			<Circle center={coordinates} pathOptions={{ fillColor: "blue" }} radius={200} />
-// 			<Circle center={coordinates} pathOptions={{ fillColor: "red" }} radius={100} stroke={false} />
-// 			<LayerGroup>
-// 				<Circle center={coordinates} pathOptions={{ color: "green", fillColor: "green" }} radius={100} />
-// 			</LayerGroup>
-// 		</LayerGroup>
-// 	</LayersControl.Overlay>
-// 	<LayersControl.Overlay name="Feature group">
-// 		<FeatureGroup pathOptions={{ color: "purple" }}>
-// 			<Popup>Popup in FeatureGroup</Popup>
-// 			<Circle center={coordinates} radius={200} />
-// 			{/* <Rectangle bounds={rectangle} /> */}
-// 		</FeatureGroup>
-// 	</LayersControl.Overlay>
-// </LayersControl>
+// <LayersControl.Overlay name="Marker with popup">
+// 	<Marker position={coordinates}>
+// 		<Popup>
+// 			A pretty CSS3 popup. <br /> Easily customizable.
+// 		</Popup>
+// 	</Marker>
+// 		<LayersControl.Overlay name="Feature group">
+// 			<FeatureGroup pathOptions={{ color: "purple" }}>
+// 				<Popup>Popup in FeatureGroup</Popup>
+// 				<Circle center={coordinates} radius={200} />
+// 				{/* <Rectangle bounds={rectangle} /> */}
+// 			</FeatureGroup>
+// 		</LayersControl.Overlay>
+// </LayersControl.Overlay>

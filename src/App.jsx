@@ -174,7 +174,7 @@ function App() {
 								<div className="mr-0 sm:mr-1.5 mt-3 sm:mt-0 bg-slate-950/20 rounded-lg shadow-sm py-5 px-6 md:w-1/2 w-full">
 									{visualForecast && <Today data={visualForecast} units={units} timezone={timeZone} />}
 								</div>
-								<div className="ml-0 sm:ml-1.5 mt-3 sm:mt-0 bg-slate-950/20 rounded-lg shadow-sm md:w-1/2 w-full ">
+								<div className="ml-0 sm:ml-1.5 mt-3 sm:mt-0 bg-white/20 backdrop-blur-xl rounded-lg shadow-sm md:w-1/2 w-full">
 									{coordinates && <Radar coordinates={coordinates} />}
 								</div>
 							</div>

@@ -5,7 +5,6 @@ const getRadar = async () => {
 	try {
 		const res = await fetch(RADAR_MAPS_URL);
 		const resJson = await res.json();
-		console.log(resJson);
 		return resJson.radar;
 	} catch (err) {
 		console.log(`rainviewer api error ${err}`);
@@ -38,8 +37,6 @@ const RadarFrame = ({ index, getTimes }) => {
 				})
 			);
 		});
-		console.log(pathArray);
-		console.log(timeArray);
 		// return formatted times to label Radar slider
 		getTimes(timeArray);
 		setRadar(pathArray);
@@ -49,7 +46,6 @@ const RadarFrame = ({ index, getTimes }) => {
 			const radarObj = await getRadar();
 			setRadar(radarObj);
 			getFrames(radarObj);
-			console.log(radarObj);
 		})();
 	}, []);
 	if (!radar) {
