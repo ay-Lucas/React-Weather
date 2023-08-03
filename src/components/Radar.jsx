@@ -1,21 +1,56 @@
+import { ArrowLeft, ArrowRight, Pause, PlayArrow } from "@mui/icons-material";
+import { Slider } from "@mui/material";
+import { useCallback, useEffect, useState } from "react";
 import { Circle, FeatureGroup, LayerGroup, LayersControl, MapContainer, Marker, Popup, Rectangle, TileLayer, useMap } from "react-leaflet";
-
+import RadarFrame from "./RadarFrame";
 // eslint-disable-next-line react/prop-types
-function Radar({ coordinates }) {
-	const center = [51.505, -0.09];
-	const rectangle = [
-		[51.49, -0.08],
-		[51.5, -0.06],
-	];
+const Radar = ({ coordinates }) => {
+	const [frame, setFrame] = useState(13);
+	const [play, setPlay] = useState(false);
+	const handleButton = () => {
+		if (play === false) {
+			setPlay(true);
+		} else {
+			setPlay(false);
+		}
+		console.log(frame);
+	};
+	const incrementFrame = useCallback(() => {
+		setFrame((prevFrame) => prevFrame + 1);
+	}, []);
+	useEffect(() => {
+		if (play) {
+			if (frame > 15) {
+				setFrame(0);
+				return;
+			}
+			const timeoutFunction = setInterval(incrementFrame, 1000);
+			console.log(frame);
+			return () => clearInterval(timeoutFunction);
+		}
+	}, [incrementFrame, frame, play]);
+	const handleSlider = (e) => {
+		console.log(e.target.value);
+		setFrame(e.target.value);
+	};
+	// const getTimes = () => {};
 	return (
-		<MapContainer center={coordinates} zoom={8} scrollWheelZoom={true} className="flex rounded-lg w-full h-[400px]">
-			<TileLayer
-				attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-				url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-			/>
-		</MapContainer>
+		<div className="">
+			<nav className="flex mt-2">
+				<div className="ml-2">
+					<button onClick={handleButton}>{(play && <Pause />) || (!play && <PlayArrow />)}</button>
+				</div>
+				<div className="w-full px-4">
+					<Slider aria-label="Temperature" value={frame} valueLabelDisplay="auto" step={1} marks min={0} max={15} onChange={handleSlider} />
+				</div>
+			</nav>
+			<MapContainer center={coordinates} zoom={8} scrollWheelZoom={true} className="flex rounded-lg w-full h-[400px]">
+				<TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+				<RadarFrame index={frame} />
+			</MapContainer>
+		</div>
 	);
-}
+};
 export default Radar;
 // <LayersControl position="topright">
 // 	<LayersControl.Overlay name="Marker with popup">
