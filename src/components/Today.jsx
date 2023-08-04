@@ -23,7 +23,7 @@ const Today = ({ data, units, timezone }) => {
 	return (
 		<div>
 			<div className="w-full items-center flex flex-row justify-between">
-				<div className="text-2xl inline-flex mr-3">Today</div>
+				<div className="text-2xl inline-flex mr-3 ml-1">Today</div>
 				<div className="text-md text-gray-300 ">{dateFormatter.format(new Date())}</div>
 			</div>
 			<div className="flex flex-row justify-between py-2 border-gray-800/50 border-b-[1px] ">

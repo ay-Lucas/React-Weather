@@ -84,15 +84,15 @@ const CurrentWeather = ({ data, aqi, units, timezone, stat }) => {
 	}, [data, color, aqi, AQI, timezone]);
 
 	return (
-		<div className="mt-3 lg:flex sm:inline-flex w-full ">
-			<div className="grid sm:grid-cols-4 grid-cols-2 items-center h-full w-full justify-evenly flex-wrap ">
-				<div className="grid col-span-2 items-center justify-start mr-0 sm:mr-1.5 mb-3 sm:mb-0 bg-slate-950/20 rounded-lg shadow-sm py-4 px-3 pl-6 ">
+		<div className="sm:mt-3 mt-2 lg:flex sm:inline-flex w-full flex">
+			<div className="grid sm:grid-cols-4 grid-cols-2  w-full justify-evenly flex-wrap ">
+				<div className="grid col-span-2 items-center justify-start mr-0 sm:mr-1.5 sm:mb-0 bg-slate-950/20 rounded-lg shadow-sm py-2 pb-3 sm:py-1 px-3 pl-4 sm:pl-8 mb-2">
 					<div className="flex sm:flex-row flex-col sm:items-baseline justify-start">
-						<div className="text-2xl mr-0 sm:mr-2">Current Weather</div>
-						<div className="tracking-wide dark:text-gray-400">As of {locationHourFormatter.format(data.currentConditions.datetimeEpoch * 1000)}</div>
+						<div className="sm:text-2xl text-lg mr-0 sm:mr-2">Current Weather</div>
+						<div className="tracking-wide dark:text-gray-400 text-sm">As of {locationHourFormatter.format(data.currentConditions.datetimeEpoch * 1000)}</div>
 					</div>
-					<div className="flex flex-col w-full justify-start sm:mt-8 mt-5">
-						<div className="flex flex-row w-full h-full items-start justify-start">
+					<div className="flex flex-col w-full justify-start sm:mt-4 mt-3">
+						<div className="flex flex-row w-full  items-start justify-start">
 							<div className="flex sm:flex-col flex-row items-baseline">
 								<div className="flex justify-center">
 									<div>{getIcon(data.currentConditions.icon, 60, "sm:p-0 sm:h-fit h-12")}</div>
@@ -101,7 +101,7 @@ const CurrentWeather = ({ data, aqi, units, timezone, stat }) => {
 								</div>
 							</div>
 
-							<div className="flex flex-col sm:w-full ml-3 sm:justify-evenly h-full">
+							<div className="flex flex-col sm:w-full ml-3 sm:justify-evenly ">
 								<label className="mix-blend-overlay">{data.currentConditions.conditions}</label>
 								<label className="mr-1.5">Feels like {Math.round(data.currentConditions.feelslike)}°</label>
 								{data.currentConditions.precipprob > 0 && (
@@ -113,9 +113,10 @@ const CurrentWeather = ({ data, aqi, units, timezone, stat }) => {
 							</div>
 						</div>
 					</div>
-					<div className="flex flex-col font-light  sm:fit w-full sm:items-start items-start">
-						{data.days[0].description !== undefined && <div className="flex flex-row flex-auto mt-3">{data.days[0].description}</div>}
-						<div className="flex flex-row mt-1">
+					<div className="flex flex-col font-light w-full sm:items-start items-start">
+						{data.days[0].description !== undefined && <div className="flex flex-row flex-auto mt-1">{data.days[0].description}</div>}
+
+						<div className="flex flex-row mt-3">
 							<div className="inline-flex mr-1 text-white font-bold">
 								<span className="font-normal mr-1">Day </span> {Math.round(data.days[0].tempmax)}° •
 							</div>{" "}
@@ -126,11 +127,11 @@ const CurrentWeather = ({ data, aqi, units, timezone, stat }) => {
 						</div>
 					</div>
 				</div>
-				<div className="grid h-full ml-0 sm:ml-1.5 sm:mr-0 mr-1 bg-slate-950/20 rounded-lg shadow-sm py-2 pl-3 overflow-hidden">
-					<div className="grid-rows-1 h-4">Observations</div>
-					<div className="grid grid-cols-2 sm:text-base items-center justify-center sm:justify-between text-sm sm:justify-items-start justify-items-start">
+				<div className="grid sm:col-span-1 col-span-3 pl-4 sm:ml-1.5  bg-slate-950/20 rounded-lg shadow-sm py-2 sm:pl-4 text-left mb-2 sm:mb-0">
+					<div className="sm:mt-1 mt-1 mb-2">Observations</div>
+					<div className="grid sm:grid-cols-2 gap-x-3 grid-cols-3 gap-y-3 sm:text-base items-center  sm:justify-between text-[13px] sm:justify-items-start sm:mb-4 mb-2 overflow-hidden">
 						{AQI !== null && (
-							<div>
+							<div className="">
 								<div className=" text-cyan-200">Air Quality</div>
 								<div className="flex items-center">
 									<div style={{ backgroundColor: color }} className={"mr-1 ml-1 h-3 w-3 inline-flex items-center rounded-full"}></div>
@@ -139,24 +140,24 @@ const CurrentWeather = ({ data, aqi, units, timezone, stat }) => {
 								</div>
 							</div>
 						)}
-						<div>
+						<div className="">
 							<div className="text-cyan-200">Humidity</div>
 							<div>{Math.round(data.currentConditions.humidity)}%</div>
 						</div>
-						<div>
+						<div className="">
 							<div className="text-cyan-200">Wind</div>
 							<div>
 								{Math.round(data.currentConditions.windspeed)} {units.wind}
 								<div className="text-gray-300 ml-1 inline items-center">{degreesToWindDirection(data.days[0].winddir)} </div>
 							</div>
 						</div>
-						<div>
+						<div className="">
 							<div className="text-cyan-200">Pressure</div>
 							<div>
 								{Math.round(data.currentConditions.pressure)} {units.pressure}
 							</div>
 						</div>
-						<div>
+						<div className="">
 							<div className="text-cyan-200">Cloud Cover</div>
 							<div>{Math.round(data.currentConditions.cloudcover)}%</div>
 						</div>
@@ -164,7 +165,7 @@ const CurrentWeather = ({ data, aqi, units, timezone, stat }) => {
 					<div className="text-cyan-200">Dew Point</div>
 					<div>{Math.round(data.currentConditions.dew)}°</div>
 				</div> */}
-						<div>
+						<div className="">
 							<div className="text-cyan-200">UV Index</div>
 							<div className="inline-flex ">
 								{data.currentConditions.uvindex}
@@ -198,44 +199,42 @@ const CurrentWeather = ({ data, aqi, units, timezone, stat }) => {
 					</div>
 				</div>
 				{stat && (
-					<div className="grid  h-full ml-1 sm:ml-1.5 bg-slate-950/20 rounded-lg shadow-sm py-2 pl-3 text-left">
-						<div className="h-4">Statistics</div>
-						<div className=" text-cyan-200 items-center mt-2">
-							Today is{" "}
-							<span style={{ color: stat.days[0].normal.tempmax[1] < data.days[0].tempmax ? red[100] : blue["A700"] }} className="font-semibold ">
-								{stat.days[0].normal.tempmax[1] < data.days[0].tempmax ? "above" : "below"}
-							</span>{" "}
-							average
+					<div className="grid sm:col-span-1 col-span-3 pl-4 sm:ml-1.5  bg-slate-950/20 rounded-lg shadow-sm py-2 sm:pl-4 text-left">
+						<div className="inline-flex items-center sm:mb-1 mb-2 ">
+							Statistics
+							<div className=" bg-white/20 rounded-lg px-3 sm:px-3 mx-0 text-gray-300 sm:text-xs text-[12px] ml-5 sm:mx-6  text-center">
+								Today is{" "}
+								<span style={{ color: stat.days[0].normal.tempmax[1] < data.days[0].tempmax ? red[100] : "whitesmoke" }} className="font-semibold ">
+									{stat.days[0].normal.tempmax[1] < data.days[0].tempmax ? "warmer" : "colder"}
+								</span>{" "}
+								than average
+							</div>
 						</div>
-						<div className="grid grid-cols-2">
+						<div className="grid sm:grid-cols-2 gap-x-3 grid-cols-3 gap-y-3 sm:text-base items-center  sm:justify-between text-[13px] sm:justify-items-start sm:mb-4">
 							<div>
-								<div>
-									<div className="text-cyan-200">Avg Temp</div>
-									<div>{Math.round(stat.days[0].temp) + "°"}</div>
-								</div>
-								<div>
-									<div className="text-cyan-200">Avg High</div>
-									<div>{Math.round(stat.days[0].normal.tempmax[1]) + "°"}</div>
-								</div>
-								<div>
-									<div className="text-cyan-200">Avg Low</div>
-									<div>{Math.round(stat.days[0].normal.tempmin[1]) + "°"}</div>
-								</div>
+								<div className="text-cyan-200">Avg Temp</div>
+								<div>{Math.round(stat.days[0].temp) + "°"}</div>
 							</div>
 							<div>
+								<div className="text-cyan-200">Avg High</div>
+								<div>{Math.round(stat.days[0].normal.tempmax[1]) + "°"}</div>
+							</div>
+							<div>
+								<div className="text-cyan-200">Avg Low</div>
+								<div>{Math.round(stat.days[0].normal.tempmin[1]) + "°"}</div>
+							</div>
+							<div>
+								<div className="text-cyan-200">Record High</div>
+								<div>{Math.round(stat.days[0].normal.tempmax[2]) + "°"}</div>
+							</div>
+							<div className="pb-1">
+								<div className="text-cyan-200">Record Low</div>
+								<div>{Math.round(stat.days[0].normal.tempmin[0]) + "°"}</div>
+							</div>
+							<div className="pb-1">
+								<div className="text-cyan-200">Avg Precip</div>
 								<div>
-									<div className="text-cyan-200">Record High</div>
-									<div>{Math.round(stat.days[0].normal.tempmax[2]) + "°"}</div>
-								</div>
-								<div>
-									<div className="text-cyan-200">Record Low</div>
-									<div>{Math.round(stat.days[0].normal.tempmin[0]) + "°"}</div>
-								</div>
-								<div>
-									<div className="text-cyan-200">Avg Precip</div>
-									<div>
-										{stat.days[0].normal.precip[1]} {units.precipitation}
-									</div>
+									{stat.days[0].normal.precip[1]} {units.precipitation}
 								</div>
 							</div>
 						</div>

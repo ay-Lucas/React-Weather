@@ -119,14 +119,14 @@ const Radar = ({ coordinates }) => {
 		return null;
 	}
 	return (
-		<div className="shadow-md">
+		<div className="shadow-md rounded-lg">
 			<nav className="flex mt-1 justify-center">
-				<div className="ml-3 sm:mt-2 mt-4">
+				<div className="sm:ml-3 ml-2 sm:mt-2 mt-4">
 					<button onClick={handleButton}>
 						{(play && <Pause color="primary" className="text-3xl" />) || (!play && <PlayArrow color="primary" className="text-3xl" />)}
 					</button>
 				</div>
-				<div className="w-full pl-5 pr-5 text-xs">
+				<div className="w-full sm:pl-4 pl-2 pr-5 text-xs">
 					{times && (
 						<Slider
 							className="mb-5 mt-2"
