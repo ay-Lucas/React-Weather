@@ -129,7 +129,7 @@ const CurrentWeather = ({ data, aqi, units, timezone, stat }) => {
 				</div>
 				<div className="grid sm:col-span-1 col-span-3 pl-4 sm:ml-1.5  bg-slate-950/20 rounded-lg shadow-sm py-2 sm:pl-4 text-left mb-2 sm:mb-0">
 					<div className="sm:mt-1 mt-1 mb-2">Observations</div>
-					<div className="grid sm:grid-cols-2 gap-x-3 grid-cols-3 gap-y-3 sm:text-base items-center  sm:justify-between text-[13px] sm:justify-items-start sm:mb-4 mb-2 overflow-hidden">
+					<div className="grid sm:grid-cols-2 gap-x-3 mt-1 grid-cols-3 gap-y-3 sm:text-base items-baseline  sm:justify-between text-[13px] sm:justify-items-start sm:mb-3 mb-2 overflow-hidden">
 						{AQI !== null && (
 							<div className="">
 								<div className=" text-cyan-200">Air Quality</div>
@@ -200,7 +200,7 @@ const CurrentWeather = ({ data, aqi, units, timezone, stat }) => {
 				</div>
 				{stat && (
 					<div className="grid sm:col-span-1 col-span-3 pl-4 sm:ml-1.5  bg-slate-950/20 rounded-lg shadow-sm py-2 sm:pl-4 text-left">
-						<div className="inline-flex items-center sm:mb-1 mb-2 ">
+						<div className="inline-flex items-center sm:mb-0 mb-2 ">
 							Statistics
 							<div className=" bg-white/20 rounded-lg px-3 sm:px-3 mx-0 text-gray-300 sm:text-xs text-[12px] ml-5 sm:mx-6  text-center">
 								Today is{" "}
@@ -210,7 +210,7 @@ const CurrentWeather = ({ data, aqi, units, timezone, stat }) => {
 								than average
 							</div>
 						</div>
-						<div className="grid sm:grid-cols-2 gap-x-3 grid-cols-3 gap-y-3 sm:text-base items-center  sm:justify-between text-[13px] sm:justify-items-start sm:mb-4">
+						<div className="grid sm:grid-cols-2 gap-x-3 grid-cols-3 gap-y-3 sm:text-base items-baseline  sm:justify-between text-[13px] sm:justify-items-start sm:mb-4">
 							<div>
 								<div className="text-cyan-200">Avg Temp</div>
 								<div>{Math.round(stat.days[0].temp) + "°"}</div>
