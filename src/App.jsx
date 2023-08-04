@@ -39,11 +39,11 @@ const metricUnits = {
 	tempSign: "°C",
 };
 // const options = Intl.DateTimeFormat().resolvedOptions();
-const date = new Intl.DateTimeFormat("en-us", {
-	year: "2-digit",
-	month: "2-digit",
-	day: "2-digit",
-}).format(new Date());
+// const date = new Intl.DateTimeFormat("en-us", {
+// 	year: "2-digit",
+// 	month: "2-digit",
+// 	day: "2-digit",
+// }).format(new Date());
 function App() {
 	// console.log("app.jsx rendered");
 	const [visualForecast, setVisualForecast] = useState(null);
@@ -202,7 +202,7 @@ function App() {
 									{visualForecast && <Today data={visualForecast} units={units} timezone={timeZone} />}
 								</div>
 								<div className="ml-0 sm:ml-1.5 mt-2 sm:mt-0 bg-white/20 backdrop-blur-xl rounded-lg shadow-sm md:w-1/2 w-full">
-									{coordinates && <Radar coordinates={coordinates} />}
+									{visualForecast && <Radar coordinates={coordinates} timezone={timeZone} />}
 								</div>
 							</div>
 							<div className="mb-3 mt-4">{visualForecast && <HourlyForecastOutlook data={visualForecast} units={units} timezone={timeZone} />}</div>

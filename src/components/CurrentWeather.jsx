@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { colors } from "@mui/material";
-import { blue, green, orange, red, yellow } from "@mui/material/colors";
+import { blue, green, lightBlue, orange, red, yellow } from "@mui/material/colors";
 import { useEffect, useState } from "react";
 import { BsFillCircleFill } from "react-icons/bs";
 import { GiWaterDrop } from "react-icons/gi";
@@ -11,6 +11,7 @@ const CurrentWeather = ({ data, aqi, units, timezone, stat }) => {
 	const [AQI, setAQI] = useState(null);
 	const [color, setColor] = useState(green[500]);
 	const [alert, setAlert] = useState([]);
+	const [isWarmer, setIsWarmer] = useState(stat.days[0].normal.tempmax[1] < data.days[0].tempmax);
 	const locationHourFormatter = Intl.DateTimeFormat(timezone.options.locale, {
 		timeZone: timezone.timezone,
 		hour: "numeric",
@@ -45,6 +46,9 @@ const CurrentWeather = ({ data, aqi, units, timezone, stat }) => {
 	// });
 
 	useEffect(() => {
+		if ((stat && data !== null) || (stat && data !== undefined)) {
+			setIsWarmer(stat.days[0].normal.tempmax[1] < data.days[0].tempmax);
+		}
 		if (data.alerts !== undefined) {
 			const alertList = data.alerts.map((alert) => {
 				return (
@@ -202,19 +206,22 @@ const CurrentWeather = ({ data, aqi, units, timezone, stat }) => {
 					<div className="grid sm:col-span-1 col-span-3 pl-4 sm:ml-1.5  bg-slate-950/20 rounded-lg shadow-sm py-2 sm:pl-4 text-left">
 						<div className="inline-flex items-center sm:mb-0 mb-2 ">
 							Statistics
-							<div className=" bg-white/20 rounded-lg px-3 sm:px-3 mx-0 text-gray-300 sm:text-xs text-[12px] ml-5 sm:mx-6  text-center">
+							<div className=" bg-white/20 rounded-lg px-3 sm:px-3 mx-0 sm:text-xs text-[12px] ml-5 sm:mx-6 shadow-sm text-center font-extralight">
 								Today is{" "}
-								<span style={{ color: stat.days[0].normal.tempmax[1] < data.days[0].tempmax ? red[100] : "whitesmoke" }} className="font-semibold ">
-									{stat.days[0].normal.tempmax[1] < data.days[0].tempmax ? "warmer" : "colder"}
+								<span
+									style={{
+										color: isWarmer ? red[50] : "white",
+										// filter: isWarmer ? "" : "drop-shadow(0 1.2px 1.2px rgba(128,222,234,0.7))",
+									}}
+									// className="drop-shadow-[0_1.2px_1.2px_rgba(30,144,255,0.5)]"
+									className="font-normal"
+								>
+									{isWarmer ? "warmer" : "cooler"}
 								</span>{" "}
 								than average
 							</div>
 						</div>
 						<div className="grid sm:grid-cols-2 gap-x-3 grid-cols-3 gap-y-3 sm:text-base items-baseline  sm:justify-between text-[13px] sm:justify-items-start sm:mb-4">
-							<div>
-								<div className="text-cyan-200">Avg Temp</div>
-								<div>{Math.round(stat.days[0].temp) + "°"}</div>
-							</div>
 							<div>
 								<div className="text-cyan-200">Avg High</div>
 								<div>{Math.round(stat.days[0].normal.tempmax[1]) + "°"}</div>
@@ -230,6 +237,10 @@ const CurrentWeather = ({ data, aqi, units, timezone, stat }) => {
 							<div className="pb-1">
 								<div className="text-cyan-200">Record Low</div>
 								<div>{Math.round(stat.days[0].normal.tempmin[0]) + "°"}</div>
+							</div>
+							<div>
+								<div className="text-cyan-200">Avg Temp</div>
+								<div>{Math.round(stat.days[0].temp) + "°"}</div>
 							</div>
 							<div className="pb-1">
 								<div className="text-cyan-200">Avg Precip</div>

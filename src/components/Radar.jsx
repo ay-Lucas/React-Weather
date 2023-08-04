@@ -1,9 +1,8 @@
 /* eslint-disable react/prop-types */
 import { LocationCitySharp, Pause, PlayArrow } from "@mui/icons-material";
 import { Slider } from "@mui/material";
-import L, { Map, map } from "leaflet";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Circle, FeatureGroup, LayerGroup, LayersControl, MapContainer, Marker, Popup, TileLayer, useMap, useMapEvents } from "react-leaflet";
+import { MapContainer, Marker, Popup, TileLayer, useMap } from "react-leaflet";
 import RadarFrame from "./RadarFrame";
 function getIcon() {
 	return L.icon({
@@ -12,15 +11,12 @@ function getIcon() {
 	});
 }
 
-const Radar = ({ coordinates }) => {
+const Radar = ({ coordinates, timezone }) => {
 	const [frame, setFrame] = useState(13);
 	const [play, setPlay] = useState(false);
 	const [times, setTimes] = useState(null);
 	const [labels, setLabels] = useState(null);
-	const windowWidth = useRef(window.innerWidth);
-
 	const [coordinatesChanged, setCoordinatesChanged] = useState(false);
-
 	const handleButton = () => {
 		if (play === false) {
 			setPlay(true);
@@ -32,7 +28,6 @@ const Radar = ({ coordinates }) => {
 		setFrame((prevFrame) => prevFrame + 1);
 	}, []);
 	// plays 1 second interval over 15 precipitation frames
-
 	const handleSlider = (e) => {
 		setFrame(e.target.value);
 	};
@@ -70,18 +65,8 @@ const Radar = ({ coordinates }) => {
 		setTimes(labels);
 	};
 	const getSliderLabels = () => {
-		// if (times.length >= frame) {
-		// 	return;
-		// }
 		if ((times[frame] !== undefined && times[frame] !== null) || times.length + 1 <= frame) {
 			return times[frame].label;
-		}
-	};
-	const isEvenNumber = (n, index) => {
-		if (windowWidth.current <= 768) {
-			return index % 3 === 0 && index !== 15;
-		} else {
-			return index % 2 === 0 && index !== 15;
 		}
 	};
 	useEffect(() => {
@@ -94,17 +79,6 @@ const Radar = ({ coordinates }) => {
 			return () => clearInterval(timeoutFunction);
 		}
 	}, [incrementFrame, frame, play]);
-	// const handleLabels = (n) => {
-	// 	let arr = [];
-	// 	for (let i = 0; i < n.length; i++) {
-	// 		if (i % 2 === 0) {
-	// 			arr.push(n[i]);
-	// 		} else {
-	// 			arr.push(n[i]);
-	// 		}
-	// 	}
-	// 	return arr;
-	// };
 	useEffect(() => {
 		setCoordinatesChanged(true);
 	}, [coordinates]);
@@ -169,7 +143,7 @@ const Radar = ({ coordinates }) => {
 							{"longitude: " + coordinates.lon}
 						</Popup>
 					</Marker>
-					<RadarFrame index={frame} getTimes={getTimes} />
+					<RadarFrame index={frame} getTimes={getTimes} timezone={timezone} />
 					<ChangeMapView coords={coordinates} coordinatesChanged={coordinatesChanged} />
 				</MapContainer>
 			)}

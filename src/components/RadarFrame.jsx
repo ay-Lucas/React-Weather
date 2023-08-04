@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
 import { TileLayer } from "react-leaflet";
 const RADAR_MAPS_URL = "https://api.rainviewer.com/public/weather-maps.json";
@@ -10,9 +11,15 @@ const getRadar = async () => {
 		console.log(`rainviewer api error ${err}`);
 	}
 };
+
 // eslint-disable-next-line react/prop-types
-const RadarFrame = ({ index, getTimes }) => {
+const RadarFrame = ({ index, getTimes, timezone }) => {
 	const [radar, setRadar] = useState(null);
+	const locationHourFormatter = Intl.DateTimeFormat(timezone.options.locale, {
+		timeZone: timezone.timezone,
+		hour: "numeric",
+		minute: "numeric",
+	});
 	const getFrames = (radar) => {
 		if (radar === null) {
 			return;
@@ -21,25 +28,11 @@ const RadarFrame = ({ index, getTimes }) => {
 		let timeArray = [];
 		radar.past.map((element) => {
 			pathArray.push(element.path);
-			timeArray.push(
-				new Date(element.time * 1000)
-					.toLocaleTimeString([], {
-						hour: "numeric",
-						minute: "numeric",
-					})
-					.split(" ")[0]
-			);
+			timeArray.push(locationHourFormatter.format(new Date(element.time * 1000)).split(" ")[0]);
 		});
 		radar.nowcast.map((element) => {
 			pathArray.push(element.path);
-			timeArray.push(
-				new Date(element.time * 1000)
-					.toLocaleTimeString([], {
-						hour: "numeric",
-						minute: "numeric",
-					})
-					.split(" ")[0]
-			);
+			timeArray.push(locationHourFormatter.format(new Date(element.time * 1000)).split(" ")[0]);
 		});
 		// return formatted times to label Radar slider
 		getTimes(timeArray);
@@ -51,7 +44,7 @@ const RadarFrame = ({ index, getTimes }) => {
 			setRadar(radarObj);
 			getFrames(radarObj);
 		})();
-	}, []);
+	}, [timezone]);
 	if (!radar) {
 		return <div>Loading...</div>;
 	}
