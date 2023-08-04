@@ -22,19 +22,23 @@ const RadarFrame = ({ index, getTimes }) => {
 		radar.past.map((element) => {
 			pathArray.push(element.path);
 			timeArray.push(
-				new Date(element.time * 1000).toLocaleTimeString([], {
-					hour: "numeric",
-					minute: "numeric",
-				})
+				new Date(element.time * 1000)
+					.toLocaleTimeString([], {
+						hour: "numeric",
+						minute: "numeric",
+					})
+					.split(" ")[0]
 			);
 		});
 		radar.nowcast.map((element) => {
 			pathArray.push(element.path);
 			timeArray.push(
-				new Date(element.time * 1000).toLocaleTimeString([], {
-					hour: "numeric",
-					minute: "numeric",
-				})
+				new Date(element.time * 1000)
+					.toLocaleTimeString([], {
+						hour: "numeric",
+						minute: "numeric",
+					})
+					.split(" ")[0]
 			);
 		});
 		// return formatted times to label Radar slider

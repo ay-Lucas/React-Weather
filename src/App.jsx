@@ -38,9 +38,16 @@ const metricUnits = {
 	visibility: "km",
 	tempSign: "°C",
 };
+// const options = Intl.DateTimeFormat().resolvedOptions();
+const date = new Intl.DateTimeFormat("en-us", {
+	year: "2-digit",
+	month: "2-digit",
+	day: "2-digit",
+}).format(new Date());
 function App() {
 	// console.log("app.jsx rendered");
 	const [visualForecast, setVisualForecast] = useState(null);
+	const [statData, setStatData] = useState(null);
 	const [location, setLocation] = useState("Columbia, SC");
 	const [coordinates, setCoordinates] = useState(defaultLocation);
 	const [currentAqi, setAqi] = useState(null);
@@ -59,18 +66,38 @@ function App() {
 		"&contentType=json" +
 		"&iconSet=icons2" +
 		"&elements=%2Bpm1,%2Bpm2p5,%2Bpm10,%2Bo3,%2Bno2,%2Bso2,%2Bco,%2Baqius,%2Baqieur";
+	const visualForecastStatUrl =
+		VISUAL_API_URL +
+		coordinates.lat +
+		"," +
+		coordinates.lon +
+		"/" +
+		"today?" +
+		"/" +
+		"?unitGroup=" +
+		units.name +
+		"&key=" +
+		import.meta.env.VITE_VISUAL_WEATHER_API_KEY +
+		"&contentType=json" +
+		"&include=stats";
+
 	const fetchData = () => {
+		// console.log(		new Date("").toISOString().split("T")[0]);
 		const visualForecastFetch = fetch(visualForecastUrl);
 		const currentAQIFetch = fetch(currentAQIUrl);
-		Promise.all([visualForecastFetch, currentAQIFetch])
+		const visualStatFetch = fetch(visualForecastStatUrl);
+		Promise.all([visualForecastFetch, currentAQIFetch, visualStatFetch])
 			.then(async (response) => {
 				const visualForecastResponse = await response[0].json();
 				const currentAQIResponse = await response[1].json();
+				const visualStatisticsResponse = await response[2].json();
 				setVisualForecast(visualForecastResponse);
 				setAqi(currentAQIResponse);
+				setStatData(visualStatisticsResponse);
 				const timezone = visualForecastResponse.timezone;
 				const options = Intl.DateTimeFormat().resolvedOptions();
 				setTimeZone({ timezone, options });
+				// console.log(visualStatisticsResponse);
 				// console.log(visualForecastResponse);
 				// console.log(currentAQIResponse);
 			})
@@ -168,7 +195,7 @@ function App() {
 						<div className="mx-3 my-3">
 							<div className="mt-0 md:mt-10">{visualForecast && <LocationCard location={location} timezone={timeZone} data={visualForecast} />}</div>
 							<div className=" w-full flex justify-center">
-								{visualForecast && <CurrentWeather data={visualForecast} aqi={currentAqi} units={units} timezone={timeZone} />}
+								{visualForecast && <CurrentWeather data={visualForecast} aqi={currentAqi} units={units} timezone={timeZone} stat={statData} />}
 							</div>
 							<div className="mt-3 lg:flex sm:inline-flex w-full">
 								<div className="mr-0 sm:mr-1.5 mt-3 sm:mt-0 bg-slate-950/20 rounded-lg shadow-sm py-5 px-6 md:w-1/2 w-full">

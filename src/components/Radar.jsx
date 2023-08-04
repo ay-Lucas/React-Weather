@@ -2,12 +2,12 @@
 import { LocationCitySharp, Pause, PlayArrow } from "@mui/icons-material";
 import { Slider } from "@mui/material";
 import L, { Map, map } from "leaflet";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Circle, FeatureGroup, LayerGroup, LayersControl, MapContainer, Marker, Popup, TileLayer, useMap, useMapEvents } from "react-leaflet";
 import RadarFrame from "./RadarFrame";
 function getIcon() {
 	return L.icon({
-		iconUrl: "public/place_black_48dp.svg",
+		iconUrl: "place_black_48dp.svg",
 		iconSize: [30, 60],
 	});
 }
@@ -16,6 +16,9 @@ const Radar = ({ coordinates }) => {
 	const [frame, setFrame] = useState(13);
 	const [play, setPlay] = useState(false);
 	const [times, setTimes] = useState(null);
+	const [labels, setLabels] = useState(null);
+	const windowWidth = useRef(window.innerWidth);
+
 	const [coordinatesChanged, setCoordinatesChanged] = useState(false);
 
 	const handleButton = () => {
@@ -45,6 +48,25 @@ const Radar = ({ coordinates }) => {
 			}
 			return arr;
 		};
+		const staticLabels = () => {
+			let arr = [];
+			for (let i = 0; i < times.length; i++) {
+				const timeLabels = {
+					value: i,
+					label: times[i],
+				};
+				const noLabel = {
+					value: i,
+				};
+				if (i % 2 !== 0) {
+					arr.push(noLabel);
+				} else {
+					arr.push(timeLabels);
+				}
+			}
+			return arr;
+		};
+		setLabels(staticLabels);
 		setTimes(labels);
 	};
 	const getSliderLabels = () => {
@@ -56,7 +78,11 @@ const Radar = ({ coordinates }) => {
 		}
 	};
 	const isEvenNumber = (n, index) => {
-		return index % 2 === 0;
+		if (windowWidth.current <= 768) {
+			return index % 3 === 0 && index !== 15;
+		} else {
+			return index % 2 === 0 && index !== 15;
+		}
 	};
 	useEffect(() => {
 		if (play) {
@@ -64,8 +90,7 @@ const Radar = ({ coordinates }) => {
 				setFrame(0);
 				return;
 			}
-			const timeoutFunction = setInterval(incrementFrame, 1000);
-			console.log(frame);
+			const timeoutFunction = setInterval(incrementFrame, 750);
 			return () => clearInterval(timeoutFunction);
 		}
 	}, [incrementFrame, frame, play]);
@@ -94,22 +119,23 @@ const Radar = ({ coordinates }) => {
 		return null;
 	}
 	return (
-		<div className=" shadow-md">
+		<div className="shadow-md">
 			<nav className="flex mt-1 justify-center">
-				<div className="ml-2 mt-4">
-					<button onClick={handleButton}>{(play && <Pause color="primary" />) || (!play && <PlayArrow color="primary" />)}</button>
+				<div className="ml-3 sm:mt-2 mt-4">
+					<button onClick={handleButton}>
+						{(play && <Pause color="primary" className="text-3xl" />) || (!play && <PlayArrow color="primary" className="text-3xl" />)}
+					</button>
 				</div>
-				<div className="w-full px-4 text-xs">
-					<label className="flex justify-end mr-11 mt-1 text-zinc-900">Now</label>
+				<div className="w-full pl-5 pr-5 text-xs">
 					{times && (
 						<Slider
-							className="pt-3 mb-6 pb-2"
+							className="mb-5 mt-2"
 							aria-label="Temperature"
 							value={frame}
 							valueLabelFormat={getSliderLabels}
 							valueLabelDisplay="auto"
 							step={1}
-							marks={times.filter(isEvenNumber)}
+							marks={labels}
 							min={0}
 							max={15}
 							onChange={handleSlider}
@@ -117,6 +143,9 @@ const Radar = ({ coordinates }) => {
 								"span": { fontSize: ".65rem" },
 								"&& .MuiSlider-rail": {
 									color: "white",
+								},
+								"&& .MuiSlider-markLabel": {
+									paddingLeft: "0rem",
 								},
 							}}
 						/>
@@ -126,9 +155,9 @@ const Radar = ({ coordinates }) => {
 			{coordinates && (
 				<MapContainer
 					center={coordinates}
-					zoom={8}
+					zoom={10}
 					scrollWheelZoom={true}
-					className="flex rounded-b-lg w-full h-[325px]"
+					className="flex rounded-b-lg w-full h-[340px]"
 					zoomControl={false}
 					attributionControl={false}
 				>

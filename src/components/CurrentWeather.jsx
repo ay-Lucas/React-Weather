@@ -1,12 +1,12 @@
 /* eslint-disable react/prop-types */
 import { colors } from "@mui/material";
-import { green, orange, red, yellow } from "@mui/material/colors";
+import { blue, green, orange, red, yellow } from "@mui/material/colors";
 import { useEffect, useState } from "react";
 import { BsFillCircleFill } from "react-icons/bs";
 import { GiWaterDrop } from "react-icons/gi";
 import { degreesToWindDirection, usAqiToColor, uvIndexToColor, uvIndexToPercent, uvIndexToRisk } from "../utility";
 import { getIcon } from "./Icons";
-const CurrentWeather = ({ data, aqi, units, timezone }) => {
+const CurrentWeather = ({ data, aqi, units, timezone, stat }) => {
 	// const [time, setTime] = useState(null);
 	const [AQI, setAQI] = useState(null);
 	const [color, setColor] = useState(green[500]);
@@ -197,9 +197,50 @@ const CurrentWeather = ({ data, aqi, units, timezone }) => {
 						</div>
 					</div>
 				</div>
-				<div className="grid h-full ml-1 sm:ml-1.5 bg-slate-950/20 rounded-lg shadow-sm py-2 pl-3 text-left">
-					<div className="h-4">Average Weather</div>
-				</div>
+				{stat && (
+					<div className="grid  h-full ml-1 sm:ml-1.5 bg-slate-950/20 rounded-lg shadow-sm py-2 pl-3 text-left">
+						<div className="h-4">Statistics</div>
+						<div className=" text-cyan-200 items-center mt-2">
+							Today is{" "}
+							<span style={{ color: stat.days[0].normal.tempmax[1] < data.days[0].tempmax ? red[100] : blue["A700"] }} className="font-semibold ">
+								{stat.days[0].normal.tempmax[1] < data.days[0].tempmax ? "above" : "below"}
+							</span>{" "}
+							average
+						</div>
+						<div className="grid grid-cols-2">
+							<div>
+								<div>
+									<div className="text-cyan-200">Avg Temp</div>
+									<div>{Math.round(stat.days[0].temp) + "°"}</div>
+								</div>
+								<div>
+									<div className="text-cyan-200">Avg High</div>
+									<div>{Math.round(stat.days[0].normal.tempmax[1]) + "°"}</div>
+								</div>
+								<div>
+									<div className="text-cyan-200">Avg Low</div>
+									<div>{Math.round(stat.days[0].normal.tempmin[1]) + "°"}</div>
+								</div>
+							</div>
+							<div>
+								<div>
+									<div className="text-cyan-200">Record High</div>
+									<div>{Math.round(stat.days[0].normal.tempmax[2]) + "°"}</div>
+								</div>
+								<div>
+									<div className="text-cyan-200">Record Low</div>
+									<div>{Math.round(stat.days[0].normal.tempmin[0]) + "°"}</div>
+								</div>
+								<div>
+									<div className="text-cyan-200">Avg Precip</div>
+									<div>
+										{stat.days[0].normal.precip[1]} {units.precipitation}
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				)}
 			</div>
 		</div>
 	);
