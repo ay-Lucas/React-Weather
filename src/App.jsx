@@ -198,14 +198,14 @@ function App() {
 								{visualForecast && <CurrentWeather data={visualForecast} aqi={currentAqi} units={units} timezone={timeZone} stat={statData} />}
 							</div>
 							<div className="mt-2 sm:mt-3 lg:flex sm:inline-flex w-full">
-								<div className="mr-0 sm:mr-1.5 mt-2 sm:mt-0 bg-slate-950/20 rounded-lg shadow-sm py-5 sm:px-6 px-3 md:w-1/2 w-full">
+								<div className="mr-0 sm:mr-1.5 mt-2 sm:mt-0 bg-slate-950/20 rounded-lg shadow-slate-950/10 shadow-md py-5 sm:px-6 px-3 md:w-1/2 w-full">
 									{visualForecast && <Today data={visualForecast} units={units} timezone={timeZone} />}
 								</div>
-								<div className="ml-0 sm:ml-1.5 mt-2 sm:mt-0 bg-white/20 backdrop-blur-xl rounded-lg shadow-sm md:w-1/2 w-full">
+								<div className="ml-0 sm:ml-1.5 mt-2 sm:mt-0 bg-white/20 backdrop-blur-xl rounded-lg md:w-1/2 w-full shadow-slate-950/10 shadow-md">
 									{visualForecast && <Radar coordinates={coordinates} timezone={timeZone} />}
 								</div>
 							</div>
-							<div className="mb-3 mt-4">{visualForecast && <HourlyForecastOutlook data={visualForecast} units={units} timezone={timeZone} />}</div>
+							<div className="mb-3 mt-4 ">{visualForecast && <HourlyForecastOutlook data={visualForecast} units={units} timezone={timeZone} />}</div>
 
 							<div>{visualForecast && <DailyForecastOutlook data={visualForecast} units={units} timezone={timeZone} />}</div>
 						</div>

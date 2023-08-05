@@ -93,7 +93,7 @@ const Radar = ({ coordinates, timezone }) => {
 		return null;
 	}
 	return (
-		<div className="shadow-md rounded-lg">
+		<div className="shadow-slate-950/10 shadow-sm rounded-lg">
 			<nav className="flex mt-1 justify-center">
 				<div className="sm:ml-3 ml-2 sm:mt-2 mt-4">
 					<button onClick={handleButton}>

@@ -90,7 +90,7 @@ const CurrentWeather = ({ data, aqi, units, timezone, stat }) => {
 	return (
 		<div className="sm:mt-3 mt-2 lg:flex sm:inline-flex w-full flex">
 			<div className="grid sm:grid-cols-4 grid-cols-2  w-full justify-evenly flex-wrap ">
-				<div className="grid col-span-2 items-center justify-start mr-0 sm:mr-1.5 sm:mb-0 bg-slate-950/20 rounded-lg shadow-sm py-2 pb-3 sm:py-1 px-3 pl-4 sm:pl-8 mb-2">
+				<div className="grid col-span-2 items-center justify-start mr-0 sm:mr-1.5 sm:mb-0 bg-slate-950/20 rounded-lg shadow-md shadow-slate-950/20 py-2 pb-3 sm:py-1 px-3 pl-4 sm:pl-8 mb-2">
 					<div className="flex sm:flex-row flex-col sm:items-baseline justify-start">
 						<div className="sm:text-2xl text-lg mr-0 sm:mr-2">Current Weather</div>
 						<div className="tracking-wide dark:text-gray-400 text-sm">As of {locationHourFormatter.format(data.currentConditions.datetimeEpoch * 1000)}</div>
@@ -131,7 +131,7 @@ const CurrentWeather = ({ data, aqi, units, timezone, stat }) => {
 						</div>
 					</div>
 				</div>
-				<div className="grid sm:col-span-1 col-span-3 pl-4 sm:ml-1.5  bg-slate-950/20 rounded-lg shadow-sm py-2 sm:pl-4 text-left mb-2 sm:mb-0">
+				<div className="grid sm:col-span-1 col-span-3 pl-4 sm:ml-1.5  bg-slate-950/20 rounded-lg shadow-md shadow-slate-950/10 py-2 sm:pl-4 text-left mb-2 sm:mb-0">
 					<div className="sm:mt-1 mt-1 mb-2">Observations</div>
 					<div className="grid sm:grid-cols-2 gap-x-3 mt-1 grid-cols-3 gap-y-3 sm:text-base items-baseline  sm:justify-between text-[13px] sm:justify-items-start sm:mb-3 mb-2 overflow-hidden">
 						{AQI !== null && (
@@ -203,10 +203,10 @@ const CurrentWeather = ({ data, aqi, units, timezone, stat }) => {
 					</div>
 				</div>
 				{stat && (
-					<div className="grid sm:col-span-1 col-span-3 pl-4 sm:ml-1.5  bg-slate-950/20 rounded-lg shadow-sm py-2 sm:pl-4 text-left">
+					<div className="grid sm:col-span-1 col-span-3 pl-4 sm:ml-1.5 bg-slate-950/20 rounded-lg shadow-md py-2 sm:pl-4 text-left shadow-slate-950/10">
 						<div className="inline-flex items-center sm:mb-0 mb-2 ">
 							Statistics
-							<div className=" bg-white/20 rounded-lg px-3 sm:px-3 mx-0 sm:text-xs text-[12px] ml-5 sm:mx-6 shadow-sm text-center font-extralight">
+							<div className=" bg-white/20 rounded-lg px-3 sm:px-3 mx-0 sm:text-xs text-[12px] ml-5 sm:mx-6 shadow-sm text-center py-1 font-extralight text-gray-100">
 								Today is{" "}
 								<span
 									style={{

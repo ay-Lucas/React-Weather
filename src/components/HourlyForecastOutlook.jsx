@@ -108,7 +108,7 @@ export default function HourlyForecastOutlook({ data, units, timezone }) {
 		<HourlyInterface hours={hours} data={data} startingIndex={startingIndex} timezone={timezone} colors={colors}>
 			{times.map((time, index) => (
 				<div key={uuidv4()} ref={hourRef} className="flex flex-col justify-evenly items-center">
-					<div className="flex flex-col py-1 pt-3 bg-slate-950/20 rounded-md justify-between shadow-sm">
+					<div className="flex flex-col py-1 pt-3 bg-slate-950/20 rounded-md shadow-slate-950/10 shadow-md justify-between">
 						<div className="inline-flex text-2xl items-center justify-center">
 							<div className="mr-2">{getIcon(hours[index].icon, 25)}</div>
 							{Math.round(hours[index].temp) + "°"}
