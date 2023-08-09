@@ -1,10 +1,9 @@
 /* eslint-disable react/prop-types */
-import { NightShelter, Nightlight } from "@mui/icons-material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Accordion from "@mui/material/Accordion";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
-import { orange, purple, yellow } from "@mui/material/colors";
+import { orange, yellow } from "@mui/material/colors";
 import { useEffect, useState } from "react";
 import {
 	BsClockHistory,
@@ -27,7 +26,7 @@ import { PiWindFill } from "react-icons/pi";
 import { TbGauge } from "react-icons/tb";
 import { WiHumidity } from "react-icons/wi";
 import { v4 as uuidv4 } from "uuid";
-import { decimalToMoonPhase, degreesToWindDirection, eurAqiToColor, usAqiToColor, uvIndexToColor, uvIndexToPercent, uvIndexToRisk } from "../utility";
+import { decimalToMoonPhase, degreesToWindDirection, usAqiToColor, uvIndexToColor, uvIndexToPercent, uvIndexToRisk } from "../utility";
 import { getIcon } from "./Icons";
 import MoonIcons from "./MoonIcons";
 export default function HourlyForecastOutlook({ data, model, units, timezone }) {
@@ -97,7 +96,8 @@ export default function HourlyForecastOutlook({ data, model, units, timezone }) 
 							<div className="grid sm:grid-cols-6 grid-cols-4 w-full items-center text-left">
 								<div className="order-1 sm:text-lg text-sm text-gray-200">{days}</div>
 								<div className="order-2 text-md text-sky-200 whitespace-nowrap sm:m-0">
-									<span className="font-semibold text-white mr-1">{Math.round(data.days[index].tempmax)}° /</span> {Math.round(data.days[index].tempmin)}°
+									<span className="font-semibold text-white mr-1">{Math.round(data.days[index].tempmax)}° /</span>{" "}
+									{Math.round(data.days[index].tempmin)}°
 								</div>
 								<div className="inline order-3 sm:col-span-2 col-span-1  sm:justify-self-start ml-7 m-auto sm:m-0 sm:w-auto">
 									{getIcon(data.days[index].icon, 30, "sm:p-0 sm:mr-2 p-1 inline items-center  ")}
@@ -126,7 +126,7 @@ export default function HourlyForecastOutlook({ data, model, units, timezone }) 
 											<div className="basis-7 mt-0">
 												<BsThermometerHalf size={20} className="" />
 											</div>
-											<div className="text-sky-300">Temperature</div>
+											<div className="text-cyan-200">Temperature</div>
 										</div>
 										<div>
 											{Math.round(data.days[index].tempmax)}° / {Math.round(data.days[index].tempmin)}°
@@ -137,7 +137,7 @@ export default function HourlyForecastOutlook({ data, model, units, timezone }) 
 											<div className="basis-7 mt-0">
 												<BsThermometerHigh size={20} className="" />
 											</div>
-											<div className="text-sky-300">Feels Like</div>
+											<div className="text-cyan-200">Feels Like</div>
 										</div>
 										<div>
 											{Math.round(data.days[index].feelslikemax)}° / {Math.round(data.days[index].feelslikemin)}°
@@ -148,7 +148,7 @@ export default function HourlyForecastOutlook({ data, model, units, timezone }) 
 											<div className="basis-7 mt-0">
 												<BsUmbrella size={20} className="" />
 											</div>
-											<div className="text-sky-300">Precipitation</div>
+											<div className="text-cyan-200">Precipitation</div>
 										</div>
 										<div>
 											{data.days[index].precip} {units.precipitation}
@@ -159,7 +159,7 @@ export default function HourlyForecastOutlook({ data, model, units, timezone }) 
 											<div className="basis-7 mt-0">
 												<GiWaterDrop size={17} className="text-sky-500 ml-0.5" />
 											</div>
-											<div className="text-sky-300">Precipitation Probability</div>
+											<div className="text-cyan-200">Precipitation Probability</div>
 										</div>
 										<div>{data.days[index].precipprob}%</div>
 									</div>
@@ -168,7 +168,7 @@ export default function HourlyForecastOutlook({ data, model, units, timezone }) 
 											<div className="basis-7 mt-0">
 												<BsClockHistory size={17} className="" />
 											</div>
-											<div className=" text-sky-300">Precipitation Coverage</div>
+											<div className=" text-cyan-200">Precipitation Coverage</div>
 										</div>
 										<div>{Math.round(data.days[index].precipcover)}%</div>
 									</div>
@@ -177,7 +177,7 @@ export default function HourlyForecastOutlook({ data, model, units, timezone }) 
 											<div className="basis-7 mt-0">
 												<WiHumidity size={23} className="text-sky-400" />
 											</div>
-											<div className="text-sky-300">Humidity</div>
+											<div className="text-cyan-200">Humidity</div>
 										</div>
 										<div>{Math.round(data.days[index].humidity)}%</div>
 									</div>
@@ -186,7 +186,7 @@ export default function HourlyForecastOutlook({ data, model, units, timezone }) 
 											<div className="basis-7 mt-0">
 												<BsCloudFill size={17} className="ml-0.5" />
 											</div>
-											<div className=" text-sky-300">Cloud Cover</div>
+											<div className=" text-cyan-200">Cloud Cover</div>
 										</div>
 										<div>{Math.round(data.days[index].cloudcover)}%</div>
 									</div>
@@ -195,7 +195,7 @@ export default function HourlyForecastOutlook({ data, model, units, timezone }) 
 											<div className="basis-7 mt-0">
 												<IoThunderstormOutline size={20} className="" />
 											</div>
-											<div className="text-sky-300">Severe Risk</div>
+											<div className="text-cyan-200">Severe Risk</div>
 										</div>
 										<div>{data.days[index].severerisk}</div>
 									</div>
@@ -204,7 +204,7 @@ export default function HourlyForecastOutlook({ data, model, units, timezone }) 
 											<div className="basis-7 mt-0">
 												<GiDew size={17} className="" />
 											</div>
-											<div className=" text-sky-300">Dew Point</div>
+											<div className=" text-cyan-200">Dew Point</div>
 										</div>
 										<div>{Math.round(data.days[index].dew)}°</div>
 									</div>
@@ -213,7 +213,7 @@ export default function HourlyForecastOutlook({ data, model, units, timezone }) 
 											<div className="basis-7 mt-0">
 												<BsSunFill size={19} />
 											</div>
-											<div className="text-sky-300">Max UV Index</div>
+											<div className="text-cyan-200">Max UV Index</div>
 										</div>
 										<div className="min-w-[5rem] text-center">
 											<div className="inline-flex">{data.days[index].uvindex}</div>
@@ -239,21 +239,6 @@ export default function HourlyForecastOutlook({ data, model, units, timezone }) 
 											/>
 										</div>
 									</div>
-									{/* {data.days[index].aqieur !== null && (
-										<div className="flex flex-row justify-between items-center py-2 border-gray-800/50 sm:border-0 border-b-[1px] ">
-											<div className="flex flex-auto items-center justify-start">
-												<div className="basis-7 mt-0">
-													<div
-														style={{ backgroundColor: eurAqiToColor(data.days[index].aqieur) }}
-														className={"mr-1 ml-1 h-3 w-3 inline-flex items-center rounded-full"}
-													></div>{" "}
-												</div>
-												<div className=" text-cyan-200">Air Quality Index (EU)</div>
-											</div>
-
-											<div className="">{data.days[index].aqieur}</div>
-										</div>
-									)} */}
 								</div>
 
 								<div className="flex flex-col sm:ml-3 ml-0 justify-start flex-auto">
@@ -277,7 +262,7 @@ export default function HourlyForecastOutlook({ data, model, units, timezone }) 
 											<div className="basis-7 mt-0">
 												<PiWindFill size={20} />
 											</div>
-											<div className="text-sky-300">Wind Speed</div>
+											<div className="text-cyan-200">Wind Speed</div>
 										</div>
 										<div>
 											{Math.round(data.days[index].windspeed)} {units.wind} {degreesToWindDirection(data.days[index].winddir)}
@@ -288,7 +273,7 @@ export default function HourlyForecastOutlook({ data, model, units, timezone }) 
 											<div className="basis-7 mt-0">
 												<PiWindFill size={20} />
 											</div>
-											<div className="text-sky-300">Wind Gusts</div>
+											<div className="text-cyan-200">Wind Gusts</div>
 										</div>
 										<div>
 											{Math.round(data.days[index].windgust)} {units.wind}
@@ -299,7 +284,7 @@ export default function HourlyForecastOutlook({ data, model, units, timezone }) 
 											<div className="basis-7 mt-0">
 												<TbGauge size={17} className="" />
 											</div>
-											<div className=" text-sky-300">Pressure</div>
+											<div className=" text-cyan-200">Pressure</div>
 										</div>
 										<div>
 											{Math.round(data.days[index].pressure)} {units.pressure}
@@ -310,7 +295,7 @@ export default function HourlyForecastOutlook({ data, model, units, timezone }) 
 											<div className="basis-7 mt-0">
 												<BsEye size={17} className="" />
 											</div>
-											<div className=" text-sky-300">Visibility</div>
+											<div className=" text-cyan-200">Visibility</div>
 										</div>
 										<div>
 											{Math.round(data.days[index].visibility)} {units.visibility}
@@ -358,7 +343,7 @@ export default function HourlyForecastOutlook({ data, model, units, timezone }) 
 											<div className="basis-7 mt-0">
 												<MoonIcons decimal={data.days[index].moonphase} size={23} className={"-ml-0.5"} />
 											</div>
-											<div className="text-sky-300">Moon Phase</div>
+											<div className="text-cyan-200">Moon Phase</div>
 										</div>
 										<div className="inline-flex items-center">{decimalToMoonPhase(data.days[index].moonphase)}</div>
 									</div>
@@ -370,29 +355,4 @@ export default function HourlyForecastOutlook({ data, model, units, timezone }) 
 			</div>
 		</div>
 	);
-}
-{
-	/* <div className="flex flex-col items-center sm:mt-0 mt-2 p-3.5 px-4 bg-slate-800/20 rounded-xl shadow-sm">
-	<div className="text-sky-300 mb-2">Moon</div>
-	<div className="inline-flex items-center mb-2">
-		<MoonIcons decimal={data.days[index].moonphase} size={23} />
-		<div className="ml-2">{decimalToMoonPhase(data.days[index].moonphase)}</div>
-		<div className="text-left text-lg"></div>
-	</div>
-</div> */
-}
-{
-	/* <div className="flex flex-col items-center sm:mt-0 mt-2 px-4 py-5 bg-slate-800/20 rounded-xl shadow-sm">
-	<div className="flex flex-row items-center mb-2">
-		<BsSunrise size={16} className="mx-1" color="orange" />
-		<div className="text-sky-300 flex items-center mr-2">Sunrise</div>
-		<div className="flex flex-row">{`${hourFormatter.format(new Date(data.days[index].sunriseEpoch * 1000))}`} </div>
-	</div>
-	<div className="flex flex-row items-center">
-		<BsSunset size={16} className="mx-1" color="orange" />
-		<div className="text-sky-300 flex items-center mr-3">Sunset</div>
-		<div className="flex flex-row">{`${hourFormatter.format(new Date(data.days[index].sunsetEpoch * 1000))}`}</div>
-	</div>
-</div>
-<div className="flex flex-row items-center p-2 w-full justify-evenly flex-wrap"></div> */
 }
