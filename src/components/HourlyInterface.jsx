@@ -1,5 +1,4 @@
 /* eslint-disable react/prop-types */
-import { cyan } from "@mui/material/colors";
 import { useEffect, useState } from "react";
 import { HorizontalScroll } from "./HorizontalScroll";
 export const HourlyInterface = ({ children, hours, data, startingIndex, timezone, colors }) => {
@@ -20,9 +19,6 @@ export const HourlyInterface = ({ children, hours, data, startingIndex, timezone
 	const scrollsInDay = 4;
 	const pixelsInDay = scrollDistance * scrollsInDay;
 	const tilesInView = 7;
-	const pixelsPerHour = 144;
-	const offset = 4;
-	const hourMargin = 12;
 	useEffect(() => {
 		setDate(getDateString(data.days[0].datetimeEpoch));
 	}, [timezone, startingIndex, data, hours]);
@@ -33,9 +29,6 @@ export const HourlyInterface = ({ children, hours, data, startingIndex, timezone
 		//add 500 to scroll amount to center the day
 		const index = Math.floor((scrollAmount + firstDayPixels + 500) / pixelsInDay);
 		const day = getDateString(data.days[index].datetimeEpoch);
-		// console.log(Math.floor((scrollAmount + firstDayPixels) / pixelsInDay));
-		// console.log((scrollAmount + firstDayPixels + 500) / pixelsInDay);
-		// console.log(scrollAmount);
 		setDate(day);
 		setColor(colors[index * 24]);
 	};

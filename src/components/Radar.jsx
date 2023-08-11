@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
-import { LocationCitySharp, Pause, PlayArrow } from "@mui/icons-material";
+import { Pause, PlayArrow } from "@mui/icons-material";
 import { Slider } from "@mui/material";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { MapContainer, Marker, Popup, TileLayer, useMap } from "react-leaflet";
 import RadarFrame from "./RadarFrame";
 function getIcon() {
@@ -151,17 +151,3 @@ const Radar = ({ coordinates, timezone }) => {
 	);
 };
 export default Radar;
-// <LayersControl.Overlay name="Marker with popup">
-// 	<Marker position={coordinates}>
-// 		<Popup>
-// 			A pretty CSS3 popup. <br /> Easily customizable.
-// 		</Popup>
-// 	</Marker>
-// 		<LayersControl.Overlay name="Feature group">
-// 			<FeatureGroup pathOptions={{ color: "purple" }}>
-// 				<Popup>Popup in FeatureGroup</Popup>
-// 				<Circle center={coordinates} radius={200} />
-// 				{/* <Rectangle bounds={rectangle} /> */}
-// 			</FeatureGroup>
-// 		</LayersControl.Overlay>
-// </LayersControl.Overlay>

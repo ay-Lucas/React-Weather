@@ -8,7 +8,6 @@ import { useEffect, useState } from "react";
 import {
 	BsClockHistory,
 	BsCloudFill,
-	BsDropletHalf,
 	BsEye,
 	BsFillCircleFill,
 	BsMoonStars,
@@ -43,11 +42,6 @@ export default function HourlyForecastOutlook({ data, model, units, timezone }) 
 		timeZone: timezone.timezone,
 		hour: "numeric",
 		minute: "numeric",
-	});
-	const numericDayAndMonth = Intl.DateTimeFormat(timezone.options.locale, {
-		timeZone: timezone.timezone,
-		month: "numeric",
-		day: "numeric",
 	});
 	useEffect(() => {
 		const getNextDays = () => {

@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-// import { AQI_KEY, AQI_URL, VISUAL_API_URL, VISUAL_KEY } from "./Api";
 import "./App.css";
 import CurrentWeather from "./components/CurrentWeather.jsx";
 import DailyForecastOutlook from "./components/DailyForecastOutlook";
@@ -16,10 +15,6 @@ const defaultLocation = {
 	lat: 34.0007,
 	lon: -81.0348,
 };
-// const defaultLocation = {
-// 	lat: 48.8566,
-// 	lon: -2.3522,
-// };
 const imperialUnits = {
 	name: "us",
 	temperature: "fahrenheit",
@@ -38,14 +33,7 @@ const metricUnits = {
 	visibility: "km",
 	tempSign: "°C",
 };
-// const options = Intl.DateTimeFormat().resolvedOptions();
-// const date = new Intl.DateTimeFormat("en-us", {
-// 	year: "2-digit",
-// 	month: "2-digit",
-// 	day: "2-digit",
-// }).format(new Date());
 function App() {
-	// console.log("app.jsx rendered");
 	const [visualForecast, setVisualForecast] = useState(null);
 	const [statData, setStatData] = useState(null);
 	const [location, setLocation] = useState("Columbia, SC");
@@ -53,7 +41,8 @@ function App() {
 	const [currentAqi, setAqi] = useState(null);
 	const [timeZone, setTimeZone] = useState([null]);
 	const [units, setUnits] = useState(imperialUnits);
-	const currentAQIUrl = AQI_URL + "latitude=" + coordinates.lat + "&longitude=" + coordinates.lon + "&distance=25&API_KEY=" + import.meta.env.VITE_AQI_API_KEY;
+	const currentAQIUrl =
+		AQI_URL + "latitude=" + coordinates.lat + "&longitude=" + coordinates.lon + "&distance=25&API_KEY=" + import.meta.env.VITE_AQI_API_KEY;
 	const visualForecastUrl =
 		VISUAL_API_URL +
 		coordinates.lat +
@@ -82,7 +71,6 @@ function App() {
 		"&include=stats";
 
 	const fetchData = () => {
-		// console.log(		new Date("").toISOString().split("T")[0]);
 		const visualForecastFetch = fetch(visualForecastUrl);
 		const currentAQIFetch = fetch(currentAQIUrl);
 		const visualStatFetch = fetch(visualForecastStatUrl);
@@ -115,11 +103,6 @@ function App() {
 		}
 	};
 	const handleOnSearchChange = (searchData) => {
-		// console.log(searchData);
-		// if (searchData.label.endsWith("United States of America")) {
-		// 	searchData.label = searchData.label.replace("United States of America", "US");
-		// 	console.log(searchData.label);
-		// }
 		setLocation(searchData.label);
 		const [lat, lon] = searchData.value.split(" ");
 		setCoordinates({ lat, lon });
@@ -155,8 +138,6 @@ function App() {
 		fetch(geoLocationUrl)
 			.then(async (response) => {
 				const data = await response.json();
-				// console.log(data);
-				// console.log(data.features[0].text);
 				setLocation(data.features[0].place_name);
 			})
 			.catch((error) => {
@@ -193,7 +174,9 @@ function App() {
 				<div className="flex mx-auto">
 					<div className="box-content w-screen max-w-screen-lg">
 						<div className="mx-3 my-3">
-							<div className="mt-0 md:mt-10">{visualForecast && <LocationCard location={location} timezone={timeZone} data={visualForecast} />}</div>
+							<div className="mt-0 md:mt-10">
+								{visualForecast && <LocationCard location={location} timezone={timeZone} data={visualForecast} />}
+							</div>
 							<div className="w-full h-full flex justify-center">
 								{visualForecast && <CurrentWeather data={visualForecast} aqi={currentAqi} units={units} timezone={timeZone} stat={statData} />}
 							</div>
@@ -205,7 +188,9 @@ function App() {
 									{visualForecast && <Radar coordinates={coordinates} timezone={timeZone} />}
 								</div>
 							</div>
-							<div className="mb-3 mt-4 ">{visualForecast && <HourlyForecastOutlook data={visualForecast} units={units} timezone={timeZone} />}</div>
+							<div className="mb-3 mt-4 ">
+								{visualForecast && <HourlyForecastOutlook data={visualForecast} units={units} timezone={timeZone} />}
+							</div>
 
 							<div>{visualForecast && <DailyForecastOutlook data={visualForecast} units={units} timezone={timeZone} />}</div>
 						</div>

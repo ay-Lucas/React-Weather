@@ -1,17 +1,14 @@
 /* eslint-disable react/prop-types */
 import { ChevronLeftRounded, ChevronRightRounded } from "@mui/icons-material";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDraggable } from "react-use-draggable-scroll";
 
 export const HorizontalScroll = ({ children, updateDate }) => {
 	const elementRef = useRef(null);
-	//drag scroll hook from react-use-draggable-scroll
-	//relies on event listeners instead of state for performance
+	// drag scroll hook from react-use-draggable-scroll
+	// relies on event listeners instead of state for performance
 	const [arrowDisable, setArrowDisable] = useState(true);
 	const [isDragging, setDragging] = useState(false);
-	//TODO: fix rubber band effect
-	// second render rubbder band effect to work event though it's disabled
-	// rubber band effect is laggy with man elements (hours)
 	const { events } = useDraggable(elementRef, {
 		applyRubberBandEffect: false,
 	});

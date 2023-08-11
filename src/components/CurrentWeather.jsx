@@ -1,16 +1,13 @@
 /* eslint-disable react/prop-types */
-import { colors } from "@mui/material";
-import { blue, green, lightBlue, orange, red, yellow } from "@mui/material/colors";
+import { green, red } from "@mui/material/colors";
 import { useEffect, useState } from "react";
 import { BsFillCircleFill } from "react-icons/bs";
 import { GiWaterDrop } from "react-icons/gi";
 import { degreesToWindDirection, usAqiToColor, uvIndexToColor, uvIndexToPercent, uvIndexToRisk } from "../utility";
 import { getIcon } from "./Icons";
 const CurrentWeather = ({ data, aqi, units, timezone, stat }) => {
-	// const [time, setTime] = useState(null);
 	const [AQI, setAQI] = useState(null);
 	const [color, setColor] = useState(green[500]);
-	const [alert, setAlert] = useState([]);
 	const [isWarmer, setIsWarmer] = useState(stat.days[0].normal.tempmax[1] < data.days[0].tempmax);
 	const locationHourFormatter = Intl.DateTimeFormat(timezone.options.locale, {
 		timeZone: timezone.timezone,
@@ -18,18 +15,10 @@ const CurrentWeather = ({ data, aqi, units, timezone, stat }) => {
 		minute: "numeric",
 		timeZoneName: "shortGeneric",
 	});
-	const dateFormatter = Intl.DateTimeFormat(timezone.options.locale, {
-		timeZone: timezone.timezone,
-		month: "numeric",
-		day: "numeric",
-		hour: "numeric",
-		minute: "numeric",
-	});
 	const hoursInDay = Intl.DateTimeFormat(timezone.options.locale, {
 		timeZone: timezone.timezone,
 		hour12: false,
 		hour: "2-digit",
-		// minute: "numeric",
 	});
 	const getStartingIndex = () => {
 		const date = new Date();
@@ -37,34 +26,10 @@ const CurrentWeather = ({ data, aqi, units, timezone, stat }) => {
 		let currentHourNum = parseInt(currentHourStr.split("/")[0]);
 		return currentHourNum - 1;
 	};
-
-	// const dateFormatter = Intl.DateTimeFormat(timezone.options.locale, {
-	// 	timeZone: timezone.timezone,
-	// 	weekday: "long",
-	// 	month: "numeric",
-	// 	day: "numeric",
-	// });
-
 	useEffect(() => {
 		if ((stat && data !== null) || (stat && data !== undefined)) {
 			setIsWarmer(stat.days[0].normal.tempmax[1] < data.days[0].tempmax);
 		}
-		if (data.alerts !== undefined) {
-			const alertList = data.alerts.map((alert) => {
-				return (
-					<div key={alert.id} className="flex-row bg-red-500/30 rounded-lg p-1 my-1">
-						<a href={alert.link} rel="noreferrer noopener" target="_blank" className="flex-col">
-							{alert.headline}
-						</a>
-						<div className="text-gray-400">
-							{dateFormatter.format(new Date(alert.onset))} - {dateFormatter.format(new Date(alert.ends))}
-						</div>
-					</div>
-				);
-			});
-			setAlert(alertList);
-		}
-		// setColor(usAqiToColor(aqi));
 		try {
 			if (aqi !== undefined && aqi.length > 0) {
 				let num = 0;
@@ -93,7 +58,9 @@ const CurrentWeather = ({ data, aqi, units, timezone, stat }) => {
 				<div className="grid col-span-2 items-center justify-start mr-0 sm:mr-1.5 sm:mb-0 bg-slate-950/20 rounded-lg shadow-md shadow-slate-950/20 py-2 pb-3 sm:py-1 px-3 pl-4 sm:pl-8 mb-2">
 					<div className="flex sm:flex-row flex-col sm:items-baseline justify-start">
 						<div className="sm:text-2xl text-lg mr-0 sm:mr-2">Current Weather</div>
-						<div className="tracking-wide dark:text-gray-400 text-sm">As of {locationHourFormatter.format(data.currentConditions.datetimeEpoch * 1000)}</div>
+						<div className="tracking-wide dark:text-gray-400 text-sm">
+							As of {locationHourFormatter.format(data.currentConditions.datetimeEpoch * 1000)}
+						</div>
 					</div>
 					<div className="flex flex-col w-full justify-start sm:mt-4 mt-3">
 						<div className="flex flex-row w-full  items-start justify-start">
@@ -165,10 +132,6 @@ const CurrentWeather = ({ data, aqi, units, timezone, stat }) => {
 							<div className="text-cyan-200">Cloud Cover</div>
 							<div>{Math.round(data.currentConditions.cloudcover)}%</div>
 						</div>
-						{/* <div>
-					<div className="text-cyan-200">Dew Point</div>
-					<div>{Math.round(data.currentConditions.dew)}°</div>
-				</div> */}
 						<div className="">
 							<div className="text-cyan-200">UV Index</div>
 							<div className="inline-flex ">
@@ -211,9 +174,7 @@ const CurrentWeather = ({ data, aqi, units, timezone, stat }) => {
 								<span
 									style={{
 										color: isWarmer ? red[50] : "white",
-										// filter: isWarmer ? "" : "drop-shadow(0 1.2px 1.2px rgba(128,222,234,0.7))",
 									}}
-									// className="drop-shadow-[0_1.2px_1.2px_rgba(30,144,255,0.5)]"
 									className="font-normal"
 								>
 									{isWarmer ? "warmer" : "cooler"}

@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { GiWaterDrop } from "react-icons/gi";
 import { v4 as uuidv4 } from "uuid";
 // import { HourlyHorizontal } from "./HourlyHorizontal";
-import { cyan, green, grey, indigo, lightBlue, teal } from "@mui/material/colors";
+import { cyan, grey } from "@mui/material/colors";
 import { HourlyInterface } from "./HourlyInterface";
 import { getIcon } from "./Icons";
 
@@ -32,14 +32,11 @@ export default function HourlyForecastOutlook({ data, units, timezone }) {
 		grey[50],
 		cyan["A100"],
 		grey[50],
-		// teal["A200"],
-		// grey[50],
 	];
 	const hoursInDay = Intl.DateTimeFormat(timezone.options.locale, {
 		timeZone: timezone.timezone,
 		hour12: false,
 		hour: "2-digit",
-		// minute: "numeric",
 	});
 	const locationHourFormatter = Intl.DateTimeFormat(timezone.options.locale, {
 		timeZone: timezone.timezone,

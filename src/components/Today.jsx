@@ -1,5 +1,5 @@
-import { blue, lightBlue, orange, yellow } from "@mui/material/colors";
-import { BsEye, BsMoonStars, BsSun, BsSunrise, BsSunset, BsThermometerHalf, BsThermometerHigh, BsUmbrella } from "react-icons/bs";
+import { orange, yellow } from "@mui/material/colors";
+import { BsSunrise, BsSunset, BsThermometerHalf, BsThermometerHigh } from "react-icons/bs";
 import { GiWaterDrop } from "react-icons/gi";
 import { PiWindFill } from "react-icons/pi";
 import { WiHumidity } from "react-icons/wi";
@@ -12,7 +12,6 @@ const Today = ({ data, units, timezone }) => {
 		timeZone: timezone.timezone,
 		hour: "numeric",
 		minute: "numeric",
-		// minute: "numeric",
 	});
 	const dateFormatter = Intl.DateTimeFormat(timezone.options.locale, {
 		timeZone: timezone.timezone,
@@ -106,24 +105,6 @@ const Today = ({ data, units, timezone }) => {
 				</div>
 				<div className="inline-flex items-center">{decimalToMoonPhase(data.days[0].moonphase)}</div>
 			</div>
-			{/* <div className="flex flex-row justify-between py-2 border-gray-800/50 border-b-[1px]">
-				<div className="flex flex-auto items-center justify-start">
-					<div className="basis-7 mt-1">
-						<BsSun size={20} />
-					</div>
-					<div className="text-cyan-200">Day Length</div>
-				</div>
-				<div>{getDayLength(data.days[index].sunriseEpoch, data.days[index].sunsetEpoch)[0]}</div>
-			</div>
-			<div className="flex flex-row justify-between py-2 border-gray-800/50 border-b-[1px]">
-				<div className="flex flex-auto items-center justify-start">
-					<div className="basis-7 mt-1">
-						<BsMoonStars size={17} />
-					</div>
-					<div className="text-cyan-200">Night Length</div>
-				</div>
-				<div>{getDayLength(data.days[index].sunriseEpoch, data.days[index].sunsetEpoch)[1]}</div>
-			</div> */}
 		</div>
 	);
 };

@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-vars */
-import { Code } from "@mui/icons-material";
 import { useState } from "react";
 import { BsSearch } from "react-icons/bs";
 import { AsyncPaginate } from "react-select-async-paginate";
@@ -124,13 +122,11 @@ const Search = ({ onSearchChange }) => {
 			//check for city and state OR
 			//city and country
 		} else if (arr.length === 2) {
-			// console.log(inputValue);
 			let state = searchState(inputValue[1]);
 			if (state !== null) {
 				stateCode = state;
 				countryCode = "US";
 				const cityStateCountry = `${GEODB_AUTOSUGGEST_URL}/countries/${countryCode}/regions/${stateCode}/cities?namePrefix=${city}&limit=10`;
-				// console.log(cityStateCountry);
 				return cityStateCountry;
 			}
 			let country = searchCountry(inputValue[1]);
@@ -152,7 +148,6 @@ const Search = ({ onSearchChange }) => {
 	}
 
 	const loadOptions = (inputValue) => {
-		// console.log(inputValue);
 		if (inputValue === lastInputVal) {
 			console.log("input repeat");
 			return Promise.resolve({ options: [] });
@@ -160,10 +155,8 @@ const Search = ({ onSearchChange }) => {
 		lastInputVal = inputValue;
 		let url = getUrl(inputValue);
 		try {
-			// console.log(url);
 			return fetch(url, geoApiOptions)
 				.then((response) => {
-					// console.log(response);
 					if (!response.ok) {
 						console.log("geodb response error!");
 						throw new Error("geodb response error");
@@ -172,7 +165,6 @@ const Search = ({ onSearchChange }) => {
 					}
 				})
 				.then((response) => {
-					// console.log(response);
 					let regionName;
 					return {
 						options: response.data.map((city) => {
@@ -191,7 +183,6 @@ const Search = ({ onSearchChange }) => {
 		console.log(inputValue);
 	};
 	const handleOnChange = (searchData) => {
-		// console.log(searchData);
 		setSearch(searchData);
 		onSearchChange(searchData);
 	};
@@ -240,7 +231,6 @@ const Search = ({ onSearchChange }) => {
 			color: "#d1d5db",
 		}),
 	};
-	//bg color bg-[#1b3c5f]
 	return (
 		<div className="flex items-center rounded-md pl-4 bg-[#555555] border-[1px] border-solid border-[#484848] hover:border-[#66c2ff] md:h-8 h-7 md:text-base text-sm justify-center md:w-[25rem] w-80 mx-3 md:mx-0">
 			<div>
