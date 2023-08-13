@@ -28,16 +28,16 @@ export default function LocationCard({ location, timezone, data }) {
 		}
 	}, [data, timezone]);
 	return (
-		<div className="flex flex-col shadow-slate-950/10 shadow-md rounded-lg">
+		<div className="flex flex-col">
 			<div
 				className="flex
-		justify-center bg-slate-950/20 rounded-lg py-1 "
+		justify-center bg-slate-950/20 py-1 shadow-slate-950/10 shadow-md rounded-lg"
 			>
 				<div className="text-white text-xl font-medium">{location}</div>
 			</div>
 			{alert.length > 0 && (
 				<>
-					<div className="text-md flex-row text-center">{alert}</div>
+					<div className="text-md flex-row text-center shadow-slate-950/10 shadow-md rounded-lg">{alert}</div>
 				</>
 			)}
 		</div>
